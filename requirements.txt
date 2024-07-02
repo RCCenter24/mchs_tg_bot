@@ -1,0 +1,9 @@
+psycopg
+aiogram
+aiohttp
+pandas
+pytz
+APScheduler
+aiosql
+sqlalchemy
+icecream

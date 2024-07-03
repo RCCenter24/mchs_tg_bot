@@ -2,20 +2,16 @@ from aiogram import Dispatcher, Router, Bot
 from aiogram.fsm.storage.redis import (RedisStorage, DefaultKeyBuilder)
 from config import bot_token
 import asyncio
+
 bot = Bot(bot_token)
 
 storage = RedisStorage.from_url("redis://localhost:6379/2")
-
-
-
-
-
-
 
 async def main():
     
     dp = Dispatcher(storage = storage)
     from handlers import main_router
+    from callbacks import main_router
     dp.include_router(main_router)
     
     

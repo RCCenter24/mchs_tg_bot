@@ -1,4 +1,4 @@
-psycopg
+psycopg2
 aiogram
 aiohttp
 pandas
@@ -7,3 +7,5 @@ APScheduler
 aiosql
 sqlalchemy
 icecream
+glob
+aioimaplib

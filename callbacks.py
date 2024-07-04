@@ -15,28 +15,25 @@ from handlers import main_router
 
 @main_router.callback_query(F.data == 'choise_munic')
 async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContext):
-    await state.set_state(Form.waiting_for_munic)
-    cur = connection.cursor()   
-    cur.execute("SELECT municipality_name FROM municipalities ORDER BY municipality_name ASC")
+    
+    cur = connection.cursor()
+    cur.execute("SELECT map_id, municipality_name FROM municipalities ORDER BY municipality_name ASC")
     all_municipalities = cur.fetchall()
+    
     builder = ReplyKeyboardBuilder()
     
-    
-    for index in enumerate(all_municipalities, start=1):
-
-        button_text = f"{index[1]}"
-        
-        button_text = button_text.replace("'", "").replace("(", "").replace(")", "").replace(",", "")
-
+    for index, mun in enumerate(all_municipalities, start=1):
+        button_text = mun[1]  # Используем первое значение из кортежа, т.е. само имя муниципалитета
         builder.button(text=button_text)
     
     builder.adjust(1)
     keyboard_1 = builder.as_markup(resize_keyboard=True, one_time_keyboard=True)
     
+    await query.message.answer(text='Выберите муниципальное образование', reply_markup=keyboard_1)
+    await state.set_state(Form.waiting_for_munic)
+    
+    # Сохраняем все муниципалитеты в состоянии для дальнейшей проверки
+    await state.update_data(all_municipalities=[mun[1] for mun in all_municipalities])
     
     
-    await query.message.answer(text = f'Выберите муниципальное образование', reply_markup=keyboard_1)
-    
-    connection.commit()
     cur.close()
-    #connection.close()

@@ -1,3 +1,5 @@
+from glob import glob
+import os
 from aiogram import types, Router, F
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
@@ -5,8 +7,10 @@ from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram.types import Message
+import pandas as pd
 from db_conn import connection
 from icecream import ic
+from bot import bot
 
 main_router = Router()
 
@@ -46,14 +50,15 @@ async def handle_start(message: Message, state: FSMContext):
 @main_router.message(Command('subscribe'))
 async def handle_waiting_for_choise(message: types.Message, state: FSMContext):
     cur = connection.cursor()
-    cur.execute("SELECT municipality_name FROM municipalities ORDER BY municipality_name ASC")
+    cur.execute("SELECT map_id, municipality_name FROM municipalities ORDER BY municipality_name ASC")
     all_municipalities = cur.fetchall()
+    
     builder = ReplyKeyboardBuilder()
     
     for index, mun in enumerate(all_municipalities, start=1):
-        button_text = mun[0]  # Используем первое значение из кортежа, т.е. само имя муниципалитета
+        button_text = mun[1]  # Используем первое значение из кортежа, т.е. само имя муниципалитета
         builder.button(text=button_text)
-    
+    builder.button(text='Отмена')
     builder.adjust(1)
     keyboard_1 = builder.as_markup(resize_keyboard=True, one_time_keyboard=True)
     
@@ -61,7 +66,8 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext):
     await state.set_state(Form.waiting_for_munic)
     
     # Сохраняем все муниципалитеты в состоянии для дальнейшей проверки
-    await state.update_data(all_municipalities=[mun[0] for mun in all_municipalities])
+    await state.update_data(all_municipalities=[mun[1] for mun in all_municipalities])
+    
     
     cur.close()
     
@@ -73,7 +79,13 @@ async def subscribe(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     
     data = await state.get_data()
+    if selected_mun == "Отмена":
+        await state.clear()
+        await message.answer('Вы вернулись в главное меню')
+        return
     all_municipalities = data.get('all_municipalities', [])
+    
+   
     
     
     if selected_mun in all_municipalities:
@@ -87,8 +99,17 @@ async def subscribe(message: types.Message, state: FSMContext):
         if subscription_exists:
             await message.answer('Вы уже подписаны на это муниципальное образование.')
         else:
-            insert_query = f"INSERT INTO subscriptions (user_id, municipality_name, subscribed_at) " \
-                           f"VALUES ({user_id}, '{selected_mun}', CURRENT_TIMESTAMP) ON CONFLICT DO NOTHING"
+
+            insert_query = f"""
+            INSERT INTO subscriptions (user_id, map_id, municipality_name, subscribed_at)
+            SELECT {user_id}, m.map_id, '{selected_mun}', CURRENT_TIMESTAMP
+            FROM municipalities m
+            WHERE m.municipality_name = '{selected_mun}'
+            ON CONFLICT DO NOTHING;
+            """
+
+            
+            
             cur.execute(insert_query)
             connection.commit()
 
@@ -142,3 +163,41 @@ async def handle_waiting_for_choise(message: Message, state: FSMContext):
     cur.execute(query)
     connection.commit()
     cur.close()
+    await message.answer('Вы отписались от всего😕')
+    
+    
+@main_router.message(Command('check_news'))
+async def check_news(message: Message, state: FSMContext):
+    
+    file_path = glob('*инамика*.xlsx')
+    file_path.sort(key=os.path.getmtime, reverse=True)
+    latest_file_path = file_path[0]
+   # cur = connection.cursor()
+    df = pd.read_excel(latest_file_path)
+    
+    
+    check_query = f"SELECT * FROM subscriptions"
+   # cur.execute(check_query)
+    #subscription_exists = cur.fetchall()
+    df_2 = pd.read_sql_query(con=connection, sql=check_query)
+    
+    
+    result_df = df.merge(df_2, left_on='ID Карты', right_on='map_id')
+    
+    ic(result_df.columns)
+    
+    if not result_df.empty:
+        grouped_df = result_df.groupby('user_id')
+        
+        for user_id, group in grouped_df:
+            response = ""
+            grouped_by_municipality = group.groupby('Район')
+            
+            for municipality, fires in grouped_by_municipality:
+                response += f"\n<b>{municipality}</b>\n"
+                
+                for _, row in fires.iterrows():
+                    response += f"Пожар в {row['Город']} возникший {row['Дата возникновения пожара']} статус {row['Статус']}.\n"
+                
+            await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
+    

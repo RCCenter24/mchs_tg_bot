@@ -2,6 +2,7 @@ import asyncio
 from glob import glob
 import imaplib
 import os
+from datetime import datetime as dt
 from aiogram import types, Router, F
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
@@ -186,19 +187,67 @@ async def check_news(message: Message):
     print(f'email id в чек ньюс {email_id}')
     file_path = glob('saved_files/*инамика*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
+    
     latest_file_path = file_path[0]
-    ic(latest_file_path)
+    print(type(latest_file_path))
    # cur = connection.cursor()
-    df = pd.read_excel(latest_file_path)
+    df = pd.read_excel(latest_file_path, engine='openpyxl')
+    date_format = '%d.%m.%Y %H:%M:%S'
+
+   # df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']] = df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']]\
+   # .apply(pd.to_datetime, format=date_format, dayfirst=True, errors='coerce')
+
+
+   # df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']] = df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']]\
+   #     .apply(lambda x: x.dt.strftime('%Y-%m-%d %H:%M'))
+    
+    
+  #  ic(df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']])
+    
+    
+    #df['Статус'] = df['Статус'].apply(lambda x:'🔴Продолжается' if x =='Продолжается' else x)
+   # df['Статус'] = df['Статус'].apply(lambda x:'🟢Ликвидирован' if x =='Ликвидирован' else x)
+  #  df['Статус'] = df['Статус'].apply(lambda x:'🟠Частично локализован' if x =='Частично локализован' else x)
+   # df['Статус'] = df['Статус'].apply(lambda x:'🟡Локализован' if x =='Локализован' else x)
+   # df['Статус'] = df['Статус'].apply(lambda x:'🔴Усиливается' if x =='Усиливается' else x)
+    
+    df['icon_status'] = 0
+    df['icon_status'] = df['Статус'].apply(
+        lambda x: '🔴' if x == 'Продолжается' else 
+                '🟢' if x == 'Ликвидирован' else 
+                '🟠' if x == 'Частично локализован' else 
+                '🟡' if x == 'Локализован' else 
+                '🔴' if x == 'Усиливается' else 0
+    )
+
+    
+    
+   # ic(df['icon_status'])
+   # ic(df.dtypes)
     
     
     check_query = f"SELECT * FROM subscriptions"
-   # cur.execute(check_query)
-    #subscription_exists = cur.fetchall()
+   
     df_2 = pd.read_sql_query(con=connection, sql=check_query)
     
     
     result_df = df.merge(df_2, left_on='ID Карты', right_on='map_id')
+    
+    result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']] = result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']]\
+    .apply(pd.to_datetime, format=date_format, dayfirst=True, errors='coerce')
+
+
+    result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']] = result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']]\
+        .apply(lambda x: x.dt.strftime('%Y-%m-%d %H:%M'))
+    
+    ic(result_df['Дата ликвидации пожара'])
+    ic(result_df['Дата изменения данных'])
+    ic(result_df['Дата изменения данных'])
+    ic(result_df['Дата возникновения пожара'])
+    
+    ic(result_df.dtypes)
+    ic(result_df.columns)
+    
     cur = connection.cursor()
     print(f'email_id в check_news {email_id}')
     check_query = f"SELECT user_id FROM messages WHERE message_id = '{email_id}'"
@@ -221,10 +270,10 @@ async def check_news(message: Message):
                 grouped_by_municipality = group.groupby('Район')
                 
                 for municipality, fires in grouped_by_municipality:
-                    response += f"\n<b>{municipality}</b>\n"
+                    response += f"\n<b>{municipality}</b>\n\n"
                     
-                    for _, row in fires.iterrows():
-                        response += f"Пожар в {row['Город']} возникший {row['Дата возникновения пожара']} статус {row['Статус']}.\n"
+                    for idx, row in fires.iterrows():
+                        response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
                     
                 await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                 query = f"INSERT INTO messages (user_id, message_id, message_text, date_of_sending) VALUES ({user_id}, '{email_id}', '{response}', CURRENT_TIMESTAMP) ON CONFLICT DO NOTHING"

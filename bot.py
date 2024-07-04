@@ -38,7 +38,7 @@ async def main():
     
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     #scheduler.add_job(on_startup, 'cron', hour=0, minute=1)
-    scheduler.add_job(on_startup, 'interval', minutes=0.2)
+    scheduler.add_job(on_startup, 'interval', minutes=0.15)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
 

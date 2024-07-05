@@ -210,13 +210,13 @@ async def check_news(message: Message):
 
 
     
-    df['icon_status'] = 0
+    df['icon_status'] = ""
     df['icon_status'] = df['Статус'].apply(
         lambda x: '🔴' if x == 'Продолжается' else 
                 '🟢' if x == 'Ликвидирован' else 
                 '🟠' if x == 'Частично локализован' else 
                 '🟡' if x == 'Локализован' else 
-                '🔴' if x == 'Усиливается' else 0
+                '🔴' if x == 'Усиливается' else ""
     )
 
    

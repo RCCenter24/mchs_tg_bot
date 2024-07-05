@@ -8,3 +8,4 @@ __pycache__/
 *.csv
 db_conn.py
 *.pgsql
+/saved_files/*

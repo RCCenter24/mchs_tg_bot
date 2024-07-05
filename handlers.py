@@ -219,10 +219,7 @@ async def check_news(message: Message):
                 '🔴' if x == 'Усиливается' else 0
     )
 
-    
-    
    
-    
     check_query = f"SELECT * FROM subscriptions"
    
     df_2 = pd.read_sql_query(con=connection, sql=check_query)

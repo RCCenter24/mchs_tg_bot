@@ -263,13 +263,21 @@ async def check_news(message: Message):
                     for idx, row in fires.iterrows():
                         response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
                     
-                await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
-                query = f"INSERT INTO messages (user_id, message_id, message_text, date_of_sending) VALUES ({user_id}, '{email_id}', '{response}', CURRENT_TIMESTAMP) ON CONFLICT DO NOTHING"
-                ic(query)
-                cur = connection.cursor()
-                cur.execute(query)
-                connection.commit()
-                cur.close()
+                user_ids = [user_id]  # преобразование в список, если это отдельный идентификатор
+                for i in user_ids:
+                    try:
+                        await bot.send_message(chat_id=i, text=response, parse_mode='HTML')
+                        query = f"INSERT INTO messages (user_id, message_id, message_text, date_of_sending) VALUES ({i}, '{email_id}', '{response}', CURRENT_TIMESTAMP) ON CONFLICT DO NOTHING"
+                        ic(query)
+                        cur = connection.cursor()
+                        cur.execute(query)
+                        connection.commit()
+                        cur.close()
+                    except Exception as e:
+                        print(f'Ошибка при отправке пользователю {i}: {str(e)}')
+                        traceback.print_exc()
+
+                        
             
     
 

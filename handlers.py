@@ -15,7 +15,7 @@ from config import EMAIL, PASSWORD, SAVE_DIR
 from db_conn import connection
 from icecream import ic
 from bot import bot
-
+from xlsx2csv import Xlsx2csv
 
 import aioimaplib
 import ssl
@@ -189,27 +189,20 @@ async def check_news(message: Message):
     file_path.sort(key=os.path.getmtime, reverse=True)
     
     latest_file_path = file_path[0]
-    print(type(latest_file_path))
-   # cur = connection.cursor()
-    df = pd.read_excel(latest_file_path, engine='openpyxl')
+    
+    
+    conveted_name = latest_file_path.split('.')[0]
+    ic(conveted_name)
+    
+   
+   
+    Xlsx2csv(latest_file_path, outputencoding="utf-8").convert(f"{conveted_name}.csv")
+    
+    
+    df = pd.read_csv(f"{conveted_name}.csv")
     date_format = '%d.%m.%Y %H:%M:%S'
 
-   # df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']] = df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']]\
-   # .apply(pd.to_datetime, format=date_format, dayfirst=True, errors='coerce')
 
-
-   # df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']] = df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']]\
-   #     .apply(lambda x: x.dt.strftime('%Y-%m-%d %H:%M'))
-    
-    
-  #  ic(df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных']])
-    
-    
-    #df['Статус'] = df['Статус'].apply(lambda x:'🔴Продолжается' if x =='Продолжается' else x)
-   # df['Статус'] = df['Статус'].apply(lambda x:'🟢Ликвидирован' if x =='Ликвидирован' else x)
-  #  df['Статус'] = df['Статус'].apply(lambda x:'🟠Частично локализован' if x =='Частично локализован' else x)
-   # df['Статус'] = df['Статус'].apply(lambda x:'🟡Локализован' if x =='Локализован' else x)
-   # df['Статус'] = df['Статус'].apply(lambda x:'🔴Усиливается' if x =='Усиливается' else x)
     
     df['icon_status'] = 0
     df['icon_status'] = df['Статус'].apply(

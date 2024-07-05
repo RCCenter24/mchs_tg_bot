@@ -1,5 +1,10 @@
 config.py
 .venv/
 __pycache__/
-*xslx
-*ipynb
+.DS_Store
+*.xslx
+*.ipynb
+*.xsl
+*.csv
+db_conn.py
+*.pgsql

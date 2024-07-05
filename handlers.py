@@ -3,6 +3,7 @@ from glob import glob
 import imaplib
 import os
 from datetime import datetime as dt
+import traceback
 from aiogram import types, Router, F
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
@@ -192,11 +193,16 @@ async def check_news(message: Message):
     
     
     conveted_name = latest_file_path.split('.')[0]
-    ic(conveted_name)
+    
     
    
-   
-    Xlsx2csv(latest_file_path, outputencoding="utf-8").convert(f"{conveted_name}.csv")
+    try:
+        Xlsx2csv(latest_file_path, outputencoding="utf-8").convert(f"{conveted_name}.csv")
+    
+    except Exception as e:
+        print('Ошибка в конвертировании check_news', str(e))
+        traceback.print_exc()
+        
     
     
     df = pd.read_csv(f"{conveted_name}.csv")
@@ -215,9 +221,7 @@ async def check_news(message: Message):
 
     
     
-   # ic(df['icon_status'])
-   # ic(df.dtypes)
-    
+   
     
     check_query = f"SELECT * FROM subscriptions"
    
@@ -233,18 +237,12 @@ async def check_news(message: Message):
     result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']] = result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']]\
         .apply(lambda x: x.dt.strftime('%Y-%m-%d %H:%M'))
     
-    ic(result_df['Дата ликвидации пожара'])
-    ic(result_df['Дата изменения данных'])
-    ic(result_df['Дата изменения данных'])
-    ic(result_df['Дата возникновения пожара'])
-    
-    ic(result_df.dtypes)
-    ic(result_df.columns)
+
     
     cur = connection.cursor()
     print(f'email_id в check_news {email_id}')
     check_query = f"SELECT user_id FROM messages WHERE message_id = '{email_id}'"
-    ic(check_query)
+    
     cur.execute(check_query)
     msg_already_sent = cur.fetchall()
     ic(msg_already_sent)

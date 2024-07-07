@@ -9,3 +9,4 @@ __pycache__/
 db_conn.py
 *.pgsql
 /saved_files/*
+/database/__pycache__/

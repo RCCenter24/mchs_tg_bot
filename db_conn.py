@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg
 
 host = "localhost"
 user = "rejoller"
@@ -6,11 +6,14 @@ port = 5432
 database = "mchs_tg"
 password = "9205"
 
+connection = None
 
-connection = psycopg2.connect(
+async def create_connection():
+    await psycopg.AsyncConnection.connect(
         host=host,
         user=user,
         port=port,
-        database=database,
+        dbname=database,  
         password=password
     )
+    return connection

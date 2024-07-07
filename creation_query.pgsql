@@ -87,3 +87,6 @@ CREATE TABLE subscriptions (
     municipality_name VARCHAR(50) REFERENCES municipalities(municipality_name),
     subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE subscriptions
+ADD COLUMN id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY;

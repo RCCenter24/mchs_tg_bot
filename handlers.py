@@ -81,7 +81,7 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
     builder.adjust(1)
     builder.attach(InlineKeyboardBuilder.from_markup(markup))
 
-    caption =   "Это бот по инцидентам МЧС. Чтобы подписаться на одно из муниципальных образований для получения новостей нажмите /subscribe \n"
+    caption = "Это бот по инцидентам МЧС Красноярского края. Чтобы подписаться на одно из муниципальных образований для получения новостей воспользуйтесь командой /subscribe \n Чтобы подписатья на все обновления нажмите на команду /subscribe_all\n"
                 
     
     await message.answer_photo(caption= caption, reply_markup=markup, photo=main_photo)
@@ -114,12 +114,12 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
     builder.button(text='Отмена')
     builder.adjust(1)
     keyboard_1 = builder.as_markup(
-        resize_keyboard=True, one_time_keyboard=True)
+        resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Выберите муниципальное образование")
 
     try:
         await message.edit_caption(caption='Выберите муниципальное образование')
     except:
-        await message.answer_photo(caption='Выберите муниципальное образование', reply_markup=keyboard_1, photo = map_image)
+        await message.answer_photo(caption='Выберите муниципальное образование', reply_markup=keyboard_1, photo = map_image, parse_mode='HTML')
     
     await state.set_state(Form.waiting_for_munic)
 
@@ -133,7 +133,7 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
     data = await state.get_data()
     if selected_mun == "Отмена":
         await state.clear()
-        await message.answer('Вы вернулись в главное меню')
+        await message.answer('Вы вернулись в главное меню', reply_markup=types.ReplyKeyboardRemove())
         return
 
     all_municipalities = data.get('all_municipalities', [])
@@ -148,7 +148,7 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
         subscription_exists = result.first()
 
         if subscription_exists is not None:
-            await message.answer('Вы уже подписаны на это муниципальное образование.')
+            await message.answer('Вы уже подписаны на это муниципальное образование')
         else:
             subquery = select(Municipalities.map_id).where(
                 Municipalities.municipality_name == selected_mun).scalar_subquery()
@@ -174,7 +174,7 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
             message_text = "Подписка прошла успешно 🙂\n\n<b>Ваши подписки</b>\n" + \
                 "\n".join(municipalities)
 
-            await message.answer(message_text, parse_mode='HTML')
+            await message.answer(message_text, parse_mode='HTML', reply_markup=types.ReplyKeyboardRemove())
 
         await state.clear()
     else:
@@ -235,7 +235,7 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
 
     try:
     
-        await message.answer_photo(caption=message_text, photo=main_photo)
+        await message.answer_photo(caption=message_text, photo=main_photo, parse_mode='HTML')
         
     except:
         await message.answer(message_text, parse_mode='HTML')
@@ -271,12 +271,12 @@ async def check_news(message: Message, session: AsyncSession):
     subscribers = result.all()
 
     df_2 = pd.DataFrame(subscribers)
-    ic(df_2.head())
+    
     
     
     
     result_df = await result_df_maker(df, df_2)
-    ic(result_df.head())
+    
     check_query = select(Messages.user_id).where(
         Messages.message_id == email_id)
     check_result = await session.execute(check_query)
@@ -295,15 +295,19 @@ async def check_news(message: Message, session: AsyncSession):
             else:
                 response = ""
                 grouped_by_municipality = group.groupby('Район')
-                ic(grouped_by_municipality)
+                
                 
                 for municipality, fires in grouped_by_municipality:
-                    response += f"\n<b>{municipality}</b>\n\n"
+                    response += f"\n<b>{municipality}</b>\n"
+                    status_counts = fires['icon_status'].value_counts()
+    
+                    for status, count in status_counts.items():
+                        response += f"{count}{status}  "
                     
                     for idx, row in fires.iterrows():
                         
                         
-                        response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
+                        response += f"\n\n{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
                     
                 
                 
@@ -350,7 +354,7 @@ async def manual_check_news(message: Message, session: AsyncSession):
 
     df_2 = pd.DataFrame(subscribers)
     result_df = await result_df_maker(df, df_2)
-    ic(result_df)
+   
     
     
     grouped_by_municipality = result_df.groupby('Район')

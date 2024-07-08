@@ -13,3 +13,4 @@ db_conn.py
 .ruff_cache/
 *.csv
 bot.log
+/database/db_config.py

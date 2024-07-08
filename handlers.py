@@ -1,10 +1,11 @@
+from icecream import ic
 import logging
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
-from aiogram import types, Router
+from aiogram import F, types, Router
 
 from glob import glob
 import os
@@ -15,6 +16,7 @@ import pandas as pd
 from utils.df_converter import df_converter
 from utils.df_modifier import df_mod
 from utils.result_df_maker import result_df_maker
+from images import main_photo, map_image
 
 from database.models import Municipalities, Users, Subscriptions, Messages
 from email_checker import fetch_and_save_files
@@ -31,6 +33,19 @@ main_router = Router()
 
 class Form(StatesGroup):
     waiting_for_munic = State()
+
+
+
+@main_router.message(F.animation)
+async def echo_gif(message: Message):
+    file_id = message.animation.file_id
+    
+    await message.reply_animation(file_id)
+    
+@main_router.message(F.photo)
+async def get_photo_id(message: Message):
+    await message.reply(text=f"{message.photo[-1].file_id}")
+
 
 
 @main_router.message(CommandStart())
@@ -56,12 +71,29 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
 
     markup = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
-            text='Выбрать муниципальное образование', callback_data='choise_munic')]
+            text='Выбрать муниципальное образование', callback_data='choise_munic')],
+        [InlineKeyboardButton(
+            text='Подписаться на все обновления', callback_data='choise_all_munic')]
     ])
+
+    builder.adjust(1)
     builder.attach(InlineKeyboardBuilder.from_markup(markup))
 
-    await message.answer(text='Это бот по инцидентам МЧС\nЧтобы выбрать муниципальное образование нажмите'
-                         'на кнопку ниже или команду /subscribe', reply_markup=markup)
+    caption =   "Это бот по инцидентам МЧС. Чтобы подписаться на одно из муниципальных образований для получения новостей нажмите /subscribe \n"
+                
+    
+    await message.answer_photo(caption= caption, reply_markup=markup, photo=main_photo)
+
+
+
+@main_router.message(Command('help'))
+async def handle_waiting_for_choise(message: types.Message):
+    response = ('Основные команды:\n\n'
+                'выбрать муниципальное образований /subscribe \n'
+                'подписаться на все муниципальные обазования /subscribe_all \n'
+                'отказаться от всех подписок /cancel_subscriptions \n'
+                'посмотреть мои подписки /my_subscriptions')
+    await message.answer(response, parse_mode='HTML')
 
 
 @main_router.message(Command('subscribe'))
@@ -82,7 +114,11 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
     keyboard_1 = builder.as_markup(
         resize_keyboard=True, one_time_keyboard=True)
 
-    await message.answer(text='Выберите муниципальное образование', reply_markup=keyboard_1)
+    try:
+        await message.edit_caption(caption='Выберите муниципальное образование')
+    except:
+        await message.answer_photo(caption='Выберите муниципальное образование', reply_markup=keyboard_1, photo = map_image)
+    
     await state.set_state(Form.waiting_for_munic)
 
     await state.update_data(all_municipalities=[mun[1] for mun in all_municipalities])
@@ -143,6 +179,38 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
         await message.answer('Пожалуйста, выберите муниципальное образование из предложенных.')
 
 
+
+@main_router.message(Command('subscribe_all'))
+async def handle_sub_to_all_munic(message: types.Message, state: FSMContext, session: AsyncSession):
+    user_id = message.from_user.id
+    
+    subscribe_query = select(Municipalities.map_id, Municipalities.municipality_name).order_by(
+        Municipalities.municipality_name.asc())
+    result = await session.execute(subscribe_query)
+    all_municipalities = result.all()
+    map_ids = [item[0] for item in all_municipalities]
+    municipality_names  = [item[1] for item in all_municipalities]
+
+    
+    
+    subscribers_data = [
+        {
+            "user_id": user_id,
+            "map_id": map_id,
+            "municipality_name": municipality_name,
+            "subscribed_at": dt.now()
+        }
+        for map_id, municipality_name in zip(map_ids, municipality_names)
+    ]
+    add_subscriber_query = insert(Subscriptions).values(subscribers_data).on_conflict_do_nothing()
+    await session.execute(add_subscriber_query)
+    await session.commit()
+    
+    await message.answer('Вы подписались на все муниципальные образования🐿️')
+
+
+
+
 @main_router.message(Command('my_subscriptions'))
 async def handle_my_subscriptions(message: Message, state: FSMContext, session: AsyncSession):
 
@@ -155,17 +223,26 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
     all_cathegories = result.all()
 
     municipalities = [item[0] for item in all_cathegories]
-
+    
+    if municipalities == []:
+        response = 'У вас нет активных подписок, чтобы подписаться нажмите /subscriptions или нажмите /help если нужна помощь'
+        await message.answer(response)
+        return
+    
     message_text = "<b>Ваши подписки</b>\n" + "\n".join(municipalities)
 
-    await message.answer(message_text, parse_mode='HTML')
+    try:
+    
+        await message.answer_photo(caption=message_text, photo=main_photo)
+        
+    except:
+        await message.answer(message_text, parse_mode='HTML')
 
 
 @main_router.message(Command('cancel_subscriptions'))
 async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, session: AsyncSession):
     await state.clear()
     user_id = message.from_user.id
-
     delete_subs = delete(Subscriptions).where(Subscriptions.user_id == user_id)
     await session.execute(delete_subs)
     await session.commit()
@@ -196,8 +273,7 @@ async def check_news(message: Message, session: AsyncSession):
 
     msg_already_sent = check_result.all()
 
-    sent_user_ids = [row[0]
-                     for row in msg_already_sent] if msg_already_sent else []
+    sent_user_ids = [row[0] for row in msg_already_sent] if msg_already_sent else []
 
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')

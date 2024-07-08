@@ -1,11 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from database.models import Base
+from database.db_config import (user, password, host, port, database)
 
-host = "localhost"
-user = "rejoller"
-port = 5432
-database = "mchs_tg"
-password = "9205"
+
 DBURL=f'postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}'
 
 

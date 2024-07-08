@@ -14,3 +14,4 @@ db_conn.py
 *.csv
 bot.log
 /database/db_config.py
+images.py

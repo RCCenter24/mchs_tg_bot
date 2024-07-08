@@ -14,4 +14,4 @@ async def df_mod(conveted_name):
         '🔺' if x == 'Усиливается' else ""
     )
     
-    return df
+    return pd.DataFrame(df)

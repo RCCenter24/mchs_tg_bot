@@ -1,3 +1,4 @@
+import traceback
 from icecream import ic
 import logging
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
@@ -9,6 +10,8 @@ from aiogram import F, types, Router
 
 from glob import glob
 import os
+from xlsx2csv import Xlsx2csv
+
 
 from datetime import datetime as dt
 
@@ -23,7 +26,6 @@ from email_checker import fetch_and_save_files
 from bot import bot
 
 from sqlalchemy.exc import SQLAlchemyError
-
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
 from sqlalchemy.dialects.postgresql import insert
@@ -257,16 +259,24 @@ async def check_news(message: Message, session: AsyncSession):
     file_path = glob('saved_files/*инамика*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
     latest_file_path = file_path[0]
+    
     conveted_name = await df_converter(latest_file_path)
+        
+    
+    
     df = await df_mod(conveted_name)
 
-    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id)
+    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id, Subscriptions.municipality_name, Subscriptions.subscribed_at)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
 
     df_2 = pd.DataFrame(subscribers)
+    ic(df_2.head())
+    
+    
+    
     result_df = await result_df_maker(df, df_2)
-
+    ic(result_df.head())
     check_query = select(Messages.user_id).where(
         Messages.message_id == email_id)
     check_result = await session.execute(check_query)
@@ -277,46 +287,86 @@ async def check_news(message: Message, session: AsyncSession):
 
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
-
+        
         for user_id, group in grouped_df:
+            
             if user_id in sent_user_ids:
-                continue
+                continue 
             else:
                 response = ""
                 grouped_by_municipality = group.groupby('Район')
-
+                ic(grouped_by_municipality)
+                
                 for municipality, fires in grouped_by_municipality:
                     response += f"\n<b>{municipality}</b>\n\n"
-
+                    
                     for idx, row in fires.iterrows():
-                        response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️"
-                        f"{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
+                        
+                        
+                        response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
+                    
+                
+                
+                try:
+                    await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
+                    sent_message_query= insert(Messages).values(
+                            user_id=user_id,
+                            message_id=email_id,
+                            message_text=response,
+                            date_of_sending=dt.now()
+                        ).on_conflict_do_nothing()
+                    await session.execute(sent_message_query)
+                    await session.commit()
+                except SQLAlchemyError as db_err:
+                    logging.error(
+                        f'Ошибка базы данных при обработке пользователя {user_id}: {db_err}')
+                    await session.rollback()
+                except Exception as e:
+                    logging.error(
+                        f'Ошибка при отправке пользователю {user_id}: {str(e)}')
+             
+                
+            
+                            
+                        
+                        
 
-                user_ids = [user_id]
-                for i in user_ids:
-                    try:
-                        await bot.send_message(chat_id=i, text=response, parse_mode='HTML')
-                        async with session.begin():
-                            stmt = (
-                                insert(Subscriptions)
-                                .values(
-                                    user_id=i,
-                                    map_id=email_id,
-                                    municipality_name=response,
-                                    subscribed_at=dt.now()
-                                )
-                            ).on_conflict_do_nothing()
-                            await session.execute(stmt)
+                        
 
-                        await session.commit()
 
-                    except SQLAlchemyError as db_err:
-                        logging.error(
-                            f'Ошибка базы данных при обработке пользователя {i}: {db_err}')
-                        await session.rollback()
-                    except Exception as e:
-                        logging.error(
-                            f'Ошибка при отправке пользователю {i}: {str(e)}')
+
+@main_router.message(Command('check_news'))
+async def manual_check_news(message: Message, session: AsyncSession):
+
+    saved_files, subject, content, email_id = await fetch_and_save_files()
+    file_path = glob('saved_files/*инамика*.xlsx')
+    file_path.sort(key=os.path.getmtime, reverse=True)
+    latest_file_path = file_path[0]
+    conveted_name = await df_converter(latest_file_path)
+    df = await df_mod(conveted_name)
+    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id)
+    result = await session.execute(subscribers_query)
+    subscribers = result.all()
+
+    df_2 = pd.DataFrame(subscribers)
+    result_df = await result_df_maker(df, df_2)
+    ic(result_df)
+    
+    
+    grouped_by_municipality = result_df.groupby('Район')
+    response = ''
+    for municipality, fires in grouped_by_municipality:
+        response += f"\n<b>{municipality}</b>\n\n"
+
+        for idx, row in fires.iterrows():
+            response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️"
+            f"{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
+    
+    await message.answer(text=response, parse_mode='HTML')
+
+
+
+
 
 
 @main_router.message(Command('check_email'))

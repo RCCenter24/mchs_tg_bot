@@ -12,4 +12,4 @@ async def result_df_maker(df, df_2):
     result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']] = result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']]\
         .apply(lambda x: x.dt.strftime('%d.%m %H:%M'))
         
-    return result_df
+    return pd.DataFrame(result_df)

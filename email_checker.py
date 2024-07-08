@@ -1,4 +1,3 @@
-import logging
 import asyncio
 from email import message_from_bytes
 from email.header import decode_header
@@ -44,7 +43,6 @@ async def fetch_and_save_files():
     subject = None
     content = None
 
-
     num = email_nums[-1]
     result, email_data = await asyncio.to_thread(mail.fetch, num, '(RFC822)')
     raw_email = email_data[0][1]
@@ -53,41 +51,41 @@ async def fetch_and_save_files():
     subject_header = msg["Subject"]
     if subject_header is not None:
         decoded_subject = decode_header(subject_header)[0][0]
-        subject = decoded_subject.decode() if isinstance(decoded_subject, bytes) else decoded_subject
+        subject = decoded_subject.decode() if isinstance(
+            decoded_subject, bytes) else decoded_subject
     else:
         subject = ""
-    content = await extract_content(msg)  # Асинхронный вызов
+    content = await extract_content(msg)
 
     global global_email_id
     email_id = msg["Message-ID"]
-    
+
     global_email_id = email_id
 
     if msg.is_multipart():
         text_part_found = False
         for part in msg.walk():
-            logging(f"Processing part with Content-Type: {part.get_content_type()}")
 
             content_type = part.get_content_type()
             content_disposition = part.get("Content-Disposition")
             if content_disposition and "attachment" in content_disposition:
                 filename = part.get_filename()
                 if filename:
-                    logging(f"Found attachment: {filename}")
-                    filename = await decode_file_name(filename) 
-                    logging(f"Decoded filename: {filename}")
+
+                    filename = await decode_file_name(filename)
+
                     filepath = os.path.join(SAVE_DIR, filename)
-                    logging(f"File path: {filepath}")
+
                     await save_file(part, filename)
 
                     saved_files.append(filepath)
-                    logging(f"Processing attachment: {filename}")
+
             elif not text_part_found and content_type in ['text/plain', 'text/html']:
                 if content_disposition is None or "attachment" not in content_disposition:
-                    logging("Extracting text content")
+
                     content = part.get_payload(decode=True).decode()
                     text_part_found = True
 
     await asyncio.to_thread(mail.logout)
-    
+
     return saved_files, subject, content, email_id

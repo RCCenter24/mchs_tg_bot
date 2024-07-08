@@ -10,7 +10,6 @@ from glob import glob
 import os
 
 from datetime import datetime as dt
-from icecream import ic
 
 import pandas as pd
 from utils.df_converter import df_converter
@@ -20,11 +19,10 @@ from utils.result_df_maker import result_df_maker
 from database.models import Municipalities, Users, Subscriptions, Messages
 from email_checker import fetch_and_save_files
 from bot import bot
-from config import EMAIL, PASSWORD, SAVE_DIR
+
 from sqlalchemy.exc import SQLAlchemyError
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.engine import session_maker
 from sqlalchemy import select, delete
 from sqlalchemy.dialects.postgresql import insert
 
@@ -42,7 +40,7 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
     first_name = message.from_user.first_name
     last_name = message.from_user.last_name
     username = message.from_user.username
-    
+
     add_user_query = insert(Users).values(
         user_id=user_id,
         user_name=first_name,
@@ -50,7 +48,7 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
         username=username,
         joined_at=dt.now()
     ).on_conflict_do_nothing()
-    
+
     await session.execute(add_user_query)
     await session.commit()
 
@@ -62,13 +60,13 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
     ])
     builder.attach(InlineKeyboardBuilder.from_markup(markup))
 
-    await message.answer(text=f'Это бот по инцидентам МЧС\nЧтобы выбрать муниципальное образование нажмите'
+    await message.answer(text='Это бот по инцидентам МЧС\nЧтобы выбрать муниципальное образование нажмите'
                          'на кнопку ниже или команду /subscribe', reply_markup=markup)
 
 
 @main_router.message(Command('subscribe'))
 async def handle_waiting_for_choise(message: types.Message, state: FSMContext, session: AsyncSession):
-    
+
     subscribe_query = select(Municipalities.map_id, Municipalities.municipality_name).order_by(
         Municipalities.municipality_name.asc())
     result = await session.execute(subscribe_query)
@@ -111,7 +109,7 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
         result = await session.execute(subscribe_check_query)
         subscription_exists = result.first()
 
-        if subscription_exists != None:
+        if subscription_exists is not None:
             await message.answer('Вы уже подписаны на это муниципальное образование.')
         else:
             subquery = select(Municipalities.map_id).where(
@@ -123,10 +121,10 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
                 municipality_name=selected_mun,
                 subscribed_at=dt.now()
             ).on_conflict_do_nothing()
-            
+
             await session.execute(add_subscriber_query)
             await session.commit()
-            
+
             query_get_subs = select(Subscriptions.municipality_name).where(
                 Subscriptions.user_id == user_id)
 
@@ -146,7 +144,7 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
 
 
 @main_router.message(Command('my_subscriptions'))
-async def handle_waiting_for_choise(message: Message, state: FSMContext, session: AsyncSession):
+async def handle_my_subscriptions(message: Message, state: FSMContext, session: AsyncSession):
 
     await state.clear()
     user_id = message.from_user.id
@@ -164,7 +162,7 @@ async def handle_waiting_for_choise(message: Message, state: FSMContext, session
 
 
 @main_router.message(Command('cancel_subscriptions'))
-async def handle_waiting_for_choise(message: Message, state: FSMContext, session: AsyncSession):
+async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, session: AsyncSession):
     await state.clear()
     user_id = message.from_user.id
 
@@ -177,14 +175,14 @@ async def handle_waiting_for_choise(message: Message, state: FSMContext, session
 
 @main_router.message(Command('check_news'))
 async def check_news(message: Message, session: AsyncSession):
-    
+
     saved_files, subject, content, email_id = await fetch_and_save_files()
     file_path = glob('saved_files/*инамика*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
     latest_file_path = file_path[0]
     conveted_name = await df_converter(latest_file_path)
     df = await df_mod(conveted_name)
-    
+
     subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
@@ -195,11 +193,11 @@ async def check_news(message: Message, session: AsyncSession):
     check_query = select(Messages.user_id).where(
         Messages.message_id == email_id)
     check_result = await session.execute(check_query)
-    
-    
+
     msg_already_sent = check_result.all()
 
-    sent_user_ids = [row[0] for row in msg_already_sent] if msg_already_sent else []
+    sent_user_ids = [row[0]
+                     for row in msg_already_sent] if msg_already_sent else []
 
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
@@ -215,7 +213,8 @@ async def check_news(message: Message, session: AsyncSession):
                     response += f"\n<b>{municipality}</b>\n\n"
 
                     for idx, row in fires.iterrows():
-                        response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
+                        response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️"
+                        f"{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
 
                 user_ids = [user_id]
                 for i in user_ids:
@@ -232,7 +231,7 @@ async def check_news(message: Message, session: AsyncSession):
                                 )
                             ).on_conflict_do_nothing()
                             await session.execute(stmt)
-                            
+
                         await session.commit()
 
                     except SQLAlchemyError as db_err:

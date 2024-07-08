@@ -6876,3 +6876,61 @@ TypeError: 'module' object is not callable
 2024-07-08 11:31:12,897 - WARNING - Received SIGINT signal
 2024-07-08 11:31:12,900 - INFO - Polling stopped for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
 2024-07-08 11:31:12,900 - INFO - Polling stopped
+2024-07-08 11:33:50,536 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 11:33:50,537 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 11:33:50,537 - INFO - Scheduler started
+2024-07-08 11:33:50,537 - INFO - Start polling
+2024-07-08 11:33:51,004 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:33:56,538 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:34:02 +07)" (scheduled at 2024-07-08 11:33:56.536237+07:00)
+2024-07-08 11:33:57,194 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:33:57,197 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:34:02 +07)" executed successfully
+2024-07-08 11:33:59,025 - INFO - Received message from 964635576: /subscribe
+2024-07-08 11:33:59,441 - INFO - Update id=792257384 is handled. Duration 432 ms by bot id=6235250605
+2024-07-08 11:34:02,312 - INFO - Received message from 964635576: Назаровский район
+2024-07-08 11:34:02,471 - INFO - Update id=792257385 is handled. Duration 160 ms by bot id=6235250605
+2024-07-08 11:34:02,537 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:34:08 +07)" (scheduled at 2024-07-08 11:34:02.536237+07:00)
+2024-07-08 11:34:03,241 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:34:03,242 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:34:08 +07)" executed successfully
+2024-07-08 11:34:07,403 - WARNING - Received SIGINT signal
+2024-07-08 11:34:07,406 - INFO - Polling stopped for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:34:07,406 - INFO - Polling stopped
+2024-07-08 11:39:47,841 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 11:39:47,842 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 11:39:47,842 - INFO - Scheduler started
+2024-07-08 11:39:47,842 - INFO - Start polling
+2024-07-08 11:39:48,171 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:39:49,481 - WARNING - Received SIGINT signal
+2024-07-08 11:39:49,482 - INFO - Polling stopped for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:39:49,482 - INFO - Polling stopped
+2024-07-08 11:43:07,916 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 11:43:07,917 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 11:43:07,918 - INFO - Scheduler started
+2024-07-08 11:43:07,918 - INFO - Start polling
+2024-07-08 11:43:08,354 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:43:13,920 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:43:19 +07)" (scheduled at 2024-07-08 11:43:13.915793+07:00)
+2024-07-08 11:46:22,445 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 11:46:22,446 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 11:46:22,446 - INFO - Scheduler started
+2024-07-08 11:46:22,447 - INFO - Start polling
+2024-07-08 11:46:22,867 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:46:28,448 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:46:34 +07)" (scheduled at 2024-07-08 11:46:28.444743+07:00)
+2024-07-08 11:48:21,059 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 11:48:21,061 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 11:48:21,061 - INFO - Scheduler started
+2024-07-08 11:48:21,062 - INFO - Start polling
+2024-07-08 11:48:21,381 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:48:27,063 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:48:33 +07)" (scheduled at 2024-07-08 11:48:27.059194+07:00)
+2024-07-08 11:48:38,013 - ERROR - Ошибка при отправке пользователю 811983691: Telegram server says - Bad Request: chat not found
+2024-07-08 11:48:55,003 - WARNING - Execution of job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:48:33 +07)" skipped: maximum number of running instances reached (1)

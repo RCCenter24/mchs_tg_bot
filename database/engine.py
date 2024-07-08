@@ -1,8 +1,12 @@
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from database.models import Base
 
-
-DBURL='postgresql+asyncpg://rejoller:9205@localhost:5432/mchs_tg'
+host = "localhost"
+user = "rejoller"
+port = 5432
+database = "mchs_tg"
+password = "9205"
+DBURL=f'postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}'
 
 
 engine = create_async_engine(DBURL, echo=False)

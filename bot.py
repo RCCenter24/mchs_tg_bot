@@ -35,7 +35,6 @@ async def on_startup():
 async def main():
     setup_logging()
     dp = Dispatcher(storage = storage)
-    
     from handlers import main_router
     from callbacks import main_router
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
@@ -45,7 +44,7 @@ async def main():
     
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     #scheduler.add_job(on_startup, 'cron', hour=0, minute=1)
-    scheduler.add_job(on_startup, 'interval', minutes=1)
+    scheduler.add_job(on_startup, 'interval', minutes=0.1)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
 
@@ -53,5 +52,4 @@ async def main():
     await dp.start_polling(bot, skip_updates=True)
 
 if __name__ == "__main__":
-    #logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     asyncio.run(main())

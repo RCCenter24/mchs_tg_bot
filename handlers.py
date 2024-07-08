@@ -13,7 +13,9 @@ from datetime import datetime as dt
 from icecream import ic
 
 import pandas as pd
-from xlsx2csv import Xlsx2csv
+from utils.df_converter import df_converter
+from utils.df_modifier import df_mod
+from utils.result_df_maker import result_df_maker
 
 from database.models import Municipalities, Users, Subscriptions, Messages
 from email_checker import fetch_and_save_files
@@ -66,9 +68,9 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
 
 @main_router.message(Command('subscribe'))
 async def handle_waiting_for_choise(message: types.Message, state: FSMContext, session: AsyncSession):
+    
     subscribe_query = select(Municipalities.map_id, Municipalities.municipality_name).order_by(
         Municipalities.municipality_name.asc())
-
     result = await session.execute(subscribe_query)
     all_municipalities = result.all()
 
@@ -92,7 +94,6 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
 async def subscribe(message: types.Message, state: FSMContext, session: AsyncSession):
     selected_mun = message.text
     user_id = message.from_user.id
-
     data = await state.get_data()
     if selected_mun == "Отмена":
         await state.clear()
@@ -100,7 +101,6 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
         return
 
     all_municipalities = data.get('all_municipalities', [])
-
     if selected_mun in all_municipalities:
 
         subscribe_check_query = select(Subscriptions.map_id).where(
@@ -109,24 +109,24 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
         )
 
         result = await session.execute(subscribe_check_query)
-
         subscription_exists = result.first()
 
         if subscription_exists != None:
             await message.answer('Вы уже подписаны на это муниципальное образование.')
         else:
-
             subquery = select(Municipalities.map_id).where(
                 Municipalities.municipality_name == selected_mun).scalar_subquery()
 
-            session.add(Subscriptions(
+            add_subscriber_query = insert(Subscriptions).values(
                 user_id=user_id,
                 map_id=subquery.scalar_subquery(),
                 municipality_name=selected_mun,
                 subscribed_at=dt.now()
-            ))
-
+            ).on_conflict_do_nothing()
+            
+            await session.execute(add_subscriber_query)
             await session.commit()
+            
             query_get_subs = select(Subscriptions.municipality_name).where(
                 Subscriptions.user_id == user_id)
 
@@ -177,59 +177,29 @@ async def handle_waiting_for_choise(message: Message, state: FSMContext, session
 
 @main_router.message(Command('check_news'))
 async def check_news(message: Message, session: AsyncSession):
+    
     saved_files, subject, content, email_id = await fetch_and_save_files()
-
     file_path = glob('saved_files/*инамика*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
-
     latest_file_path = file_path[0]
-
-    conveted_name = latest_file_path.split('.')[0]
-
-    try:
-        Xlsx2csv(latest_file_path,
-                 outputencoding="utf-8").convert(f"{conveted_name}.csv")
-
-    except Exception as e:
-        logging.error(f'Ошибка в конвертировании check_news', str(e))
-
-    df = pd.read_csv(f"{conveted_name}.csv")
-    date_format = '%d.%m.%Y %H:%M:%S'
-
-    df['icon_status'] = ""
-    df['icon_status'] = df['Статус'].apply(
-        lambda x: '🔴' if x == 'Продолжается' else
-        '🟢' if x == 'Ликвидирован' else
-        '🟠' if x == 'Частично локализован' else
-        '🟡' if x == 'Локализован' else
-        '❌' if x == 'Закрыт по решению КЧП' else
-        '⬇️' if x == 'Ослабевает' else
-        '🔺' if x == 'Усиливается' else ""
-    )
-
+    conveted_name = await df_converter(latest_file_path)
+    df = await df_mod(conveted_name)
+    
     subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
 
     df_2 = pd.DataFrame(subscribers)
-    result_df = df.merge(df_2, left_on='ID Карты', right_on='map_id')
-
-    result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']] = result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']]\
-        .apply(pd.to_datetime, format=date_format, dayfirst=True, errors='coerce')
-
-    result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']] = result_df[['Дата ликвидации пожара', 'Дата изменения данных', 'Актуальность данных', 'Дата возникновения пожара']]\
-        .apply(lambda x: x.dt.strftime('%d.%m %H:%M'))
+    result_df = await result_df_maker(df, df_2)
 
     check_query = select(Messages.user_id).where(
         Messages.message_id == email_id)
-
     check_result = await session.execute(check_query)
     
     
     msg_already_sent = check_result.all()
 
-    sent_user_ids = [row[0]
-                     for row in msg_already_sent] if msg_already_sent else []
+    sent_user_ids = [row[0] for row in msg_already_sent] if msg_already_sent else []
 
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
@@ -260,7 +230,7 @@ async def check_news(message: Message, session: AsyncSession):
                                     municipality_name=response,
                                     subscribed_at=dt.now()
                                 )
-                            )
+                            ).on_conflict_do_nothing()
                             await session.execute(stmt)
                             
                         await session.commit()
@@ -268,7 +238,6 @@ async def check_news(message: Message, session: AsyncSession):
                     except SQLAlchemyError as db_err:
                         logging.error(
                             f'Ошибка базы данных при обработке пользователя {i}: {db_err}')
-
                         await session.rollback()
                     except Exception as e:
                         logging.error(

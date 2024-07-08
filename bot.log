@@ -5440,3 +5440,1439 @@ client_session: <aiohttp.client.ClientSession object at 0x14570bef0>
 2024-07-08 00:28:28,990 - INFO - Polling stopped
 2024-07-08 00:28:29,405 - ERROR - Unclosed client session
 client_session: <aiohttp.client.ClientSession object at 0x13dc06e40>
+2024-07-08 10:29:16,540 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 10:29:16,542 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 10:29:16,542 - INFO - Scheduler started
+2024-07-08 10:29:16,543 - INFO - Start polling
+2024-07-08 10:29:16,954 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:29:38,157 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 10:29:38,159 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 10:29:38,159 - INFO - Scheduler started
+2024-07-08 10:29:38,159 - INFO - Start polling
+2024-07-08 10:29:38,490 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:29:44,159 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:29:50 +07)" (scheduled at 2024-07-08 10:29:44.157172+07:00)
+2024-07-08 10:30:03,624 - ERROR - Ошибка при отправке пользователю 811983691: Telegram server says - Bad Request: chat not found
+2024-07-08 10:30:38,398 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 10:30:38,400 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 10:30:38,400 - INFO - Scheduler started
+2024-07-08 10:30:38,401 - INFO - Start polling
+2024-07-08 10:30:38,722 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:30:44,400 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:30:50 +07)" (scheduled at 2024-07-08 10:30:44.398429+07:00)
+2024-07-08 10:51:20,528 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 10:51:20,529 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 10:51:20,529 - INFO - Scheduler started
+2024-07-08 10:51:20,529 - INFO - Start polling
+2024-07-08 10:51:20,968 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:51:26,534 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:51:32 +07)" (scheduled at 2024-07-08 10:51:26.528379+07:00)
+2024-07-08 10:51:28,450 - ERROR - Ошибка при отправке пользователю 811983691: Telegram server says - Bad Request: chat not found
+2024-07-08 10:51:28,561 - ERROR - Ошибка при отправке пользователю 901904618: Telegram server says - Bad Request: chat not found
+2024-07-08 10:51:28,563 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:51:32 +07)" executed successfully
+2024-07-08 10:51:32,532 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:51:38 +07)" (scheduled at 2024-07-08 10:51:32.528379+07:00)
+2024-07-08 10:51:34,652 - ERROR - Ошибка при отправке пользователю 811983691: Telegram server says - Bad Request: chat not found
+2024-07-08 10:51:34,826 - ERROR - Ошибка при отправке пользователю 901904618: Telegram server says - Bad Request: chat not found
+2024-07-08 10:51:34,827 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:51:38 +07)" executed successfully
+2024-07-08 10:51:37,562 - WARNING - Received SIGINT signal
+2024-07-08 10:51:37,563 - INFO - Polling stopped for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:51:37,563 - INFO - Polling stopped
+2024-07-08 10:51:37,962 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x11f59eb40>
+2024-07-08 10:51:37,962 - ERROR - Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x11f5d8110>, 366952.293434)]']
+connector: <aiohttp.connector.TCPConnector object at 0x10f646150>
+2024-07-08 10:53:50,707 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 10:53:50,708 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 10:53:50,708 - INFO - Scheduler started
+2024-07-08 10:53:50,708 - INFO - Start polling
+2024-07-08 10:53:51,107 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:53:56,709 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:54:02 +07)" (scheduled at 2024-07-08 10:53:56.707739+07:00)
+2024-07-08 10:53:57,369 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 89, in fetch_and_save_files
+    logging("Extracting text content")
+TypeError: 'module' object is not callable
+2024-07-08 10:53:57,373 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:54:02 +07)" executed successfully
+2024-07-08 10:54:02,709 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:54:08 +07)" (scheduled at 2024-07-08 10:54:02.707739+07:00)
+2024-07-08 10:54:03,296 - WARNING - Received SIGINT signal
+2024-07-08 10:54:03,297 - INFO - Polling stopped for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:54:03,297 - INFO - Polling stopped
+2024-07-08 10:54:03,359 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 89, in fetch_and_save_files
+    logging("Extracting text content")
+TypeError: 'module' object is not callable
+2024-07-08 10:54:03,361 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:54:08 +07)" executed successfully
+2024-07-08 10:55:16,494 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-07-08 10:55:16,494 - INFO - Added job "on_startup" to job store "default"
+2024-07-08 10:55:16,494 - INFO - Scheduler started
+2024-07-08 10:55:16,495 - INFO - Start polling
+2024-07-08 10:55:16,951 - INFO - Run polling for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 10:55:22,102 - INFO - Received message from 964635576: /subscribe
+2024-07-08 10:55:22,489 - INFO - Update id=792257371 is handled. Duration 396 ms by bot id=6235250605
+2024-07-08 10:55:22,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:28 +07)" (scheduled at 2024-07-08 10:55:22.494076+07:00)
+2024-07-08 10:55:23,143 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:23,145 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:28 +07)" executed successfully
+2024-07-08 10:55:25,102 - INFO - Received message from 964635576: Уярский район
+2024-07-08 10:55:25,311 - INFO - Update id=792257372 is handled. Duration 210 ms by bot id=6235250605
+2024-07-08 10:55:28,497 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:34 +07)" (scheduled at 2024-07-08 10:55:28.494076+07:00)
+2024-07-08 10:55:29,248 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:29,252 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:34 +07)" executed successfully
+2024-07-08 10:55:34,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:40 +07)" (scheduled at 2024-07-08 10:55:34.494076+07:00)
+2024-07-08 10:55:35,164 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:35,166 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:40 +07)" executed successfully
+2024-07-08 10:55:40,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:46 +07)" (scheduled at 2024-07-08 10:55:40.494076+07:00)
+2024-07-08 10:55:41,181 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:41,184 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:46 +07)" executed successfully
+2024-07-08 10:55:46,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:52 +07)" (scheduled at 2024-07-08 10:55:46.494076+07:00)
+2024-07-08 10:55:47,126 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:47,129 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:52 +07)" executed successfully
+2024-07-08 10:55:52,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:58 +07)" (scheduled at 2024-07-08 10:55:52.494076+07:00)
+2024-07-08 10:55:53,124 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:53,128 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:55:58 +07)" executed successfully
+2024-07-08 10:55:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:04 +07)" (scheduled at 2024-07-08 10:55:58.494076+07:00)
+2024-07-08 10:55:59,145 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:55:59,148 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:04 +07)" executed successfully
+2024-07-08 10:56:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:10 +07)" (scheduled at 2024-07-08 10:56:04.494076+07:00)
+2024-07-08 10:56:05,166 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:05,168 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:10 +07)" executed successfully
+2024-07-08 10:56:10,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:16 +07)" (scheduled at 2024-07-08 10:56:10.494076+07:00)
+2024-07-08 10:56:11,093 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:11,096 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:16 +07)" executed successfully
+2024-07-08 10:56:16,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:22 +07)" (scheduled at 2024-07-08 10:56:16.494076+07:00)
+2024-07-08 10:56:17,231 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:17,234 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:22 +07)" executed successfully
+2024-07-08 10:56:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:28 +07)" (scheduled at 2024-07-08 10:56:22.494076+07:00)
+2024-07-08 10:56:23,111 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:23,115 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:28 +07)" executed successfully
+2024-07-08 10:56:28,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:34 +07)" (scheduled at 2024-07-08 10:56:28.494076+07:00)
+2024-07-08 10:56:29,148 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:29,151 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:34 +07)" executed successfully
+2024-07-08 10:56:34,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:40 +07)" (scheduled at 2024-07-08 10:56:34.494076+07:00)
+2024-07-08 10:56:35,127 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:35,130 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:40 +07)" executed successfully
+2024-07-08 10:56:40,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:46 +07)" (scheduled at 2024-07-08 10:56:40.494076+07:00)
+2024-07-08 10:56:41,088 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:41,090 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:46 +07)" executed successfully
+2024-07-08 10:56:46,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:52 +07)" (scheduled at 2024-07-08 10:56:46.494076+07:00)
+2024-07-08 10:56:47,190 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:47,193 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:52 +07)" executed successfully
+2024-07-08 10:56:52,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:58 +07)" (scheduled at 2024-07-08 10:56:52.494076+07:00)
+2024-07-08 10:56:53,199 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:53,201 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:56:58 +07)" executed successfully
+2024-07-08 10:56:58,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:04 +07)" (scheduled at 2024-07-08 10:56:58.494076+07:00)
+2024-07-08 10:56:59,193 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:56:59,195 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:04 +07)" executed successfully
+2024-07-08 10:57:04,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:10 +07)" (scheduled at 2024-07-08 10:57:04.494076+07:00)
+2024-07-08 10:57:05,160 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:05,161 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:10 +07)" executed successfully
+2024-07-08 10:57:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:16 +07)" (scheduled at 2024-07-08 10:57:10.494076+07:00)
+2024-07-08 10:57:11,169 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:11,172 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:16 +07)" executed successfully
+2024-07-08 10:57:16,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:22 +07)" (scheduled at 2024-07-08 10:57:16.494076+07:00)
+2024-07-08 10:57:17,097 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:17,100 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:22 +07)" executed successfully
+2024-07-08 10:57:22,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:28 +07)" (scheduled at 2024-07-08 10:57:22.494076+07:00)
+2024-07-08 10:57:23,187 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:23,190 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:28 +07)" executed successfully
+2024-07-08 10:57:28,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:34 +07)" (scheduled at 2024-07-08 10:57:28.494076+07:00)
+2024-07-08 10:57:29,122 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:29,123 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:34 +07)" executed successfully
+2024-07-08 10:57:34,510 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:40 +07)" (scheduled at 2024-07-08 10:57:34.494076+07:00)
+2024-07-08 10:57:35,180 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:35,181 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:40 +07)" executed successfully
+2024-07-08 10:57:40,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:46 +07)" (scheduled at 2024-07-08 10:57:40.494076+07:00)
+2024-07-08 10:57:41,185 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:41,186 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:46 +07)" executed successfully
+2024-07-08 10:57:46,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:52 +07)" (scheduled at 2024-07-08 10:57:46.494076+07:00)
+2024-07-08 10:57:47,184 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:47,187 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:52 +07)" executed successfully
+2024-07-08 10:57:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:58 +07)" (scheduled at 2024-07-08 10:57:52.494076+07:00)
+2024-07-08 10:57:53,148 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:53,150 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:57:58 +07)" executed successfully
+2024-07-08 10:57:58,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:04 +07)" (scheduled at 2024-07-08 10:57:58.494076+07:00)
+2024-07-08 10:57:59,098 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:57:59,101 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:04 +07)" executed successfully
+2024-07-08 10:58:04,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:10 +07)" (scheduled at 2024-07-08 10:58:04.494076+07:00)
+2024-07-08 10:58:05,101 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:05,104 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:10 +07)" executed successfully
+2024-07-08 10:58:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:16 +07)" (scheduled at 2024-07-08 10:58:10.494076+07:00)
+2024-07-08 10:58:11,144 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:11,146 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:16 +07)" executed successfully
+2024-07-08 10:58:16,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:22 +07)" (scheduled at 2024-07-08 10:58:16.494076+07:00)
+2024-07-08 10:58:17,144 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:17,147 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:22 +07)" executed successfully
+2024-07-08 10:58:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:28 +07)" (scheduled at 2024-07-08 10:58:22.494076+07:00)
+2024-07-08 10:58:23,105 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:23,108 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:28 +07)" executed successfully
+2024-07-08 10:58:28,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:34 +07)" (scheduled at 2024-07-08 10:58:28.494076+07:00)
+2024-07-08 10:58:29,153 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:29,155 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:34 +07)" executed successfully
+2024-07-08 10:58:34,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:40 +07)" (scheduled at 2024-07-08 10:58:34.494076+07:00)
+2024-07-08 10:58:35,172 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:35,173 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:40 +07)" executed successfully
+2024-07-08 10:58:40,497 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:46 +07)" (scheduled at 2024-07-08 10:58:40.494076+07:00)
+2024-07-08 10:58:41,094 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:41,096 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:46 +07)" executed successfully
+2024-07-08 10:58:46,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:52 +07)" (scheduled at 2024-07-08 10:58:46.494076+07:00)
+2024-07-08 10:58:47,096 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:47,097 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:52 +07)" executed successfully
+2024-07-08 10:58:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:58 +07)" (scheduled at 2024-07-08 10:58:52.494076+07:00)
+2024-07-08 10:58:53,149 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:53,151 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:58:58 +07)" executed successfully
+2024-07-08 10:58:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:04 +07)" (scheduled at 2024-07-08 10:58:58.494076+07:00)
+2024-07-08 10:58:59,139 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:58:59,140 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:04 +07)" executed successfully
+2024-07-08 10:59:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:10 +07)" (scheduled at 2024-07-08 10:59:04.494076+07:00)
+2024-07-08 10:59:05,157 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:05,158 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:10 +07)" executed successfully
+2024-07-08 10:59:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:16 +07)" (scheduled at 2024-07-08 10:59:10.494076+07:00)
+2024-07-08 10:59:11,120 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:11,123 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:16 +07)" executed successfully
+2024-07-08 10:59:16,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:22 +07)" (scheduled at 2024-07-08 10:59:16.494076+07:00)
+2024-07-08 10:59:17,164 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:17,166 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:22 +07)" executed successfully
+2024-07-08 10:59:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:28 +07)" (scheduled at 2024-07-08 10:59:22.494076+07:00)
+2024-07-08 10:59:23,174 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:23,176 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:28 +07)" executed successfully
+2024-07-08 10:59:28,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:34 +07)" (scheduled at 2024-07-08 10:59:28.494076+07:00)
+2024-07-08 10:59:29,194 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:29,197 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:34 +07)" executed successfully
+2024-07-08 10:59:34,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:40 +07)" (scheduled at 2024-07-08 10:59:34.494076+07:00)
+2024-07-08 10:59:35,145 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:35,148 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:40 +07)" executed successfully
+2024-07-08 10:59:40,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:46 +07)" (scheduled at 2024-07-08 10:59:40.494076+07:00)
+2024-07-08 10:59:41,132 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:41,134 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:46 +07)" executed successfully
+2024-07-08 10:59:46,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:52 +07)" (scheduled at 2024-07-08 10:59:46.494076+07:00)
+2024-07-08 10:59:47,194 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:47,195 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:52 +07)" executed successfully
+2024-07-08 10:59:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:58 +07)" (scheduled at 2024-07-08 10:59:52.494076+07:00)
+2024-07-08 10:59:53,128 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:53,130 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 10:59:58 +07)" executed successfully
+2024-07-08 10:59:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:04 +07)" (scheduled at 2024-07-08 10:59:58.494076+07:00)
+2024-07-08 10:59:59,187 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 10:59:59,189 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:04 +07)" executed successfully
+2024-07-08 11:00:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:10 +07)" (scheduled at 2024-07-08 11:00:04.494076+07:00)
+2024-07-08 11:00:05,151 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:05,153 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:10 +07)" executed successfully
+2024-07-08 11:00:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:16 +07)" (scheduled at 2024-07-08 11:00:10.494076+07:00)
+2024-07-08 11:00:11,108 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:11,109 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:16 +07)" executed successfully
+2024-07-08 11:00:16,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:22 +07)" (scheduled at 2024-07-08 11:00:16.494076+07:00)
+2024-07-08 11:00:17,148 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:17,149 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:22 +07)" executed successfully
+2024-07-08 11:00:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:28 +07)" (scheduled at 2024-07-08 11:00:22.494076+07:00)
+2024-07-08 11:00:23,112 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:23,113 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:28 +07)" executed successfully
+2024-07-08 11:00:28,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:34 +07)" (scheduled at 2024-07-08 11:00:28.494076+07:00)
+2024-07-08 11:00:29,150 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:29,151 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:34 +07)" executed successfully
+2024-07-08 11:00:34,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:40 +07)" (scheduled at 2024-07-08 11:00:34.494076+07:00)
+2024-07-08 11:00:35,115 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:35,118 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:40 +07)" executed successfully
+2024-07-08 11:00:40,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:46 +07)" (scheduled at 2024-07-08 11:00:40.494076+07:00)
+2024-07-08 11:00:41,144 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:41,149 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:46 +07)" executed successfully
+2024-07-08 11:00:46,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:52 +07)" (scheduled at 2024-07-08 11:00:46.494076+07:00)
+2024-07-08 11:00:47,115 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:47,117 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:52 +07)" executed successfully
+2024-07-08 11:00:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:58 +07)" (scheduled at 2024-07-08 11:00:52.494076+07:00)
+2024-07-08 11:00:53,139 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:53,141 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:00:58 +07)" executed successfully
+2024-07-08 11:00:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:04 +07)" (scheduled at 2024-07-08 11:00:58.494076+07:00)
+2024-07-08 11:00:59,107 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:00:59,109 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:04 +07)" executed successfully
+2024-07-08 11:01:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:10 +07)" (scheduled at 2024-07-08 11:01:04.494076+07:00)
+2024-07-08 11:01:05,116 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:05,119 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:10 +07)" executed successfully
+2024-07-08 11:01:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:16 +07)" (scheduled at 2024-07-08 11:01:10.494076+07:00)
+2024-07-08 11:01:11,194 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:11,196 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:16 +07)" executed successfully
+2024-07-08 11:01:16,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:22 +07)" (scheduled at 2024-07-08 11:01:16.494076+07:00)
+2024-07-08 11:01:17,106 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:17,108 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:22 +07)" executed successfully
+2024-07-08 11:01:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:28 +07)" (scheduled at 2024-07-08 11:01:22.494076+07:00)
+2024-07-08 11:01:23,130 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:23,131 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:28 +07)" executed successfully
+2024-07-08 11:01:28,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:34 +07)" (scheduled at 2024-07-08 11:01:28.494076+07:00)
+2024-07-08 11:01:29,110 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:29,112 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:34 +07)" executed successfully
+2024-07-08 11:01:34,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:40 +07)" (scheduled at 2024-07-08 11:01:34.494076+07:00)
+2024-07-08 11:01:35,175 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:35,176 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:40 +07)" executed successfully
+2024-07-08 11:01:40,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:46 +07)" (scheduled at 2024-07-08 11:01:40.494076+07:00)
+2024-07-08 11:01:41,137 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:41,138 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:46 +07)" executed successfully
+2024-07-08 11:01:46,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:52 +07)" (scheduled at 2024-07-08 11:01:46.494076+07:00)
+2024-07-08 11:01:47,156 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:47,157 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:52 +07)" executed successfully
+2024-07-08 11:01:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:58 +07)" (scheduled at 2024-07-08 11:01:52.494076+07:00)
+2024-07-08 11:01:53,116 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:53,117 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:01:58 +07)" executed successfully
+2024-07-08 11:01:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:04 +07)" (scheduled at 2024-07-08 11:01:58.494076+07:00)
+2024-07-08 11:01:59,211 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:01:59,212 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:04 +07)" executed successfully
+2024-07-08 11:02:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:10 +07)" (scheduled at 2024-07-08 11:02:04.494076+07:00)
+2024-07-08 11:02:05,109 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:02:05,110 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:10 +07)" executed successfully
+2024-07-08 11:02:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:16 +07)" (scheduled at 2024-07-08 11:02:10.494076+07:00)
+2024-07-08 11:02:11,135 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:02:11,136 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:16 +07)" executed successfully
+2024-07-08 11:02:16,498 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:22 +07)" (scheduled at 2024-07-08 11:02:16.494076+07:00)
+2024-07-08 11:02:16,503 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:16,508 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:22 +07)" executed successfully
+2024-07-08 11:02:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:28 +07)" (scheduled at 2024-07-08 11:02:22.494076+07:00)
+2024-07-08 11:02:22,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:22,498 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:28 +07)" executed successfully
+2024-07-08 11:02:28,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:34 +07)" (scheduled at 2024-07-08 11:02:28.494076+07:00)
+2024-07-08 11:02:28,498 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:28,500 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:34 +07)" executed successfully
+2024-07-08 11:02:34,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:40 +07)" (scheduled at 2024-07-08 11:02:34.494076+07:00)
+2024-07-08 11:02:34,496 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:34,497 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:40 +07)" executed successfully
+2024-07-08 11:02:40,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:46 +07)" (scheduled at 2024-07-08 11:02:40.494076+07:00)
+2024-07-08 11:02:40,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:40,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:46 +07)" executed successfully
+2024-07-08 11:02:46,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:52 +07)" (scheduled at 2024-07-08 11:02:46.494076+07:00)
+2024-07-08 11:02:46,498 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:46,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:52 +07)" executed successfully
+2024-07-08 11:02:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:58 +07)" (scheduled at 2024-07-08 11:02:52.494076+07:00)
+2024-07-08 11:02:52,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:52,500 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:02:58 +07)" executed successfully
+2024-07-08 11:02:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:04 +07)" (scheduled at 2024-07-08 11:02:58.494076+07:00)
+2024-07-08 11:02:58,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:02:58,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:04 +07)" executed successfully
+2024-07-08 11:03:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:10 +07)" (scheduled at 2024-07-08 11:03:04.494076+07:00)
+2024-07-08 11:03:04,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:04,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:10 +07)" executed successfully
+2024-07-08 11:03:10,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:16 +07)" (scheduled at 2024-07-08 11:03:10.494076+07:00)
+2024-07-08 11:03:10,498 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:10,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:16 +07)" executed successfully
+2024-07-08 11:03:16,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:22 +07)" (scheduled at 2024-07-08 11:03:16.494076+07:00)
+2024-07-08 11:03:16,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:16,500 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:22 +07)" executed successfully
+2024-07-08 11:03:19,514 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+2024-07-08 11:03:19,514 - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 6235250605)
+2024-07-08 11:03:20,520 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:20,520 - WARNING - Sleep for 1.225157 seconds and try again... (tryings = 1, bot id = 6235250605)
+2024-07-08 11:03:21,747 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:21,748 - WARNING - Sleep for 1.638224 seconds and try again... (tryings = 2, bot id = 6235250605)
+2024-07-08 11:03:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:28 +07)" (scheduled at 2024-07-08 11:03:22.494076+07:00)
+2024-07-08 11:03:22,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:22,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:28 +07)" executed successfully
+2024-07-08 11:03:23,388 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:23,389 - WARNING - Sleep for 2.099851 seconds and try again... (tryings = 3, bot id = 6235250605)
+2024-07-08 11:03:25,492 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:25,492 - WARNING - Sleep for 2.721571 seconds and try again... (tryings = 4, bot id = 6235250605)
+2024-07-08 11:03:28,216 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:28,216 - WARNING - Sleep for 3.424418 seconds and try again... (tryings = 5, bot id = 6235250605)
+2024-07-08 11:03:28,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:34 +07)" (scheduled at 2024-07-08 11:03:28.494076+07:00)
+2024-07-08 11:03:28,498 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:28,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:34 +07)" executed successfully
+2024-07-08 11:03:31,643 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:31,643 - WARNING - Sleep for 4.411763 seconds and try again... (tryings = 6, bot id = 6235250605)
+2024-07-08 11:03:34,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:40 +07)" (scheduled at 2024-07-08 11:03:34.494076+07:00)
+2024-07-08 11:03:34,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:34,499 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:40 +07)" executed successfully
+2024-07-08 11:03:36,058 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:36,058 - WARNING - Sleep for 5.125591 seconds and try again... (tryings = 7, bot id = 6235250605)
+2024-07-08 11:03:40,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:46 +07)" (scheduled at 2024-07-08 11:03:40.494076+07:00)
+2024-07-08 11:03:40,496 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:40,497 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:46 +07)" executed successfully
+2024-07-08 11:03:41,186 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:41,186 - WARNING - Sleep for 5.048350 seconds and try again... (tryings = 8, bot id = 6235250605)
+2024-07-08 11:03:46,243 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:03:46,244 - WARNING - Sleep for 5.182712 seconds and try again... (tryings = 9, bot id = 6235250605)
+2024-07-08 11:03:46,499 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:52 +07)" (scheduled at 2024-07-08 11:03:46.494076+07:00)
+2024-07-08 11:03:46,502 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:03:46,510 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:03:52 +07)" executed successfully
+2024-07-08 11:21:09,333 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:21:09,333 - WARNING - Sleep for 5.014810 seconds and try again... (tryings = 10, bot id = 6235250605)
+2024-07-08 11:21:10,398 - WARNING - Run time of job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:21:10 +07)" was missed by 0:00:05.904786
+2024-07-08 11:21:10,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:21:16 +07)" (scheduled at 2024-07-08 11:21:10.494076+07:00)
+2024-07-08 11:21:10,497 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 36, in fetch_and_save_files
+    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1306, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1319, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 1309, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 829, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 964, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+2024-07-08 11:21:10,498 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:21:16 +07)" executed successfully
+2024-07-08 11:29:23,879 - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+2024-07-08 11:29:23,880 - WARNING - Sleep for 5.050876 seconds and try again... (tryings = 11, bot id = 6235250605)
+2024-07-08 11:29:26,021 - WARNING - Run time of job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:28 +07)" was missed by 0:00:03.527308
+2024-07-08 11:29:28,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:34 +07)" (scheduled at 2024-07-08 11:29:28.494076+07:00)
+2024-07-08 11:29:29,180 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:29:29,182 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:34 +07)" executed successfully
+2024-07-08 11:29:29,278 - INFO - Connection established (tryings = 12, bot id = 6235250605)
+2024-07-08 11:29:29,296 - INFO - Received message from 964635576: /subscribe
+2024-07-08 11:29:29,720 - INFO - Update id=792257373 is handled. Duration 440 ms by bot id=6235250605
+2024-07-08 11:29:34,496 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:40 +07)" (scheduled at 2024-07-08 11:29:34.494076+07:00)
+2024-07-08 11:29:35,153 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:29:35,156 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:40 +07)" executed successfully
+2024-07-08 11:29:40,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:46 +07)" (scheduled at 2024-07-08 11:29:40.494076+07:00)
+2024-07-08 11:29:41,213 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:29:41,216 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:46 +07)" executed successfully
+2024-07-08 11:29:46,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:52 +07)" (scheduled at 2024-07-08 11:29:46.494076+07:00)
+2024-07-08 11:29:47,140 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:29:47,141 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:52 +07)" executed successfully
+2024-07-08 11:29:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:58 +07)" (scheduled at 2024-07-08 11:29:52.494076+07:00)
+2024-07-08 11:29:53,157 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:29:53,159 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:29:58 +07)" executed successfully
+2024-07-08 11:29:58,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:04 +07)" (scheduled at 2024-07-08 11:29:58.494076+07:00)
+2024-07-08 11:29:59,182 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:29:59,186 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:04 +07)" executed successfully
+2024-07-08 11:30:04,338 - INFO - Received message from 964635576: /subscribe
+2024-07-08 11:30:04,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:10 +07)" (scheduled at 2024-07-08 11:30:04.494076+07:00)
+2024-07-08 11:30:04,916 - INFO - Update id=792257374 is handled. Duration 583 ms by bot id=6235250605
+2024-07-08 11:30:05,112 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:05,114 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:10 +07)" executed successfully
+2024-07-08 11:30:07,218 - INFO - Received message from 964635576: Минусинский район
+2024-07-08 11:30:07,372 - INFO - Update id=792257375 is handled. Duration 155 ms by bot id=6235250605
+2024-07-08 11:30:10,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:16 +07)" (scheduled at 2024-07-08 11:30:10.494076+07:00)
+2024-07-08 11:30:11,182 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:11,184 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:16 +07)" executed successfully
+2024-07-08 11:30:12,606 - INFO - Received message from 964635576: /my_subscriptions
+2024-07-08 11:30:12,734 - INFO - Update id=792257376 is handled. Duration 128 ms by bot id=6235250605
+2024-07-08 11:30:16,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:22 +07)" (scheduled at 2024-07-08 11:30:16.494076+07:00)
+2024-07-08 11:30:17,148 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:17,151 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:22 +07)" executed successfully
+2024-07-08 11:30:17,719 - INFO - Received message from 964635576: /subscribe
+2024-07-08 11:30:17,940 - INFO - Update id=792257377 is handled. Duration 222 ms by bot id=6235250605
+2024-07-08 11:30:19,825 - INFO - Received message from 964635576: Ачинский район
+2024-07-08 11:30:20,036 - INFO - Update id=792257378 is handled. Duration 211 ms by bot id=6235250605
+2024-07-08 11:30:21,890 - INFO - Received message from 964635576: /subscribe
+2024-07-08 11:30:22,045 - INFO - Update id=792257379 is handled. Duration 156 ms by bot id=6235250605
+2024-07-08 11:30:22,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:28 +07)" (scheduled at 2024-07-08 11:30:22.494076+07:00)
+2024-07-08 11:30:23,107 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:23,108 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:28 +07)" executed successfully
+2024-07-08 11:30:24,801 - INFO - Received message from 964635576: город Дивногорск
+2024-07-08 11:30:24,948 - INFO - Update id=792257380 is handled. Duration 148 ms by bot id=6235250605
+2024-07-08 11:30:27,926 - INFO - Received message from 964635576: /cancel_subscriptions
+2024-07-08 11:30:28,144 - INFO - Update id=792257381 is handled. Duration 219 ms by bot id=6235250605
+2024-07-08 11:30:28,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:34 +07)" (scheduled at 2024-07-08 11:30:28.494076+07:00)
+2024-07-08 11:30:29,231 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:29,232 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:34 +07)" executed successfully
+2024-07-08 11:30:29,958 - INFO - Received message from 964635576: /subscribe
+2024-07-08 11:30:30,101 - INFO - Update id=792257382 is handled. Duration 144 ms by bot id=6235250605
+2024-07-08 11:30:32,127 - INFO - Received message from 964635576: Партизанский район
+2024-07-08 11:30:32,266 - INFO - Update id=792257383 is handled. Duration 139 ms by bot id=6235250605
+2024-07-08 11:30:34,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:40 +07)" (scheduled at 2024-07-08 11:30:34.494076+07:00)
+2024-07-08 11:30:35,143 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:35,146 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:40 +07)" executed successfully
+2024-07-08 11:30:40,499 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:46 +07)" (scheduled at 2024-07-08 11:30:40.494076+07:00)
+2024-07-08 11:30:41,114 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:41,118 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:46 +07)" executed successfully
+2024-07-08 11:30:46,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:52 +07)" (scheduled at 2024-07-08 11:30:46.494076+07:00)
+2024-07-08 11:30:47,120 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:47,121 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:52 +07)" executed successfully
+2024-07-08 11:30:52,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:58 +07)" (scheduled at 2024-07-08 11:30:52.494076+07:00)
+2024-07-08 11:30:53,176 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:53,177 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:30:58 +07)" executed successfully
+2024-07-08 11:30:58,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:31:04 +07)" (scheduled at 2024-07-08 11:30:58.494076+07:00)
+2024-07-08 11:30:59,192 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:30:59,196 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:31:04 +07)" executed successfully
+2024-07-08 11:31:04,495 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:31:10 +07)" (scheduled at 2024-07-08 11:31:04.494076+07:00)
+2024-07-08 11:31:05,162 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:31:05,165 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:31:10 +07)" executed successfully
+2024-07-08 11:31:10,494 - INFO - Running job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:31:16 +07)" (scheduled at 2024-07-08 11:31:10.494076+07:00)
+2024-07-08 11:31:11,152 - ERROR - Failed to initialize and load data:
+Traceback (most recent call last):
+  File "/Users/rejoller/python_projects/mchs_tg_bot/bot.py", line 28, in on_startup
+    await fetch_and_save_files()
+  File "/Users/rejoller/python_projects/mchs_tg_bot/email_checker.py", line 69, in fetch_and_save_files
+    logging(f"Processing part with Content-Type: {part.get_content_type()}")
+TypeError: 'module' object is not callable
+2024-07-08 11:31:11,154 - INFO - Job "on_startup (trigger: interval[0:00:06], next run at: 2024-07-08 11:31:16 +07)" executed successfully
+2024-07-08 11:31:12,897 - WARNING - Received SIGINT signal
+2024-07-08 11:31:12,900 - INFO - Polling stopped for bot @MCR_Expert_bot id=6235250605 - 'MCR_expert'
+2024-07-08 11:31:12,900 - INFO - Polling stopped

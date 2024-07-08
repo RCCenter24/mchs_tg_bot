@@ -1,4 +1,4 @@
-from icecream import ic
+import logging
 import asyncio
 from email import message_from_bytes
 from email.header import decode_header
@@ -21,7 +21,6 @@ async def fetch_and_save_files():
 
     async def save_file(part, filename):
         filepath = os.path.join(SAVE_DIR, filename)
-        # Открытие файла в отдельном потоке
         await asyncio.to_thread(lambda: open(filepath, 'wb').write(part.get_payload(decode=True)))
         return filepath
 
@@ -45,7 +44,7 @@ async def fetch_and_save_files():
     subject = None
     content = None
 
-    # Извлекаем данные из последнего email
+
     num = email_nums[-1]
     result, email_data = await asyncio.to_thread(mail.fetch, num, '(RFC822)')
     raw_email = email_data[0][1]
@@ -67,28 +66,28 @@ async def fetch_and_save_files():
     if msg.is_multipart():
         text_part_found = False
         for part in msg.walk():
-            print(f"Processing part with Content-Type: {part.get_content_type()}")
+            logging(f"Processing part with Content-Type: {part.get_content_type()}")
 
             content_type = part.get_content_type()
             content_disposition = part.get("Content-Disposition")
             if content_disposition and "attachment" in content_disposition:
                 filename = part.get_filename()
                 if filename:
-                    print(f"Found attachment: {filename}")
-                    filename = await decode_file_name(filename)  # Асинхронный вызов
-                    print(f"Decoded filename: {filename}")
+                    logging(f"Found attachment: {filename}")
+                    filename = await decode_file_name(filename) 
+                    logging(f"Decoded filename: {filename}")
                     filepath = os.path.join(SAVE_DIR, filename)
-                    print(f"File path: {filepath}")
-                    await save_file(part, filename)  # Асинхронный вызов
+                    logging(f"File path: {filepath}")
+                    await save_file(part, filename)
 
                     saved_files.append(filepath)
-                    print(f"Processing attachment: {filename}")
+                    logging(f"Processing attachment: {filename}")
             elif not text_part_found and content_type in ['text/plain', 'text/html']:
                 if content_disposition is None or "attachment" not in content_disposition:
-                    print("Extracting text content")
+                    logging("Extracting text content")
                     content = part.get_payload(decode=True).decode()
                     text_part_found = True
 
     await asyncio.to_thread(mail.logout)
-    ic(email_id)
+    
     return saved_files, subject, content, email_id

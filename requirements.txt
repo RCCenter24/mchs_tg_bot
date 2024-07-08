@@ -12,3 +12,4 @@ aioimaplib
 redis
 psycopg
 xlsx2csv
+asyncpg

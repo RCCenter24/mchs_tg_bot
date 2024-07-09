@@ -148,7 +148,7 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
         subscription_exists = result.first()
 
         if subscription_exists is not None:
-            await message.answer('Вы уже подписаны на это муниципальное образование')
+            await message.answer('Вы уже подписаны на это муниципальное образование', reply_markup=types.ReplyKeyboardRemove())
         else:
             subquery = select(Municipalities.map_id).where(
                 Municipalities.municipality_name == selected_mun).scalar_subquery()

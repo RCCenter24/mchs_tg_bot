@@ -48,7 +48,7 @@ async def main():
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
 
-  
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, skip_updates=True)
 
 if __name__ == "__main__":

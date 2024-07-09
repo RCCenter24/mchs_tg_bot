@@ -205,6 +205,7 @@ async def handle_sub_to_all_munic(message: types.Message, state: FSMContext, ses
     await session.execute(add_subscriber_query)
     await session.commit()
     
+    
     await message.answer('Вы подписались на все муниципальные образования')
 
 
@@ -223,7 +224,7 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
     municipalities = [item[0] for item in all_cathegories]
     
     if municipalities == []:
-        response = ('У вас нет активных подписок, чтобы подписаться нажмите /subscriptions '
+        response = ('У вас нет активных подписок, чтобы подписаться нажмите /subscribe '
                     'или нажмите /help если нужна помощь')
         await message.answer(response)
         return
@@ -284,7 +285,7 @@ async def check_news(message: Message, session: AsyncSession):
                 
                 
                 for municipality, fires in grouped_by_municipality:
-                    response += f"\n<b>{municipality}</b>\n"
+                    response += f"\n\n\n<b>{municipality}</b>\n"
                     status_counts = fires['icon_status'].value_counts()
     
                     for status, count in status_counts.items():

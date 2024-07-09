@@ -14,6 +14,7 @@ from datetime import datetime as dt
 from handlers import main_router
 from images import map_image
 
+from bot import bot
 
 
 @main_router.callback_query(F.data == 'choise_munic')
@@ -76,4 +77,5 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
     
     await session.execute(add_subscriber_query)
     await session.commit()
+    await bot.delete_message(chat_id=user_id, message_id= query.message.message_id)
     await query.message.answer('Вы подписались на все муниципальные образования')

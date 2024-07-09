@@ -292,8 +292,7 @@ async def check_news(message: Message, session: AsyncSession):
                     
                     for idx, row in fires.iterrows():    
                         response += (f"\n\n{row['icon_status']} {row['Статус']} пожар №{row['Номер пожара']} {row['Город']} "
-                                     f"на площади {row['Площадь обнаружения пожара']} га."
-                                     f"\n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n")
+                                     f"на площади {row['Площадь обнаружения пожара']} га.")
                                        
                 try:
                     await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')

@@ -11,6 +11,7 @@ from logging_middleware import LoggingMiddleware
 from database.db import DataBaseSession
 from database.engine import session_maker
 from sqlalchemy.ext.asyncio import AsyncSession
+from config import interval_min
 
 bot = Bot(bot_token)
 
@@ -43,7 +44,7 @@ async def main():
     
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     #scheduler.add_job(on_startup, 'cron', hour=0, minute=1)
-    scheduler.add_job(on_startup, 'interval', minutes=1)
+    scheduler.add_job(on_startup, 'interval', minutes=interval_min)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
 

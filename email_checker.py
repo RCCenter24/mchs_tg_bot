@@ -3,7 +3,7 @@ from email import message_from_bytes
 from email.header import decode_header
 import imaplib
 import os
-
+from icecream import ic
 from config import EMAIL, PASSWORD, SAVE_DIR
 
 
@@ -32,7 +32,8 @@ async def fetch_and_save_files():
                 mail_content += part.get_payload(decode=True).decode()
         return mail_content
 
-    mail = imaplib.IMAP4_SSL('imap.rambler.ru')
+    mail = imaplib.IMAP4_SSL('mail.krskcit.ru')
+    ic(mail)
     await asyncio.to_thread(mail.login, EMAIL, PASSWORD)
     await asyncio.to_thread(mail.select, 'inbox')
 

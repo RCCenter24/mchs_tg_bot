@@ -112,10 +112,8 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
     keyboard_1 = builder.as_markup(
         resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Выберите муниципальное образование")
 
-    try:
-        await message.edit_caption(caption='Выберите муниципальное образование')
-    except:
-        await message.answer_photo(caption='Выберите муниципальное образование',
+    
+    await message.answer_photo(caption='Выберите муниципальное образование',
                                    reply_markup=keyboard_1, photo=map_image, parse_mode='HTML')
 
     await state.set_state(Form.waiting_for_munic)

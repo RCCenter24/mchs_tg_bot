@@ -34,11 +34,8 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
     builder.adjust(1)
     keyboard_1 = builder.as_markup(resize_keyboard=True, one_time_keyboard=True)
     
-    try:
-        await query.message.edit_caption(caption='Выберите муниципальное образование')
-    
-    except:
-        await query.message.answer_photo(caption='Выберите муниципальное образование', reply_markup=keyboard_1)
+    await query.message.answer_photo(caption='Выберите муниципальное образование',
+                                   reply_markup=keyboard_1, photo=map_image, parse_mode='HTML')
     
     
     await state.set_state(Form.waiting_for_munic)
@@ -70,12 +67,9 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
 
     
     add_subscriber_query = insert(Subscriptions).values(subscribers_data).on_conflict_do_nothing()
+    await query.answer('Вы подписались на все муниципальные образования', show_alert=True)
+    await session.execute(add_subscriber_query)
+    await session.commit()
 
-    await session.execute(add_subscriber_query)
-    await session.commit()
-    
-    
-    await session.execute(add_subscriber_query)
-    await session.commit()
     await bot.delete_message(chat_id=user_id, message_id= query.message.message_id)
-    await query.message.answer('Вы подписались на все муниципальные образования')
+    

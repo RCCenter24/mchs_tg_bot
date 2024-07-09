@@ -1,4 +1,3 @@
-import traceback
 from icecream import ic
 import logging
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
@@ -10,8 +9,6 @@ from aiogram import F, types, Router
 
 from glob import glob
 import os
-from xlsx2csv import Xlsx2csv
-
 
 from datetime import datetime as dt
 
@@ -81,7 +78,9 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
     builder.adjust(1)
     builder.attach(InlineKeyboardBuilder.from_markup(markup))
 
-    caption = "Это бот по инцидентам МЧС Красноярского края. Чтобы подписаться на одно из муниципальных образований для получения новостей воспользуйтесь командой /subscribe \n Чтобы подписатья на все обновления нажмите на команду /subscribe_all\n"
+    caption = ("Это бот по инцидентам МЧС Красноярского края. Чтобы подписаться на одно из муниципальных "
+               "образований для получения новостей воспользуйтесь командой /subscribe \n Чтобы подписатья "
+               "на все обновления нажмите на команду /subscribe_all\n")
                 
     
     await message.answer_photo(caption= caption, reply_markup=markup, photo=main_photo)
@@ -119,7 +118,8 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
     try:
         await message.edit_caption(caption='Выберите муниципальное образование')
     except:
-        await message.answer_photo(caption='Выберите муниципальное образование', reply_markup=keyboard_1, photo = map_image, parse_mode='HTML')
+        await message.answer_photo(caption='Выберите муниципальное образование',
+                                   reply_markup=keyboard_1, photo = map_image, parse_mode='HTML')
     
     await state.set_state(Form.waiting_for_munic)
 
@@ -192,9 +192,6 @@ async def handle_sub_to_all_munic(message: types.Message, state: FSMContext, ses
     all_municipalities = result.all()
     map_ids = [item[0] for item in all_municipalities]
     municipality_names  = [item[1] for item in all_municipalities]
-
-    
-    
     subscribers_data = [
         {
             "user_id": user_id,
@@ -208,14 +205,13 @@ async def handle_sub_to_all_munic(message: types.Message, state: FSMContext, ses
     await session.execute(add_subscriber_query)
     await session.commit()
     
-    await message.answer('Вы подписались на все муниципальные образования🐿️')
+    await message.answer('Вы подписались на все муниципальные образования')
 
 
 
 
 @main_router.message(Command('my_subscriptions'))
 async def handle_my_subscriptions(message: Message, state: FSMContext, session: AsyncSession):
-
     await state.clear()
     user_id = message.from_user.id
 
@@ -227,16 +223,14 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
     municipalities = [item[0] for item in all_cathegories]
     
     if municipalities == []:
-        response = 'У вас нет активных подписок, чтобы подписаться нажмите /subscriptions или нажмите /help если нужна помощь'
+        response = ('У вас нет активных подписок, чтобы подписаться нажмите /subscriptions '
+                    'или нажмите /help если нужна помощь')
         await message.answer(response)
         return
-    
     message_text = "<b>Ваши подписки</b>\n" + "\n".join(municipalities)
 
     try:
-    
         await message.answer_photo(caption=message_text, photo=main_photo, parse_mode='HTML')
-        
     except:
         await message.answer(message_text, parse_mode='HTML')
 
@@ -261,26 +255,18 @@ async def check_news(message: Message, session: AsyncSession):
     latest_file_path = file_path[0]
     
     conveted_name = await df_converter(latest_file_path)
-        
-    
-    
     df = await df_mod(conveted_name)
 
-    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id, Subscriptions.municipality_name, Subscriptions.subscribed_at)
+    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id,
+                               Subscriptions.municipality_name, Subscriptions.subscribed_at)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
 
     df_2 = pd.DataFrame(subscribers)
-    
-    
-    
-    
     result_df = await result_df_maker(df, df_2)
-    
     check_query = select(Messages.user_id).where(
         Messages.message_id == email_id)
     check_result = await session.execute(check_query)
-
     msg_already_sent = check_result.all()
 
     sent_user_ids = [row[0] for row in msg_already_sent] if msg_already_sent else []
@@ -304,13 +290,11 @@ async def check_news(message: Message, session: AsyncSession):
                     for status, count in status_counts.items():
                         response += f"{count}{status}  "
                     
-                    for idx, row in fires.iterrows():
-                        
-                        
-                        response += f"\n\n{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
-                    
-                
-                
+                    for idx, row in fires.iterrows():    
+                        response += (f"\n\n{row['icon_status']} {row['Статус']} пожар №{row['Номер пожара']} {row['Город']} "
+                                     f"на площади {row['Площадь обнаружения пожара']} га."
+                                     f"\n⏱️{row['Дата возникновения пожара']}\n{row['Статус']}\n")
+                                       
                 try:
                     await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                     sent_message_query= insert(Messages).values(
@@ -329,14 +313,6 @@ async def check_news(message: Message, session: AsyncSession):
                     logging.error(
                         f'Ошибка при отправке пользователю {user_id}: {str(e)}')
              
-                
-            
-                            
-                        
-                        
-
-                        
-
 
 
 @main_router.message(Command('check_news'))
@@ -351,12 +327,8 @@ async def manual_check_news(message: Message, session: AsyncSession):
     subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
-
     df_2 = pd.DataFrame(subscribers)
     result_df = await result_df_maker(df, df_2)
-   
-    
-    
     grouped_by_municipality = result_df.groupby('Район')
     response = ''
     for municipality, fires in grouped_by_municipality:
@@ -364,11 +336,9 @@ async def manual_check_news(message: Message, session: AsyncSession):
 
         for idx, row in fires.iterrows():
             response += f"{row['icon_status']} {row['Город']} ({row['Номер пожара']}) \n⏱️"
-            f"{row['Дата возникновения пожара']}\n{row['Статус']}\n\n"
+            f"{row['Дата возникновения пожара']}\n{row['Статус']}\n"
     
     await message.answer(text=response, parse_mode='HTML')
-
-
 
 
 

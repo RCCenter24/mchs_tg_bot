@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
-from sqlalchemy import ForeignKey, String, BIGINT, TIMESTAMP, DateTime, func, Text
+from sqlalchemy import ForeignKey, String, BIGINT, TIMESTAMP, DateTime
 
 class Base(DeclarativeBase):
     pass

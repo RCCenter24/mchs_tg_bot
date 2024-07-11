@@ -11,7 +11,8 @@ async def response_maker(df):
         for idx, row in fires.iterrows():
             response += (f"\n\n{row['icon_status']} {row['Статус']} пожар №{row['Номер пожара']} "
                             f"{row['Лесничество']} лесничество "
-                            f"на площади {row['Площадь пожара']} га. ")
+                            f"на площади {row['Площадь пожара']} га. "
+                            f"{row['Зона']} ")
             aps = row['АПС']
             lps = row['ЛПС']
             

@@ -38,7 +38,7 @@ async def main():
     from handlers import main_router
     from callbacks import main_router
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
-    dp.message.middleware
+    
     dp.include_router(main_router)
     dp.message.middleware(LoggingMiddleware())
     
@@ -49,7 +49,7 @@ async def main():
     print('Бот запущен и готов к приему сообщений')
 
     await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot, skip_updates=True)
+    await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(), skip_updates=True)
 
 if __name__ == "__main__":
     asyncio.run(main())

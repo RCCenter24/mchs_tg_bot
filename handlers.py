@@ -15,6 +15,7 @@ from datetime import datetime as dt
 import pandas as pd
 from utils.df_converter import df_converter
 from utils.df_modifier import df_mod
+from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 from images import main_photo, map_image
 
@@ -112,9 +113,8 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
     keyboard_1 = builder.as_markup(
         resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Выберите муниципальное образование")
 
-    
     await message.answer_photo(caption='Выберите муниципальное образование',
-                                   reply_markup=keyboard_1, photo=map_image, parse_mode='HTML')
+                               reply_markup=keyboard_1, photo=map_image, parse_mode='HTML')
 
     await state.set_state(Form.waiting_for_munic)
 
@@ -236,7 +236,6 @@ async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, s
     delete_subs = delete(Subscriptions).where(Subscriptions.user_id == user_id)
     await session.execute(delete_subs)
     await session.commit()
-
     await message.answer('Вы отписались от всего😕')
 
 
@@ -244,37 +243,32 @@ async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, s
 async def manual_check_news(message: Message, session: AsyncSession):
     user_id = message.from_user.id
     saved_files, subject, content, email_id = await fetch_and_save_files()
-    file_path = glob('saved_files/*инамика*.xlsx')
+    file_path = glob('saved_files/*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
     latest_file_path = file_path[0]
-
     conveted_name = await df_converter(latest_file_path)
     df = await df_mod(conveted_name)
 
     subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id,
                                Subscriptions.municipality_name, Subscriptions.subscribed_at) \
-        .where(Subscriptions.user_id == user_id)
+                        .where(Subscriptions.user_id == user_id)
 
     result = await session.execute(subscribers_query)
     subscribers = result.all()
-
+    if subscribers == []:
+        text = (
+                "Для выбранных муниципальных образований информация о пожарной обстановке отсутствует. \n"
+                "Чтобы подписаться на другие муниципальные образования нажмите /subscribe или /subscribe_all")
+        await bot.send_message(chat_id=user_id, text=text, parse_mode='HTML')
+        return
     df_2 = pd.DataFrame(subscribers)
     result_df = await result_df_maker(df, df_2)
 
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
         for user_id, group in grouped_df:
-            response = ""
             grouped_by_municipality = group.groupby('Район')
-            for municipality, fires in grouped_by_municipality:
-                response += f"\n\n\n<b>{municipality}</b>\n"
-                status_counts = fires['icon_status'].value_counts()
-                for status, count in status_counts.items():
-                    response += f"{count}{status}  "
-                for idx, row in fires.iterrows():
-                    response += (f"\n\n{row['icon_status']} {row['Статус']} пожар №{row['Номер пожара']} "
-                                 f"на расстоянии {row['Расстояние']} км от {row['Город']} "
-                                 f"на площади {row['Площадь обнаружения пожара']} га.")
+            response = await response_maker(grouped_by_municipality)
             try:
                 await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                 sent_message_query = insert(Messages).values(
@@ -292,3 +286,5 @@ async def manual_check_news(message: Message, session: AsyncSession):
             except Exception as e:
                 logging.error(
                     f'Ошибка при отправке пользователю {user_id}: {str(e)}')
+
+                

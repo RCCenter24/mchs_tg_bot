@@ -10,6 +10,7 @@ from database.models import Messages, Subscriptions
 from email_checker import fetch_and_save_files
 from utils.df_converter import df_converter
 from utils.df_modifier import df_mod
+from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 
 from sqlalchemy import select
@@ -24,7 +25,7 @@ from icecream import ic
 async def msg_sender(message: Message, session: AsyncSession):
 
     saved_files, subject, content, email_id = await fetch_and_save_files()
-    file_path = glob('saved_files/*инамика*.xlsx')
+    file_path = glob('saved_files/*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
     latest_file_path = file_path[0]
 
@@ -51,19 +52,8 @@ async def msg_sender(message: Message, session: AsyncSession):
             if user_id in sent_user_ids:
                 continue
             else:
-                response = ""
                 grouped_by_municipality = group.groupby('Район')
-
-                for municipality, fires in grouped_by_municipality:
-                    response += f"\n\n\n<b>{municipality}</b>\n"
-                    status_counts = fires['icon_status'].value_counts()
-
-                    for status, count in status_counts.items():
-                        response += f"{count}{status}  "
-
-                    for idx, row in fires.iterrows():
-                        response += (f"\n\n{row['icon_status']} {row['Статус']} пожар №{row['Номер пожара']} на расстоянии {row['Расстояние']} км от {row['Город']} "
-                                     f"на площади {row['Площадь обнаружения пожара']} га.")
+                response = await response_maker(grouped_by_municipality)                
                 try:
                     await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                     sent_message_query = insert(Messages).values(

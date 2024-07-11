@@ -33,7 +33,7 @@ async def fetch_and_save_files():
         return mail_content
 
     mail = imaplib.IMAP4_SSL('mail.krskcit.ru')
-    ic(mail)
+    
     await asyncio.to_thread(mail.login, EMAIL, PASSWORD)
     await asyncio.to_thread(mail.select, 'inbox')
 

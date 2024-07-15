@@ -47,26 +47,23 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
 @main_router.callback_query(F.data == 'choise_all_munic')
 async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContext, session: AsyncSession):
     user_id = query.from_user.id
-    
-    subscribe_query = select(Municipalities.map_id, Municipalities.municipality_name).order_by(
+
+    subscribe_query = select(Municipalities.municipality_id, Municipalities.municipality_name).order_by(
         Municipalities.municipality_name.asc())
     result = await session.execute(subscribe_query)
     all_municipalities = result.all()
-    map_ids = [item[0] for item in all_municipalities]
-    municipality_names  = [item[1] for item in all_municipalities]
-    
+    municipality_ids = [item[0] for item in all_municipalities]
+    municipality_names = [item[1] for item in all_municipalities]
     subscribers_data = [
         {
             "user_id": user_id,
-            "map_id": map_id,
-            "municipality_name": municipality_name,
-            "subscribed_at": dt.now()
+            "municipality_id": municipality_ids,
+            "date_subscribed": dt.now()
         }
-        for map_id, municipality_name in zip(map_ids, municipality_names)
+        for municipality_ids, municipality_name in zip(municipality_ids, municipality_names)
     ]
-
-    
-    add_subscriber_query = insert(Subscriptions).values(subscribers_data).on_conflict_do_nothing()
+    add_subscriber_query = insert(Subscriptions).values(
+        subscribers_data).on_conflict_do_nothing()
     await query.answer('Вы подписались на все муниципальные образования', show_alert=True)
     await session.execute(add_subscriber_query)
     await session.commit()

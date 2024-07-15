@@ -57,7 +57,7 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
 
     add_user_query = insert(Users).values(
         user_id=user_id,
-        user_name=first_name,
+        first_name=first_name,
         last_name=last_name,
         username=username,
         joined_at=dt.now()
@@ -111,7 +111,8 @@ async def handle_waiting_for_choise(message: types.Message, state: FSMContext, s
     builder.button(text='Отмена')
     builder.adjust(1)
     keyboard_1 = builder.as_markup(
-        resize_keyboard=True, one_time_keyboard=True, input_field_placeholder="Выберите муниципальное образование")
+        resize_keyboard=True, one_time_keyboard=True,
+        input_field_placeholder="Выберите муниципальное образование")
 
     await message.answer_photo(caption='Выберите муниципальное образование',
                                reply_markup=keyboard_1, photo=map_image, parse_mode='HTML')
@@ -134,10 +135,12 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
     all_municipalities = data.get('all_municipalities', [])
     if selected_mun in all_municipalities:
 
-        subscribe_check_query = select(Subscriptions.map_id).where(
-            (Subscriptions.user_id == user_id) &
-            (Subscriptions.municipality_name == selected_mun)
-        )
+        subscribe_check_query = select(Subscriptions.municipality_id) \
+            .join(Municipalities, Municipalities.municipality_id == Subscriptions.municipality_id) \
+            .where(
+                (Subscriptions.user_id == user_id) &
+                (Municipalities.municipality_name == selected_mun)
+            )
 
         result = await session.execute(subscribe_check_query)
         subscription_exists = result.first()
@@ -146,21 +149,21 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
             await message.answer('Вы уже подписаны на это муниципальное образование',
                                  reply_markup=types.ReplyKeyboardRemove())
         else:
-            subquery = select(Municipalities.map_id).where(
+            subquery = select(Municipalities.municipality_id).where(
                 Municipalities.municipality_name == selected_mun).scalar_subquery()
 
             add_subscriber_query = insert(Subscriptions).values(
                 user_id=user_id,
-                map_id=subquery.scalar_subquery(),
-                municipality_name=selected_mun,
-                subscribed_at=dt.now()
+                municipality_id=subquery,
+                date_subscribed=dt.now()
             ).on_conflict_do_nothing()
 
             await session.execute(add_subscriber_query)
             await session.commit()
 
-            query_get_subs = select(Subscriptions.municipality_name).where(
-                Subscriptions.user_id == user_id)
+            query_get_subs = select(Municipalities.municipality_name) \
+                    .join(Subscriptions, Subscriptions.municipality_id == Municipalities.municipality_id) \
+                    .where(Subscriptions.user_id == user_id)
 
             result = await session.execute(query_get_subs)
             all_cathegories = result.all()
@@ -181,20 +184,19 @@ async def subscribe(message: types.Message, state: FSMContext, session: AsyncSes
 async def handle_sub_to_all_munic(message: types.Message, state: FSMContext, session: AsyncSession):
     user_id = message.from_user.id
 
-    subscribe_query = select(Municipalities.map_id, Municipalities.municipality_name).order_by(
+    subscribe_query = select(Municipalities.municipality_id, Municipalities.municipality_name).order_by(
         Municipalities.municipality_name.asc())
     result = await session.execute(subscribe_query)
     all_municipalities = result.all()
-    map_ids = [item[0] for item in all_municipalities]
+    municipality_ids = [item[0] for item in all_municipalities]
     municipality_names = [item[1] for item in all_municipalities]
     subscribers_data = [
         {
             "user_id": user_id,
-            "map_id": map_id,
-            "municipality_name": municipality_name,
-            "subscribed_at": dt.now()
+            "municipality_id": municipality_ids,
+            "date_subscribed": dt.now()
         }
-        for map_id, municipality_name in zip(map_ids, municipality_names)
+        for municipality_ids, municipality_name in zip(municipality_ids, municipality_names)
     ]
     add_subscriber_query = insert(Subscriptions).values(
         subscribers_data).on_conflict_do_nothing()
@@ -209,8 +211,10 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
     await state.clear()
     user_id = message.from_user.id
 
-    query_get_subs = select(Subscriptions.municipality_name).where(
-        Subscriptions.user_id == user_id)
+    query_get_subs = select(Municipalities.municipality_name) \
+                    .join(Subscriptions, Subscriptions.municipality_id == Municipalities.municipality_id) \
+                    .where(Subscriptions.user_id == user_id)
+                    
     result = await session.execute(query_get_subs)
     all_cathegories = result.all()
 
@@ -248,11 +252,12 @@ async def manual_check_news(message: Message, session: AsyncSession):
     latest_file_path = file_path[0]
     conveted_name = await df_converter(latest_file_path)
     df = await df_mod(conveted_name)
-
-    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id,
-                               Subscriptions.municipality_name, Subscriptions.subscribed_at) \
-                        .where(Subscriptions.user_id == user_id)
-
+    
+    subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
+                    .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
+                    .where(Subscriptions.user_id == user_id)
+                    
+                    
     result = await session.execute(subscribers_query)
     subscribers = result.all()
     if subscribers == []:
@@ -273,10 +278,10 @@ async def manual_check_news(message: Message, session: AsyncSession):
                 await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                 sent_message_query = insert(Messages).values(
                     user_id=user_id,
-                    message_id=email_id,
+                    email_id=email_id,
                     message_text=response,
-                    date_of_sending=dt.now()
-                ).on_conflict_do_update()
+                    date_send=dt.now()
+                ).on_conflict_do_nothing()
                 await session.execute(sent_message_query)
                 await session.commit()
             except SQLAlchemyError as db_err:

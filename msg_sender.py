@@ -5,7 +5,7 @@ from aiogram.types import Message
 import pandas as pd
 from datetime import datetime as dt
 
-from database.models import Messages, Subscriptions
+from database.models import Messages, Municipalities, Subscriptions
 
 from email_checker import fetch_and_save_files
 from utils.df_converter import df_converter
@@ -32,20 +32,18 @@ async def msg_sender(message: Message, session: AsyncSession):
     conveted_name = await df_converter(latest_file_path)
     df = await df_mod(conveted_name)
 
-    subscribers_query = select(Subscriptions.user_id, Subscriptions.map_id,
-                               Subscriptions.municipality_name, Subscriptions.subscribed_at)
+    subscribers_query = select(Subscriptions.user_id, Municipalities.map_id) \
+                    .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
 
     df_2 = pd.DataFrame(subscribers)
     result_df = await result_df_maker(df, df_2)
     check_query = select(Messages.user_id).where(
-        Messages.message_id == email_id)
+        Messages.email_id == email_id)
     check_result = await session.execute(check_query)
     msg_already_sent = check_result.all()
-    sent_user_ids = [row[0]
-                     for row in msg_already_sent] if msg_already_sent else []
-
+    sent_user_ids = [row[0] for row in msg_already_sent] if msg_already_sent else []
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
         for user_id, group in grouped_df:
@@ -58,9 +56,9 @@ async def msg_sender(message: Message, session: AsyncSession):
                     await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                     sent_message_query = insert(Messages).values(
                         user_id=user_id,
-                        message_id=email_id,
+                        email_id=email_id,
                         message_text=response,
-                        date_of_sending=dt.now()
+                        date_send=dt.now()
                     ).on_conflict_do_nothing()
                     await session.execute(sent_message_query)
                     await session.commit()

@@ -7,14 +7,11 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from aiogram import F, types, Router
 
-from glob import glob
-import os
 
 from datetime import datetime as dt
 
 import pandas as pd
-from utils.df_converter import df_converter
-from utils.df_modifier import df_mod
+from utils.df_modifier import modify_dataframe
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 from images import main_photo, map_image
@@ -259,13 +256,20 @@ async def manual_check_news(message: Message, session: AsyncSession):
 @main_router.message(Command('last_news'))
 async def manual_check_news(message: Message, session: AsyncSession):
     
+    email_id = await fetch_and_save_files(session)
     user_id = message.from_user.id
-    saved_files, subject, content, email_id = await fetch_and_save_files(session)
-    file_path = glob('saved_files/*.xlsx')
-    file_path.sort(key=os.path.getmtime, reverse=True)
-    latest_file_path = file_path[0]
-    conveted_name = await df_converter(latest_file_path)
-    df = await df_mod(conveted_name)
+    df_query = select(Fires.region, Fires.fire_status, Fires.fire_num,
+                      Fires.forestry_name, Fires.forces_aps, Fires.forces_lps,
+                      Fires.city, Fires.distance, Fires.map_id, Fires.fire_area, Fires.fire_zone) \
+                .where(Fires.email_id == email_id)
+    result = await session.execute(df_query)
+    df_query_result = result.all()
+    df_1 = pd.DataFrame(df_query_result)
+    
+    
+    
+    modified_df = await modify_dataframe(df_1)
+   
     
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
@@ -281,12 +285,12 @@ async def manual_check_news(message: Message, session: AsyncSession):
         await bot.send_message(chat_id=user_id, text=text, parse_mode='HTML')
         return
     df_2 = pd.DataFrame(subscribers)
-    result_df = await result_df_maker(df, df_2)
+    result_df = await result_df_maker(modified_df, df_2)
 
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
         for user_id, group in grouped_df:
-            grouped_by_municipality = group.groupby('Район')
+            grouped_by_municipality = group.groupby('region')
             response = await response_maker(grouped_by_municipality)
             try:
                 await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')

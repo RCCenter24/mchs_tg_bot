@@ -85,17 +85,8 @@ async def fetch_and_save_files(session: AsyncSession):
                     already_exists = result.first()
                     if already_exists is None:
                         await save_to_db(file_bytes, email_id, session)
+                        
 
-                    filepath = os.path.join(SAVE_DIR, filename)
-                    await save_file(part, filename)
-
-                    saved_files.append(filepath)
-
-            elif not text_part_found and content_type in ['text/plain', 'text/html']:
-                if content_disposition is None or "attachment" not in content_disposition:
-
-                    content = part.get_payload(decode=True).decode()
-                    text_part_found = True
 
     await asyncio.to_thread(mail.logout)
-    return saved_files, subject, content, email_id
+    return email_id

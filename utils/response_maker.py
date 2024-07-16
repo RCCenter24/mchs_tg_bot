@@ -9,15 +9,16 @@ async def response_maker(df):
         response += "<blockquote>"
         #for status, count in status_counts.items():
          #   response += f"{count}{status}"
+         
         
         for idx, row in fires.iterrows():
             
-            response += (f"{row['icon_status']} {row['Статус']} пожар №{row['Номер пожара']} "
-                            f"{row['Лесничество']} лесничество "
-                            f"на площади {row['Площадь пожара']} га. "
-                            f"{row['Зона']} ")
-            aps = row['АПС']
-            lps = row['ЛПС']
+            response += (f"{row['icon_status']} {row['fire_status']} пожар №{row['fire_num']} "
+                            f"{row['forestry_name']} лесничество "
+                            f"на площади {row['fire_area']} га. "
+                            f"{row['fire_zone']} ")
+            aps = row['forces_aps']
+            lps = row['forces_lps']
             
             if aps and lps:
                 response += (f"Работает {aps} АПС и {lps} ЛПС ") 
@@ -26,7 +27,7 @@ async def response_maker(df):
             elif lps:
                 response += (f"Работает {lps} ЛПС ")
                 
-            response +=  (f" ({row['Зона']} {row['Расстояние']} км от {row['Город']})\n")
+            response +=  (f" ({row['fire_zone']} {row['distance']} км от {row['city']})\n")
         response += "</blockquote>"
         response += "\n"
     

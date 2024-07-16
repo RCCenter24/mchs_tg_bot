@@ -19,7 +19,7 @@ from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 from images import main_photo, map_image
 
-from database.models import Municipalities, Users, Subscriptions, Messages
+from database.models import Municipalities, Users, Subscriptions, Messages, Fires
 from email_checker import fetch_and_save_files
 from bot import bot
 
@@ -243,10 +243,24 @@ async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, s
     await message.answer('Вы отписались от всего😕')
 
 
+
+
+@main_router.message(Command('db_add'))
+async def manual_check_news(message: Message, session: AsyncSession):
+    email_id = await fetch_and_save_files()
+    
+    add_db_query = insert(Fires).values(
+        
+        
+    )
+    
+    
+
 @main_router.message(Command('last_news'))
 async def manual_check_news(message: Message, session: AsyncSession):
+    
     user_id = message.from_user.id
-    saved_files, subject, content, email_id = await fetch_and_save_files()
+    saved_files, subject, content, email_id = await fetch_and_save_files(session)
     file_path = glob('saved_files/*.xlsx')
     file_path.sort(key=os.path.getmtime, reverse=True)
     latest_file_path = file_path[0]

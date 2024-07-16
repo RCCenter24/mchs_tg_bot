@@ -2,38 +2,45 @@ import asyncio
 from email import message_from_bytes
 from email.header import decode_header
 import imaplib
+import logging
 import os
 from icecream import ic
-from config import EMAIL, PASSWORD, SAVE_DIR
+from config import EMAIL, PASSWORD, SAVE_DIR, imap_server
+from database.models import Fires
+from utils.db_saver import save_to_db
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
-async def fetch_and_save_files():
+async def decode_file_name(encoded_name):
+    d_header = decode_header(encoded_name)[0]
+    if isinstance(d_header[0], bytes):
+        return d_header[0].decode(d_header[1] or 'utf-8')
+    return d_header[0]
+
+
+async def save_file(part, filename):
+    filepath = os.path.join(SAVE_DIR, filename)
+    await asyncio.to_thread(lambda: open(filepath, 'wb').write(part.get_payload(decode=True)))
+    return filepath
+
+
+async def extract_content(email_message):
+    mail_content = ""
+    for part in email_message.walk():
+        content_type = part.get_content_type()
+        content_disposition = str(part.get("Content-Disposition"))
+        if "attachment" not in content_disposition and content_type == "text/plain":
+            mail_content += part.get_payload(decode=True).decode()
+    return mail_content
+
+
+async def fetch_and_save_files(session: AsyncSession):
     email_id = None
     if not os.path.exists(SAVE_DIR):
         os.makedirs(SAVE_DIR)
+    mail = imaplib.IMAP4_SSL(imap_server)
 
-    async def decode_file_name(encoded_name):
-        d_header = decode_header(encoded_name)[0]
-        if isinstance(d_header[0], bytes):
-            return d_header[0].decode(d_header[1] or 'utf-8')
-        return d_header[0]
-
-    async def save_file(part, filename):
-        filepath = os.path.join(SAVE_DIR, filename)
-        await asyncio.to_thread(lambda: open(filepath, 'wb').write(part.get_payload(decode=True)))
-        return filepath
-
-    async def extract_content(email_message):
-        mail_content = ""
-        for part in email_message.walk():
-            content_type = part.get_content_type()
-            content_disposition = str(part.get("Content-Disposition"))
-            if "attachment" not in content_disposition and content_type == "text/plain":
-                mail_content += part.get_payload(decode=True).decode()
-        return mail_content
-
-    mail = imaplib.IMAP4_SSL('mail.krskcit.ru')
-    
     await asyncio.to_thread(mail.login, EMAIL, PASSWORD)
     await asyncio.to_thread(mail.select, 'inbox')
 
@@ -62,21 +69,24 @@ async def fetch_and_save_files():
     email_id = msg["Message-ID"]
 
     global_email_id = email_id
-
     if msg.is_multipart():
         text_part_found = False
         for part in msg.walk():
-
             content_type = part.get_content_type()
             content_disposition = part.get("Content-Disposition")
             if content_disposition and "attachment" in content_disposition:
                 filename = part.get_filename()
                 if filename:
-
                     filename = await decode_file_name(filename)
+                    file_bytes = part.get_payload(decode=True)
+                    check_email_query = select(Fires.email_id).where(
+                        Fires.email_id == email_id)
+                    result = await session.execute(check_email_query)
+                    already_exists = result.first()
+                    if already_exists is None:
+                        await save_to_db(file_bytes, email_id, session)
 
                     filepath = os.path.join(SAVE_DIR, filename)
-
                     await save_file(part, filename)
 
                     saved_files.append(filepath)
@@ -88,5 +98,4 @@ async def fetch_and_save_files():
                     text_part_found = True
 
     await asyncio.to_thread(mail.logout)
-
     return saved_files, subject, content, email_id

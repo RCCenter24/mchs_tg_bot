@@ -12,6 +12,7 @@ from datetime import datetime as dt
 
 import pandas as pd
 from utils.df_modifier import modify_dataframe
+from utils.message_spitter import split_message
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 from images import main_photo, map_image
@@ -243,6 +244,7 @@ async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, s
 @main_router.message(Command('last_news'))
 async def manual_check_news(message: Message, session: AsyncSession):
     email_id = await fetch_and_save_files(session)
+    ic(email_id)
     user_id = message.from_user.id
     df_query = select(Fires.region, Fires.fire_status, Fires.fire_num,
                       Fires.forestry_name, Fires.forces_aps, Fires.forces_lps,
@@ -251,6 +253,7 @@ async def manual_check_news(message: Message, session: AsyncSession):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
+    ic(df_1)
     modified_df = await modify_dataframe(df_1)
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
@@ -270,24 +273,34 @@ async def manual_check_news(message: Message, session: AsyncSession):
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
         for user_id, group in grouped_df:
+            group = group.drop_duplicates(subset=['region', 'fire_status', 'fire_num',
+                                                  'forestry_name', 'forces_aps', 'forces_lps',
+                                                  'city', 'distance', 'map_id', 'fire_area', 'fire_zone'])
+            
             grouped_by_municipality = group.groupby('region')
             response = await response_maker(grouped_by_municipality)
-            try:
-                await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
-                sent_message_query = insert(Messages).values(
-                    user_id=user_id,
-                    email_id=email_id,
-                    message_text=response,
-                    date_send=dt.now()
-                ).on_conflict_do_nothing()
-                await session.execute(sent_message_query)
-                await session.commit()
-            except SQLAlchemyError as db_err:
-                logging.error(
-                    f'Ошибка базы данных при обработке пользователя {user_id}: {db_err}')
-                await session.rollback()
-            except Exception as e:
-                logging.error(
-                    f'Ошибка при отправке пользователю {user_id}: {str(e)}')
+            messages = await split_message(response)
+            for msg in messages:
+                
+                
+                try:
+                    await bot.send_message(chat_id=user_id, text=msg, parse_mode='HTML')
+                    
+                    sent_message_query = insert(Messages).values(
+                        user_id=user_id,
+                        email_id=email_id,
+                        message_text=response,
+                        date_send=dt.now()
+                    ).on_conflict_do_nothing()
+                    await session.execute(sent_message_query)
+                    await session.commit()
+                except SQLAlchemyError as db_err:
+                    logging.error(
+                        f'Ошибка базы данных при обработке пользователя {user_id}: {db_err}')
+                    await session.rollback()
+                except Exception as e:
+                    await bot.send_message(chat_id=user_id, text='Не удалось отправить сообщение', parse_mode='HTML')
+                    logging.error(
+                        f'Ошибка при отправке пользователю {user_id}: {str(e)}')
 
                 

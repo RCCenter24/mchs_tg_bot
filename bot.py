@@ -1,7 +1,6 @@
 import logging
 from zoneinfo import ZoneInfo
 from aiogram import Dispatcher, Bot
-from aiogram.types import Message
 from aiogram.fsm.storage.redis import RedisStorage
 from config import bot_token
 import asyncio
@@ -10,7 +9,6 @@ from logging_config import setup_logging
 from logging_middleware import LoggingMiddleware
 from database.db import DataBaseSession
 from database.engine import session_maker
-from sqlalchemy.ext.asyncio import AsyncSession
 from config import interval_min
 
 bot = Bot(bot_token)
@@ -28,21 +26,19 @@ async def on_startup():
             await fetch_and_save_files(session)
         except Exception as e:
             
-            logging.error('Failed to initialize and load data:', exc_info=True)
+            logging.error(f'Failed to initialize and load data:{e}', exc_info=True)
         
 
 async def main():
     setup_logging()
     dp = Dispatcher(storage = storage)
     from handlers import main_router
-    from callbacks import main_router
+    from callbacks import callback_router
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
-    
     dp.include_router(main_router)
+    dp.include_router(callback_router)
     dp.message.middleware(LoggingMiddleware())
-    
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
-    #scheduler.add_job(on_startup, 'cron', hour=0, minute=1)
     scheduler.add_job(on_startup, 'interval', minutes=interval_min)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')

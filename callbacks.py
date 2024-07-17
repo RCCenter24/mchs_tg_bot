@@ -1,4 +1,4 @@
-from aiogram import types, F
+from aiogram import types, F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
@@ -11,13 +11,16 @@ from database.models import Municipalities, Subscriptions
 from handlers import Form
 from datetime import datetime as dt
 
-from handlers import main_router
+
 from images import map_image
 
 from bot import bot
 
 
-@main_router.callback_query(F.data == 'choise_munic')
+
+callback_router = Router()
+
+@callback_router.callback_query(F.data == 'choise_munic')
 async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContext, session: AsyncSession):
 
     subscribe_query = select(Municipalities.map_id, Municipalities.municipality_name).order_by(Municipalities.municipality_name.asc())
@@ -44,7 +47,7 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
     await state.update_data(all_municipalities=[mun[1] for mun in all_municipalities])
 
 
-@main_router.callback_query(F.data == 'choise_all_munic')
+@callback_router.callback_query(F.data == 'choise_all_munic')
 async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContext, session: AsyncSession):
     user_id = query.from_user.id
 

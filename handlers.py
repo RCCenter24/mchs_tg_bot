@@ -238,24 +238,10 @@ async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, s
     await session.execute(delete_subs)
     await session.commit()
     await message.answer('Вы отписались от всего😕')
-
-
-
-
-@main_router.message(Command('db_add'))
-async def manual_check_news(message: Message, session: AsyncSession):
-    email_id = await fetch_and_save_files()
-    
-    add_db_query = insert(Fires).values(
         
-        
-    )
-    
-    
 
 @main_router.message(Command('last_news'))
 async def manual_check_news(message: Message, session: AsyncSession):
-    
     email_id = await fetch_and_save_files(session)
     user_id = message.from_user.id
     df_query = select(Fires.region, Fires.fire_status, Fires.fire_num,
@@ -265,17 +251,11 @@ async def manual_check_news(message: Message, session: AsyncSession):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    
-    
-    
     modified_df = await modify_dataframe(df_1)
-   
-    
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
                     .where(Subscriptions.user_id == user_id)
-                    
-                    
+                           
     result = await session.execute(subscribers_query)
     subscribers = result.all()
     if subscribers == []:

@@ -21,12 +21,11 @@ storage = RedisStorage.from_url("redis://localhost:6379/2")
 
 
 async def on_startup():
-    
-    from msg_sender import msg_sender
+    from email_checker import fetch_and_save_files
     from database.engine import session_maker
     async with session_maker() as session:
         try:
-            await msg_sender(Message, session)
+            await fetch_and_save_files(session)
         except Exception as e:
             
             logging.error('Failed to initialize and load data:', exc_info=True)

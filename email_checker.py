@@ -1,4 +1,5 @@
 import asyncio
+from aiogram.types import Message
 from email import message_from_bytes
 from email.header import decode_header
 import imaplib
@@ -7,6 +8,7 @@ import os
 from icecream import ic
 from config import EMAIL, PASSWORD, SAVE_DIR, imap_server
 from database.models import Fires
+from msg_sender import msg_sender
 from utils.db_saver import save_to_db
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -47,7 +49,7 @@ async def fetch_and_save_files(session: AsyncSession):
     result, data = await asyncio.to_thread(mail.search, None, 'ALL')
     email_nums = data[0].split()
 
-    saved_files = []
+    
     subject = None
     content = None
 
@@ -63,11 +65,10 @@ async def fetch_and_save_files(session: AsyncSession):
             decoded_subject, bytes) else decoded_subject
     else:
         subject = ""
-    content = await extract_content(msg)
+    await extract_content(msg)
 
     global global_email_id
     email_id = msg["Message-ID"]
-
     global_email_id = email_id
     if msg.is_multipart():
         text_part_found = False
@@ -85,8 +86,7 @@ async def fetch_and_save_files(session: AsyncSession):
                     already_exists = result.first()
                     if already_exists is None:
                         await save_to_db(file_bytes, email_id, session)
+                        await msg_sender(Message, session, email_id)
                         
-
-
     await asyncio.to_thread(mail.logout)
     return email_id

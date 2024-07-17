@@ -7,10 +7,6 @@ async def response_maker(df):
         response += f"\n<b>{municipality}</b>\n"
         status_counts = fires['icon_status'].value_counts()
         response += "<blockquote>"
-        #for status, count in status_counts.items():
-         #   response += f"{count}{status}"
-         
-        
         for idx, row in fires.iterrows():
             
             response += (f"{row['icon_status']} {row['fire_status']} пожар №{row['fire_num']} "

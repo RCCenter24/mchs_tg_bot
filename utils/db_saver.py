@@ -6,7 +6,7 @@ from io import BytesIO, StringIO
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from database.models import Fires
-
+import numpy as np
 
 
 async def save_to_db(file_bytes, email_id, session: AsyncSession):
@@ -15,19 +15,19 @@ async def save_to_db(file_bytes, email_id, session: AsyncSession):
     Xlsx2csv(bytes_io, outputencoding="utf-8").convert(csv_io)
     csv_io.seek(0)
     try:
-        df_chunks = pd.read_csv(csv_io, chunksize=10)
+        df_chunks = pd.read_csv(csv_io, parse_dates=['Дата обнаружения', 'Дата ликвидации', 'Актульно'], date_format='mixed', chunksize=10)
+        
+        
 
         for chunk in df_chunks:
-            chunk['Дата обнаружения'] = chunk['Дата обнаружения'].apply(
-                lambda x: pd.to_datetime(x, format='mixed', errors='coerce'))
-            chunk['Дата ликвидации'] = chunk['Дата ликвидации'].apply(
-                lambda x: pd.to_datetime(x, format='mixed', errors='coerce'))
-            chunk['Актульно'] = chunk['Актульно'].apply(
-                lambda x: pd.to_datetime(x, format='mixed', errors='coerce'))
+            ic(chunk)
+            ic(chunk.dtypes)
             
-            chunk['Дата ликвидации'] = chunk['Дата ликвидации'].apply(
-                lambda x: None if pd.isnull(x) else x)
-            chunk['email_id'] = email_id
+
+           
+            chunk['Дата ликвидации'] = chunk['Дата ликвидации'].ffill() 
+            
+
             to_db_data = [
                 {
                     "fire_ext_id": row['ID'],
@@ -49,7 +49,7 @@ async def save_to_db(file_bytes, email_id, session: AsyncSession):
                     "forces_": row['Привл'],
                     "forces_rent": row['Аренд'],
                     "forces_mchs": row['МЧС'],
-                    "date_terminate": row['Дата ликвидации'],
+                    "date_terminate": row['Дата ликвидации'] if not pd.isna(row['Дата ликвидации']) else None,
                     "date_actual": row['Актульно'],
                     "email_id": email_id
                 }

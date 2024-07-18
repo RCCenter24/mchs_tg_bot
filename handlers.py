@@ -247,8 +247,8 @@ async def manual_check_news(message: Message, session: AsyncSession):
     user_id = message.from_user.id
     df_query = select(Fires.region, Fires.fire_status, Fires.fire_num,
                       Fires.forestry_name, Fires.forces_aps, Fires.forces_lps,
-                      Fires.city, Fires.distance, Fires.map_id, Fires.fire_area, Fires.fire_zone) \
-                .where(Fires.email_id == email_id)
+                      Fires.city, Fires.distance, Fires.map_id, Fires.fire_area, Fires.fire_zone, Fires.ext_log) \
+                    .where(Fires.email_id == email_id)
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)

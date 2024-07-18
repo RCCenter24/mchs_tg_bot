@@ -6,7 +6,6 @@ from datetime import datetime as dt
 
 from database.models import Fires, Messages, Municipalities, Subscriptions
 
-
 from utils.df_modifier import modify_dataframe
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
@@ -18,13 +17,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
 
 from bot import bot
-from icecream import ic
 
 async def msg_sender(message: Message, session: AsyncSession, email_id):
     df_query = select(
             Fires.region, Fires.fire_status, Fires.fire_num,
             Fires.forestry_name, Fires.forces_aps, Fires.forces_lps,
-            Fires.city, Fires.distance, Fires.map_id, Fires.fire_area, Fires.fire_zone
+            Fires.city, Fires.distance, Fires.map_id, Fires.fire_area, Fires.fire_zone, Fires.ext_log
         ).where((Fires.email_id == email_id) & or_(Fires.ext_log == int(2), Fires.ext_log == int(3)))
     result = await session.execute(df_query)
     df_query_result = result.all()

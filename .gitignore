@@ -16,3 +16,5 @@ bot.log
 /database/db_config.py
 images.py
 .pytest_cache/
+.vscode/
+*.xlsx

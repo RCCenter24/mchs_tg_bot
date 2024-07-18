@@ -1,6 +1,3 @@
-import logging
-from icecream import ic
-
 async def modify_dataframe(df_1):
     
     df_1 = df_1.copy()
@@ -8,7 +5,6 @@ async def modify_dataframe(df_1):
     df_1['icon_status'] = ''
     df_1['forces_aps'] = df_1['forces_aps'].apply(lambda x: x if x > 0 else '')
     df_1['forces_lps'] = df_1['forces_lps'].apply(lambda x: x if x > 0 else '')
-
     df_1['icon_status'] = df_1['fire_status'].apply(
         lambda x: '🔴' if x == 'Продолжается' else
         '🟢' if x == 'Ликвидирован' else
@@ -18,5 +14,6 @@ async def modify_dataframe(df_1):
         '⬇️' if x == 'Ослабевает' else
         '🔺' if x == 'Усиливается' else ""
     )
+    df_1['fire_status'] = df_1['fire_status'].apply(lambda x: '🔥' if x == 'Обнаружен' else x)
 
     return df_1

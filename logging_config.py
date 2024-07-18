@@ -10,8 +10,7 @@ def setup_logging():
         level=logging.INFO,
         handlers=[file_handler]
     )
-
-
+    
     sqlalchemy_logger = logging.getLogger('sqlalchemy.engine')
     sqlalchemy_logger.setLevel(logging.ERROR) 
     sqlalchemy_logger.addHandler(file_handler)

@@ -15,3 +15,4 @@ db_conn.py
 bot.log
 /database/db_config.py
 images.py
+.pytest_cache/

@@ -244,7 +244,6 @@ async def handle_cancel_all_subscriptions(message: Message, state: FSMContext, s
 @main_router.message(Command('last_news'))
 async def manual_check_news(message: Message, session: AsyncSession):
     email_id = await fetch_and_save_files(session)
-    ic(email_id)
     user_id = message.from_user.id
     df_query = select(Fires.region, Fires.fire_status, Fires.fire_num,
                       Fires.forestry_name, Fires.forces_aps, Fires.forces_lps,
@@ -253,7 +252,6 @@ async def manual_check_news(message: Message, session: AsyncSession):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    ic(df_1)
     modified_df = await modify_dataframe(df_1)
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \

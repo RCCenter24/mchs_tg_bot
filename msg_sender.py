@@ -1,5 +1,4 @@
 import logging
-import os
 from aiogram.types import Message
 
 import pandas as pd
@@ -12,7 +11,7 @@ from utils.df_modifier import modify_dataframe
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 
-from sqlalchemy import select, cast, String, INTEGER
+from sqlalchemy import select
 from sqlalchemy import or_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -30,25 +29,21 @@ async def msg_sender(message: Message, session: AsyncSession, email_id):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    ic(df_1)
+    if df_1.empty:
+        return
     modified_df = await modify_dataframe(df_1)
-    ic(modified_df)
     subscribers_query = select(Subscriptions.user_id, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id)
     result = await session.execute(subscribers_query)
     subscribers = result.all()
     df_subscribers = pd.DataFrame(subscribers)
     result_df = await result_df_maker(modified_df, df_subscribers)
-    ic(result_df)
     if not result_df.empty:
         grouped_df = result_df.groupby('user_id')
-        ic(grouped_df)
         for user_id, group in grouped_df:
             group = group.drop_duplicates(subset=['region', 'fire_status', 'fire_num', 'forestry_name', 'forces_aps', 'forces_lps', 'city', 'distance', 'map_id', 'fire_area', 'fire_zone'])
             grouped_by_municipality = group.groupby('region')
-            ic(grouped_by_municipality)
-            response = await response_maker(grouped_by_municipality)
-            ic(response)        
+            response = await response_maker(grouped_by_municipality)       
             try:
                 await bot.send_message(chat_id=user_id, text=response, parse_mode='HTML')
                 sent_message_query = insert(Messages).values(

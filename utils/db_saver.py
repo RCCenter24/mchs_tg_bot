@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 import pandas as pd
 from xlsx2csv import Xlsx2csv
@@ -9,25 +10,22 @@ from database.models import Fires
 import numpy as np
 
 
+
+
 async def save_to_db(file_bytes, email_id, session: AsyncSession):
     bytes_io = BytesIO(file_bytes)
     csv_io = StringIO()
-    Xlsx2csv(bytes_io, outputencoding="utf-8").convert(csv_io)
+    Xlsx2csv(bytes_io, dateformat = '%d.%m.%Y %H:%M:%S').convert(csv_io)
     csv_io.seek(0)
     try:
-        df_chunks = pd.read_csv(csv_io, parse_dates=['Дата обнаружения', 'Дата ликвидации', 'Актульно'], date_format='mixed', chunksize=10)
-        
-        
-
+        df_chunks = pd.read_csv(
+            csv_io,
+            parse_dates=['Дата обнаружения', 'Дата ликвидации', 'Актульно'],
+            chunksize=10,
+            dayfirst=True
+        )       
         for chunk in df_chunks:
-            ic(chunk)
-            ic(chunk.dtypes)
-            
-
-           
-            chunk['Дата ликвидации'] = chunk['Дата ликвидации'].ffill() 
-            
-
+            chunk.ffill(inplace=True)
             to_db_data = [
                 {
                     "fire_ext_id": row['ID'],

@@ -15,7 +15,6 @@ support_user_router = Router()
 
 @support_user_router.message(F.text, StateFilter(Form.support))
 async def handle_report(message: Message, state: FSMContext, session: AsyncSession, bot: Bot):
-    print('в обычном хэндлере')
     await bot.send_message(chat_id = admin_group_chat_id, text = message.html_text + f"\n\n#id{message.from_user.id}", parse_mode="HTML")
     await state.clear()
     await message.answer('Ваше сообщение отправлено в техническую поддержку, ожидайте ответа🙂')
@@ -23,7 +22,6 @@ async def handle_report(message: Message, state: FSMContext, session: AsyncSessi
     
 @support_user_router.message(SupportedMediaFilter(), StateFilter(Form.support))
 async def supported_media(message: Message, state: FSMContext):
-    print('в медиа хэндлере')
     if message.caption and len(message.caption) > 1000:
         return await message.reply('Описание файла слишком длинное')
     else:

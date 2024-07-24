@@ -25,7 +25,7 @@ async def save_to_db(file_bytes, email_id, session: AsyncSession):
             dayfirst=True
         )       
         for chunk in df_chunks:
-            chunk.ffill(inplace=True)
+            chunk.fillna('')
             to_db_data = [
                 {
                     "fire_ext_id": row['ID'],

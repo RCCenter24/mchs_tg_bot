@@ -22,7 +22,7 @@ from bot import bot
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, and_
 from sqlalchemy.dialects.postgresql import insert
 
 main_router = Router()
@@ -211,8 +211,8 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
     user_id = message.from_user.id
 
     query_get_subs = select(Municipalities.municipality_name) \
-                    .join(Subscriptions, Subscriptions.municipality_id == Municipalities.municipality_id) \
-                    .where(Subscriptions.user_id == user_id)
+                    .join(Subscriptions, and_(Subscriptions.municipality_id == Municipalities.municipality_id,
+                                              Subscriptions.user_id == user_id))
                     
     result = await session.execute(query_get_subs)
     all_cathegories = result.all()
@@ -229,7 +229,9 @@ async def handle_my_subscriptions(message: Message, state: FSMContext, session: 
     try:
         await message.answer_photo(caption=message_text, photo=main_photo, parse_mode='HTML')
     except:
-        await message.answer(message_text, parse_mode='HTML')
+        msg_parts = await split_message(message_text)
+        for parts in msg_parts:
+            await message.answer(parts, parse_mode='HTML')
 
 
 @main_router.message(Command('cancel_subscriptions'), F.chat.type == 'private')
@@ -295,9 +297,7 @@ async def manual_check_news(message: Message, session: AsyncSession):
             grouped_by_municipality = group.groupby('region')
             response = await response_maker(grouped_by_municipality)
             messages = await split_message(response)
-            for msg in messages:
-                
-                
+            for msg in messages:                
                 try:
                     await bot.send_message(chat_id=user_id, text=msg, parse_mode='HTML')
                     

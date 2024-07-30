@@ -10,7 +10,7 @@ from aiogram import F, types, Router
 from datetime import datetime as dt
 
 import pandas as pd
-from utils.df_modifier import modify_dataframe
+from utils.df_modifier import modify_dataframe, modify_dataframe_for_command
 from utils.message_spitter import split_message
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
@@ -271,7 +271,7 @@ async def manual_check_news(message: Message, session: AsyncSession):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    modified_df = await modify_dataframe(df_1)
+    modified_df = await modify_dataframe_for_command(df_1)
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
                     .where(Subscriptions.user_id == user_id)

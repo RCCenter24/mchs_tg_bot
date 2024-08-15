@@ -2,6 +2,7 @@ import logging
 from zoneinfo import ZoneInfo
 from aiogram import Dispatcher, Bot
 from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.types import Message
 from config import bot_token
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -10,6 +11,8 @@ from logging_middleware import LoggingMiddleware
 from database.db import DataBaseSession
 from database.engine import session_maker
 from config import interval_min
+from day_summary import dayly_rep
+
 
 bot = Bot(bot_token)
 
@@ -25,6 +28,12 @@ async def on_startup():
         except Exception as e:
             
             logging.error(f'Failed to initialize and load data:{e}', exc_info=True)
+            
+
+async def daily_report_sender():
+    async with session_maker() as session:
+        await dayly_rep(Message, session)
+
         
 
 async def main():
@@ -37,15 +46,14 @@ async def main():
     from day_summary import main_router
     
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
-    
     dp.include_router(main_router)
     dp.include_router(callback_router)
     dp.include_router(support_admin_router)
     dp.include_router(support_user_router)
-    
     dp.message.middleware(LoggingMiddleware())
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     scheduler.add_job(on_startup, 'interval', minutes=interval_min)
+    scheduler.add_job(daily_report_sender, 'cron', hour= 10)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
 

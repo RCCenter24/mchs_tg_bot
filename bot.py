@@ -34,6 +34,7 @@ async def main():
     from callbacks import callback_router
     from support.adminmode import support_admin_router
     from support.usermode import support_user_router
+    from day_summary import main_router
     
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
     

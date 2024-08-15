@@ -10,6 +10,7 @@ from aiogram import F, types, Router
 from datetime import datetime as dt
 
 import pandas as pd
+from user_manager import UserManager
 from utils.df_modifier import modify_dataframe, modify_dataframe_for_command
 from utils.message_spitter import split_message
 from utils.response_maker import response_maker
@@ -34,35 +35,25 @@ class Form(StatesGroup):
     support = State()
 
 
-@main_router.message(F.animation)
-async def echo_gif(message: Message):
-    file_id = message.animation.file_id
+# @main_router.message(F.animation)
+# async def echo_gif(message: Message):
+#     file_id = message.animation.file_id
 
-    await message.reply_animation(file_id)
+#     await message.reply_animation(file_id)
 
 
-@main_router.message(F.photo)
-async def get_photo_id(message: Message):
-    await message.reply(text=f"{message.photo[-1].file_id}")
+# @main_router.message(F.photo)
+# async def get_photo_id(message: Message):
+#     await message.reply(text=f"{message.photo[-1].file_id}")
+    
+    
 
 @main_router.message(CommandStart(), F.chat.type == 'private')
 async def handle_start(message: Message, state: FSMContext, session: AsyncSession):
     await state.clear()
-    user_id = message.from_user.id
-    first_name = message.from_user.first_name
-    last_name = message.from_user.last_name
-    username = message.from_user.username
-
-    add_user_query = insert(Users).values(
-        user_id=user_id,
-        first_name=first_name,
-        last_name=last_name,
-        username=username,
-        joined_at=dt.now()
-    ).on_conflict_do_nothing()
-
-    await session.execute(add_user_query)
-    await session.commit()
+    user_manager = UserManager(session)
+    user_data = user_manager.extract_user_data_from_message(message)
+    await user_manager.add_user_if_not_exists(user_data)
 
     builder = InlineKeyboardBuilder()
 
@@ -275,7 +266,7 @@ async def manual_check_news(message: Message, session: AsyncSession):
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
                     .where(Subscriptions.user_id == user_id)
-                           
+
     result = await session.execute(subscribers_query)
     subscribers = result.all()
     if subscribers == []:

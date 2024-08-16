@@ -14,6 +14,27 @@ from images import daily_rep_animation
 
 router = Router()
 
+def get_fire_count_word(number):
+    if number % 100 in [11, 12, 13, 14]:
+        return "лесных пожаров"
+    elif number % 10 == 1:
+        return "лесной пожар"
+    elif 2 <= number % 10 <= 4:
+        return "лесных пожара"
+    else:
+        return "лесных пожаров"
+    
+def get_fire_count_word_wo_forest(number):
+    if number % 100 in [11, 12, 13, 14]:
+        return "пожаров"
+    elif number % 10 == 1:
+        return "пожар"
+    elif 2 <= number % 10 <= 4:
+        return "пожара"
+    else:
+        return "пожаров"
+
+
 
 @router.message(Command('daily_rep'), F.chat.type == 'private')
 async def dayly_rep(message: Message, session: AsyncSession):
@@ -58,28 +79,36 @@ async def dayly_rep(message: Message, session: AsyncSession):
     if not summary.empty:
         for index, row in summary.iterrows():
             if row['count'] != 0:
-                response += (f'По состоянию на {yesterday_end_lie} на территории Красноярского края количество действующих лесных пожаров '
-                             f'<b>{row["count"]}</b> на площади <b>{row["fire_area"]} га.</b>\n')
+                fire_word = get_fire_count_word(row['count'])
+
+                response += (f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
+                             f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>')
 
     acc = df_1.query('fire_zone == "АСС"')
     if not acc.empty:
         for index, row in acc.iterrows():
+            fire_word = get_fire_count_word_wo_forest(row['count'])
 
-            response += (f'пожаров в авиазоне - <b>{row["count"]}</b>, площадь <b>'
-                         f'{row["fire_area"]} га</b>;')
+            response += (f'\nв авиазоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                         f'{row["fire_area"]} га</b>.')
+            
     nss = df_1.query('fire_zone == "НСС"')
     if not nss.empty:
         for index, row in nss.iterrows():
 
-            response += (f'\nпожаров в наземной зоне -  <b>'
-                         f'{row["count"]}</b>, площадь <b>{row["fire_area"]} га</b>;')
+            fire_word = get_fire_count_word_wo_forest(row['count'])
+
+            response += (f'\nв наземной зоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                         f'{row["fire_area"]} га</b>.')
 
     zk = df_1.query('fire_zone == "ЗК"')
     if not zk.empty:
         for index, row in zk.iterrows():
 
-            response += (f'\nпожаров в зоне контроля -  <b>'
-                         f'{row["count"]}</b>, площадь <b>{row["fire_area"]} га</b>.')
+            fire_word = get_fire_count_word_wo_forest(row['count'])
+
+            response += (f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                         f'{row["fire_area"]} га</b>.')
 
     if response != '':
         await message.answer_animation(animation=daily_rep_animation, caption=response, width=50, height=100, parse_mode='HTML')

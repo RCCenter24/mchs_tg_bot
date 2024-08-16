@@ -11,7 +11,8 @@ from logging_middleware import LoggingMiddleware
 from database.db import DataBaseSession
 from database.engine import session_maker
 from config import interval_min
-from day_summary import dayly_rep
+from handlers.daily_fire_report import dayly_rep
+from handlers import setup_routers
 
 
 bot = Bot(bot_token)
@@ -39,18 +40,12 @@ async def daily_report_sender():
 async def main():
     setup_logging()
     dp = Dispatcher(storage = storage)
-    from handlers import main_router, anim_router
-    from callbacks import callback_router
-    from support.adminmode import support_admin_router
-    from support.usermode import support_user_router
-    from day_summary import main_router
+    
     
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
-    dp.include_router(anim_router)
-    dp.include_router(main_router)
-    dp.include_router(callback_router)
-    dp.include_router(support_admin_router)
-    dp.include_router(support_user_router)
+    router = setup_routers()
+    dp.include_router(router)
+    
     dp.message.middleware(LoggingMiddleware())
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     scheduler.add_job(on_startup, 'interval', minutes=interval_min)

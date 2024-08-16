@@ -39,13 +39,14 @@ async def daily_report_sender():
 async def main():
     setup_logging()
     dp = Dispatcher(storage = storage)
-    from handlers import main_router
+    from handlers import main_router, anim_router
     from callbacks import callback_router
     from support.adminmode import support_admin_router
     from support.usermode import support_user_router
     from day_summary import main_router
     
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
+    dp.include_router(anim_router)
     dp.include_router(main_router)
     dp.include_router(callback_router)
     dp.include_router(support_admin_router)

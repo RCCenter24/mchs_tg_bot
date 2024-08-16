@@ -70,14 +70,22 @@ async def dayly_rep(message: Message, session: AsyncSession):
         for index, row in acc.iterrows():
 
             response += (f'пожаров в авиазоне - <b>{row["count"]}</b>, площадь <b>'
-                         f'{row["fire_area"]} га</b>;\n')
+                         f'{row["fire_area"]} га</b>;')
+    nss = df_1.query('fire_zone == "НСС"')
+    if not nss.empty:
+        for index, row in nss.iterrows():
+
+            response += (f'\nпожаров в наземной зоне -  <b>'
+                         f'{row["count"]}</b>, площадь <b>{row["fire_area"]} га</b>;')
 
     zk = df_1.query('fire_zone == "ЗК"')
     if not zk.empty:
         for index, row in zk.iterrows():
 
-            response += (f'пожаров в зоне контроля -  <b>'
+            response += (f'\nпожаров в зоне контроля -  <b>'
                          f'{row["count"]}</b>, площадь <b>{row["fire_area"]} га</b>.')
+            
+    
 
     if response != '':
         await message.answer_animation(animation=daily_rep_animation, caption=response, width=50, height=100, parse_mode='HTML')

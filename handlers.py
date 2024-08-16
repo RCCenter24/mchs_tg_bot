@@ -34,12 +34,12 @@ class Form(StatesGroup):
     pre_support = State()
     support = State()
 
-
-# @main_router.message(F.animation)
-# async def echo_gif(message: Message):
-#     file_id = message.animation.file_id
-
-#     await message.reply_animation(file_id)
+anim_router = Router()
+@anim_router.message(F.animation)
+async def echo_gif(message: Message):
+    file_id = message.animation.file_id
+    print(file_id)
+    await message.reply(text=f'{file_id}')
 
 
 # @main_router.message(F.photo)

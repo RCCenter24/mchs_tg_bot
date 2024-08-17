@@ -11,7 +11,7 @@ from logging_middleware import LoggingMiddleware
 from database.db import DataBaseSession
 from database.engine import session_maker
 from config import interval_min
-from handlers.daily_fire_report import dayly_rep
+from handlers.daily_fire_report import dayly_rep_auto
 from handlers import setup_routers
 
 
@@ -33,7 +33,7 @@ async def on_startup():
 
 async def daily_report_sender():
     async with session_maker() as session:
-        await dayly_rep(Message, session)
+        await dayly_rep_auto(Message, Bot, session)
 
         
 

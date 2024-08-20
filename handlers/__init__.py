@@ -8,6 +8,8 @@ def setup_routers() -> Router:
                           subscribe_all_fires, subscribe_one_fire, support, daily_fire_report)
 
     from callbacks import main_menu, cb_subscribe_all_fires, wait_for_munic_name
+    
+    from support import adminmode, usermode
 
     router = Router()
 
@@ -22,9 +24,11 @@ def setup_routers() -> Router:
     router.include_router(subscribe_all_fires.router)
     router.include_router(subscribe_one_fire.router)
     router.include_router(support.router)
-
     router.include_router(main_menu.router)
     router.include_router(cb_subscribe_all_fires.router)
     router.include_router(wait_for_munic_name.router)
+    
+    router.include_router(adminmode.router)
+    router.include_router(usermode.router)
 
     return router

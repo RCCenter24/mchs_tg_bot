@@ -4,9 +4,9 @@ from aiogram.filters import Command
 from aiogram.types import Message, Chat
 
 
-support_admin_router = Router()
+router = Router()
 
-@support_admin_router.message(Command(commands=["get", "who"]), F.reply_to_message)
+@router.message(Command(commands=["get", "who"]), F.reply_to_message)
 async def get_user_info(message: Message, bot: Bot):
 
     def get_full_name(chat: Chat):
@@ -54,7 +54,7 @@ def extract_id(message: Message) -> int:
 
         
         
-@support_admin_router.message(F.reply_to_message)
+@router.message(F.reply_to_message)
 async def reply_to_user(message: Message):
     try:
         user_id = extract_id(message.reply_to_message)

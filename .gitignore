@@ -18,3 +18,5 @@ images.py
 .pytest_cache/
 .vscode/
 *.xlsx
+*.jpg
+*.png

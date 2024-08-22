@@ -16,6 +16,7 @@ from images import daily_rep_animation
 
 router = Router()
 
+
 def get_fire_count_word(number):
     if number % 100 in [11, 12, 13, 14]:
         return "лесных пожаров"
@@ -25,7 +26,8 @@ def get_fire_count_word(number):
         return "лесных пожара"
     else:
         return "лесных пожаров"
-    
+
+
 def get_fire_count_word_wo_forest(number):
     if number % 100 in [11, 12, 13, 14]:
         return "пожаров"
@@ -37,19 +39,19 @@ def get_fire_count_word_wo_forest(number):
         return "пожаров"
 
 
-
-@router.message(Command('daily_rep'), F.chat.type == 'private')
+@router.message(Command("daily_rep"), F.chat.type == "private")
 async def dayly_rep(message: Message, session: AsyncSession):
-    
     now = dt.now()
-    response = ''
-    
-    yesterday_start = (now - timedelta(days=1)
-                       ).replace(hour=0, minute=0, second=0, microsecond=0)
+    response = ""
+
+    yesterday_start = (now - timedelta(days=1)).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
     yesterday_end = now.replace(hour=9, minute=0, second=0, microsecond=0)
 
-    yesterday_end_lie = (now - timedelta(days=1)).replace(hour=23,
-                                                          minute=59, second=59, microsecond=999)
+    yesterday_end_lie = (now - timedelta(days=1)).replace(
+        hour=23, minute=59, second=59, microsecond=999
+    )
 
     df_query = text(f"""
                             select   f.fire_zone
@@ -72,69 +74,78 @@ async def dayly_rep(message: Message, session: AsyncSession):
 
     result = await session.execute(df_query)
     df_query_result = result.all()
-    
-    df_1 = pd.DataFrame(df_query_result)
-    df_1 = df_1.fillna('Всего')
 
-    yesterday_end_lie = yesterday_end_lie.strftime('%H:%M %d.%m.%Y')
+    df_1 = pd.DataFrame(df_query_result)
+    df_1 = df_1.fillna("Всего")
+
+    yesterday_end_lie = yesterday_end_lie.strftime("%H:%M %d.%m.%Y")
     summary = df_1.query('fire_zone == "Всего"')
     if not summary.empty:
         for index, row in summary.iterrows():
-            if row['count'] != 0:
-                fire_word = get_fire_count_word(row['count'])
+            if row["count"] != 0:
+                fire_word = get_fire_count_word(row["count"])
 
-                response += (f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
-                             f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>')
+                response += (
+                    f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
+                    f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>'
+                )
 
     acc = df_1.query('fire_zone == "АСС"')
     if not acc.empty:
         for index, row in acc.iterrows():
-            fire_word = get_fire_count_word_wo_forest(row['count'])
+            fire_word = get_fire_count_word_wo_forest(row["count"])
 
-            response += (f'\nв авиазоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
-                         f'{row["fire_area"]} га</b>.')
-            
+            response += (
+                f'\nв авиазоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                f'{row["fire_area"]} га</b>.'
+            )
+
     nss = df_1.query('fire_zone == "НСС"')
     if not nss.empty:
         for index, row in nss.iterrows():
+            fire_word = get_fire_count_word_wo_forest(row["count"])
 
-            fire_word = get_fire_count_word_wo_forest(row['count'])
-
-            response += (f'\nв наземной зоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
-                         f'{row["fire_area"]} га</b>.')
+            response += (
+                f'\nв наземной зоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                f'{row["fire_area"]} га</b>.'
+            )
 
     zk = df_1.query('fire_zone == "ЗК"')
     if not zk.empty:
         for index, row in zk.iterrows():
+            fire_word = get_fire_count_word_wo_forest(row["count"])
 
-            fire_word = get_fire_count_word_wo_forest(row['count'])
+            response += (
+                f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                f'{row["fire_area"]} га</b>.'
+            )
 
-            response += (f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
-                         f'{row["fire_area"]} га</b>.')
-
-    if response != '':
-        await message.answer_animation(animation=daily_rep_animation, caption=response, width=50, height=100, parse_mode='HTML')
+    if response != "":
+        await message.answer_animation(
+            animation=daily_rep_animation,
+            caption=response,
+            width=50,
+            height=100,
+            parse_mode="HTML",
+        )
     else:
-        await message.answer('Данных для ежедневного отчета нет')
-        
-        
-        
-        
-        
+        await message.answer("Данных для ежедневного отчета нет")
 
 
+async def dayly_rep_auto(session: AsyncSession):
+    from bot import bot
 
-async def dayly_rep_auto(message: Message, bot: Bot, session: AsyncSession):
-   
     now = dt.now()
-    response = ''
-    
-    yesterday_start = (now - timedelta(days=1)
-                       ).replace(hour=0, minute=0, second=0, microsecond=0)
+    response = ""
+
+    yesterday_start = (now - timedelta(days=1)).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
     yesterday_end = now.replace(hour=9, minute=0, second=0, microsecond=0)
 
-    yesterday_end_lie = (now - timedelta(days=1)).replace(hour=23,
-                                                          minute=59, second=59, microsecond=999)
+    yesterday_end_lie = (now - timedelta(days=1)).replace(
+        hour=23, minute=59, second=59, microsecond=999
+    )
 
     df_query = text(f"""
                             select   f.fire_zone
@@ -158,52 +169,66 @@ async def dayly_rep_auto(message: Message, bot: Bot, session: AsyncSession):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    df_1 = df_1.fillna('Всего')
+    df_1 = df_1.fillna("Всего")
 
-    yesterday_end_lie = yesterday_end_lie.strftime('%H:%M %d.%m.%Y')
+    yesterday_end_lie = yesterday_end_lie.strftime("%H:%M %d.%m.%Y")
     summary = df_1.query('fire_zone == "Всего"')
     if not summary.empty:
         for index, row in summary.iterrows():
-            if row['count'] != 0:
-                fire_word = get_fire_count_word(row['count'])
+            if row["count"] != 0:
+                fire_word = get_fire_count_word(row["count"])
 
-                response += (f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
-                             f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>')
+                response += (
+                    f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
+                    f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>'
+                )
 
     acc = df_1.query('fire_zone == "АСС"')
     if not acc.empty:
         for index, row in acc.iterrows():
-            fire_word = get_fire_count_word_wo_forest(row['count'])
+            fire_word = get_fire_count_word_wo_forest(row["count"])
 
-            response += (f'\nв авиазоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
-                         f'{row["fire_area"]} га</b>.')
-            
+            response += (
+                f'\nв авиазоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                f'{row["fire_area"]} га</b>.'
+            )
+
     nss = df_1.query('fire_zone == "НСС"')
     if not nss.empty:
         for index, row in nss.iterrows():
+            fire_word = get_fire_count_word_wo_forest(row["count"])
 
-            fire_word = get_fire_count_word_wo_forest(row['count'])
-
-            response += (f'\nв наземной зоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
-                         f'{row["fire_area"]} га</b>.')
+            response += (
+                f'\nв наземной зоне: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                f'{row["fire_area"]} га</b>.'
+            )
 
     zk = df_1.query('fire_zone == "ЗК"')
     if not zk.empty:
         for index, row in zk.iterrows():
+            fire_word = get_fire_count_word_wo_forest(row["count"])
 
-            fire_word = get_fire_count_word_wo_forest(row['count'])
+            response += (
+                f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
+                f'{row["fire_area"]} га</b>.'
+            )
 
-            response += (f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
-                         f'{row["fire_area"]} га</b>.')
-
-    if response != '':
+    if response != "":
         users_query = select(Users.user_id)
         users_result = await session.execute(users_query)
-        users_list = users_result.scalars().all()
-        
+        users_list = users_result.all()
+
         for user in users_list:
-            
             try:
-                await bot.send_animation(chat_id=user, animation=daily_rep_animation, caption=response, width=50, height=100, parse_mode='HTML')
+                await bot.send_animation(
+                    chat_id=user[0],
+                    animation=daily_rep_animation,
+                    caption=response,
+                    width=50,
+                    height=100,
+                    parse_mode="HTML",
+                )
             except Exception as e:
-                logging.info(f'Ошибка отправки пользователю {user} ежедневного отчета {e}')
+                logging.info(
+                    f"Ошибка отправки пользователю {user} ежедневного отчета {e}"
+                )

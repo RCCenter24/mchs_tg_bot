@@ -12,7 +12,8 @@ def setup_routers() -> Router:
     from support import adminmode, usermode
 
     router = Router()
-
+    router.include_router(adminmode.router)
+    router.include_router(usermode.router)
     router.include_router(start_command.router)
     router.include_router(help_command.router)
     router.include_router(cancel_all_fire_subs.router)
@@ -28,7 +29,6 @@ def setup_routers() -> Router:
     router.include_router(cb_subscribe_all_fires.router)
     router.include_router(wait_for_munic_name.router)
     
-    router.include_router(adminmode.router)
-    router.include_router(usermode.router)
+    
 
     return router

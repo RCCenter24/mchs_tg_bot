@@ -1,7 +1,7 @@
 import logging
 from aiogram.filters import Command
-from aiogram import Bot, Router, F
-from aiogram.types import Message
+from aiogram import Router, F
+from aiogram.types import Message, FSInputFile
 
 import pandas as pd
 from datetime import timedelta, datetime as dt
@@ -10,8 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text, select
 
 from database.models import Users
-from images import daily_rep_animation
-
+from utils.image_generator import generator
 
 
 router = Router()
@@ -121,12 +120,11 @@ async def dayly_rep(message: Message, session: AsyncSession):
             )
 
     if response != "":
-        await message.answer_animation(
-            animation=daily_rep_animation,
+        generator()
+        await message.answer_photo(
+            photo=FSInputFile('daily_report.png'),
             caption=response,
-            width=50,
-            height=100,
-            parse_mode="HTML",
+            parse_mode="HTML"
         )
     else:
         await message.answer("Данных для ежедневного отчета нет")
@@ -220,15 +218,17 @@ async def dayly_rep_auto(session: AsyncSession):
 
         for user in users_list:
             try:
-                await bot.send_animation(
+                await bot.send_photo(
                     chat_id=user[0],
-                    animation=daily_rep_animation,
+                    animation=FSInputFile('daily_report.png'),
                     caption=response,
-                    width=50,
-                    height=100,
                     parse_mode="HTML",
                 )
             except Exception as e:
                 logging.info(
                     f"Ошибка отправки пользователю {user} ежедневного отчета {e}"
                 )
+
+
+
+    

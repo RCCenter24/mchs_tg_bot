@@ -1,9 +1,10 @@
 from datetime import datetime as dt
 from datetime import timedelta
+import tempfile
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-
+from icecream import ic
 
 def generator():
     now = dt.now()
@@ -29,4 +30,9 @@ def generator():
     )
     I1.text((400, 160), label, fill=(0, 0, 0), font=font, embedded_color=True)
 
-    img.save("daily_report.png")
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False, delete_on_close=True) as temp_file:
+        img.save(temp_file, format='PNG')
+        temp_file_path = temp_file.name
+        
+    
+    return temp_file_path

@@ -1,4 +1,5 @@
 import logging
+import os
 from aiogram.filters import Command
 from aiogram import Router, F
 from aiogram.types import Message, FSInputFile
@@ -11,6 +12,7 @@ from sqlalchemy import text, select
 
 from database.models import Users
 from utils.image_generator import generator
+
 
 
 router = Router()
@@ -120,14 +122,16 @@ async def dayly_rep(message: Message, session: AsyncSession):
             )
 
     if response != "":
-        generator()
-        await message.answer_photo(
-            photo=FSInputFile('daily_report.png'),
-            caption=response,
-            parse_mode="HTML"
-        )
-    else:
-        await message.answer("Данных для ежедневного отчета нет")
+        try:
+            temp_file_path = generator()
+            await message.answer_photo(
+                photo=FSInputFile(path=temp_file_path),
+                caption=response,
+                parse_mode="HTML"
+            )
+            os.remove(temp_file_path)
+        except Exception as e:
+            await message.answer(f"Ошибка при формировании отчета {e}")
 
 
 async def dayly_rep_auto(session: AsyncSession):
@@ -212,23 +216,29 @@ async def dayly_rep_auto(session: AsyncSession):
             )
 
     if response != "":
-        users_query = select(Users.user_id)
-        users_result = await session.execute(users_query)
-        users_list = users_result.all()
+        try:
+            temp_file_path = generator()
+            users_query = select(Users.user_id)
+            users_result = await session.execute(users_query)
+            users_list = users_result.all()
 
-        for user in users_list:
-            try:
-                await bot.send_photo(
-                    chat_id=user[0],
-                    animation=FSInputFile('daily_report.png'),
-                    caption=response,
-                    parse_mode="HTML",
-                )
-            except Exception as e:
-                logging.info(
-                    f"Ошибка отправки пользователю {user} ежедневного отчета {e}"
-                )
-
-
-
+            for user in users_list:
+                try:
+                    
+                    await bot.send_photo(
+                        chat_id=user[0],
+                        photo=FSInputFile(path=temp_file_path),
+                        caption=response,
+                        parse_mode="HTML"
+                    )
+                    
+                except Exception as e:
+                    logging.info(
+                        f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}"
+                    )
+        finally:
+            if os.path.exists(temp_file_path):
+                os.remove(temp_file_path)
+            
+    
     

@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router
 
 
 def setup_routers() -> Router:
@@ -18,7 +18,7 @@ def setup_routers() -> Router:
     router.include_router(help_command.router)
     router.include_router(cancel_all_fire_subs.router)
     router.include_router(daily_fire_report.router)
-    router.include_router(echo_handler.router)
+    # router.include_router(echo_handler.router)
     router.include_router(handle_munic_name.router)
     router.include_router(last_fires_news.router)
     router.include_router(my_fire_subs.router)

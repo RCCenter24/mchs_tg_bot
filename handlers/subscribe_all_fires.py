@@ -10,8 +10,6 @@ from database.models import Municipalities, Subscriptions
 
 
 from datetime import datetime as dt
-from images import map_image
-
 
 
 router=Router()

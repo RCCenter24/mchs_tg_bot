@@ -123,13 +123,13 @@ async def dayly_rep(message: Message, session: AsyncSession):
 
     if response != "":
         try:
-            temp_file_path = generator()
+            result_file_path = generator()
             await message.answer_photo(
-                photo=FSInputFile(path=temp_file_path),
+                photo=FSInputFile(path=result_file_path),
                 caption=response,
                 parse_mode="HTML"
             )
-            os.remove(temp_file_path)
+            os.remove(result_file_path)
         except Exception as e:
             await message.answer(f"Ошибка при формировании отчета {e}")
 
@@ -217,7 +217,7 @@ async def dayly_rep_auto(session: AsyncSession):
 
     if response != "":
         try:
-            temp_file_path = generator()
+            result_file_path = generator()
             users_query = select(Users.user_id)
             users_result = await session.execute(users_query)
             users_list = users_result.all()
@@ -227,7 +227,7 @@ async def dayly_rep_auto(session: AsyncSession):
                     
                     await bot.send_photo(
                         chat_id=user[0],
-                        photo=FSInputFile(path=temp_file_path),
+                        photo=FSInputFile(path=result_file_path),
                         caption=response,
                         parse_mode="HTML"
                     )
@@ -237,8 +237,8 @@ async def dayly_rep_auto(session: AsyncSession):
                         f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}"
                     )
         finally:
-            if os.path.exists(temp_file_path):
-                os.remove(temp_file_path)
+            if os.path.exists(result_file_path):
+                os.remove(result_file_path)
             
     
     

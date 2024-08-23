@@ -1,3 +1,4 @@
+import logging
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
@@ -41,7 +42,8 @@ async def handle_my_fire_subs(message: Message, state: FSMContext, session: Asyn
 
     try:
         await message.answer_photo(caption=message_text, photo=main_photo, parse_mode='HTML')
-    except:
+    except Exception as e:
+        logging.info(f'Не удалось отправить изображение: {e}')
         msg_parts = await split_message(message_text)
         for parts in msg_parts:
             await message.answer(parts, parse_mode='HTML')

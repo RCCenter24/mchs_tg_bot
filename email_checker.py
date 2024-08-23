@@ -1,17 +1,23 @@
-import asyncio
 from aiogram.types import Message
+
+import asyncio
+import imaplib
+import os
+
 from email import message_from_bytes
 from email.header import decode_header
-import imaplib
-import logging
-import os
-from icecream import ic
+
+
 from config import EMAIL, PASSWORD, SAVE_DIR, imap_server
+
+from sqlalchemy import select
 from database.models import Fires
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from msg_sender import msg_sender
 from utils.db_saver import save_to_db
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
+
+
 
 
 async def decode_file_name(encoded_name):
@@ -49,9 +55,6 @@ async def fetch_and_save_files(session: AsyncSession):
     result, data = await asyncio.to_thread(mail.search, None, 'ALL')
     email_nums = data[0].split()
 
-    
-    subject = None
-    content = None
 
     num = email_nums[-1]
     result, email_data = await asyncio.to_thread(mail.fetch, num, '(RFC822)')
@@ -61,19 +64,17 @@ async def fetch_and_save_files(session: AsyncSession):
     subject_header = msg["Subject"]
     if subject_header is not None:
         decoded_subject = decode_header(subject_header)[0][0]
-        subject = decoded_subject.decode() if isinstance(
+        decoded_subject.decode() if isinstance(
             decoded_subject, bytes) else decoded_subject
-    else:
-        subject = ""
+
     await extract_content(msg)
 
     global global_email_id
     email_id = msg["Message-ID"]
     global_email_id = email_id
     if msg.is_multipart():
-        text_part_found = False
         for part in msg.walk():
-            content_type = part.get_content_type()
+            part.get_content_type()
             content_disposition = part.get("Content-Disposition")
             if content_disposition and "attachment" in content_disposition:
                 filename = part.get_filename()

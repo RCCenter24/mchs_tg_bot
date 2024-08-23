@@ -4,7 +4,8 @@ import tempfile
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from icecream import ic
+import os
+
 
 def generator():
     now = dt.now()
@@ -17,7 +18,13 @@ def generator():
 
     font = ImageFont.truetype("Arial", 52)
     font_1 = ImageFont.truetype("Arial", 68)
-    img = Image.open("fire.png")
+
+    directory = "/var/log/tg_bot"
+    filename = "daily_report.png"
+    filename_result = "fire.png"
+
+    file_path = os.path.join(directory, filename)
+    img = Image.open(file_path)
 
     I1 = ImageDraw.Draw(img)
 
@@ -30,9 +37,12 @@ def generator():
     )
     I1.text((400, 160), label, fill=(0, 0, 0), font=font, embedded_color=True)
 
-    with tempfile.NamedTemporaryFile(suffix=".png", delete=False, delete_on_close=True) as temp_file:
-        img.save(temp_file, format='PNG')
-        temp_file_path = temp_file.name
-        
-    
-    return temp_file_path
+    result_file_path = os.path.join(directory, filename_result)
+    img.save(result_file_path)
+    with tempfile.NamedTemporaryFile(
+        suffix=".png", delete=False, delete_on_close=True
+    ) as temp_file:
+        img.save(temp_file, format="PNG")
+        result_file_path = temp_file.name
+
+    return result_file_path

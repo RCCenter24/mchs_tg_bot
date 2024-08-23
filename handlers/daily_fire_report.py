@@ -131,7 +131,7 @@ async def dayly_rep(message: Message, session: AsyncSession):
             )
             os.remove(result_file_path)
         except Exception as e:
-            await message.answer(f"Ошибка при формировании отчета {e}")
+            await message.answer(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
 
 
 async def dayly_rep_auto(session: AsyncSession):
@@ -234,7 +234,7 @@ async def dayly_rep_auto(session: AsyncSession):
                     
                 except Exception as e:
                     logging.info(
-                        f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}"
+                        f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}, путь до файла {result_file_path}"
                     )
         finally:
             if os.path.exists(result_file_path):

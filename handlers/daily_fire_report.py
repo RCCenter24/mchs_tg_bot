@@ -130,7 +130,8 @@ async def dayly_rep(message: Message, session: AsyncSession):
                 caption=response,
                 parse_mode="HTML"
             )
-            # os.remove(result_file_path)
+            if os.path.exists(result_file_path):
+                os.remove(result_file_path)
         except Exception as e:
             await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
             await message.answer(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")

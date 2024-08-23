@@ -1,6 +1,5 @@
 from datetime import datetime as dt
 from datetime import timedelta
-import tempfile
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -13,12 +12,17 @@ def generator():
     yesterday_end_lie = (now - timedelta(days=1)).replace(
         hour=23, minute=59, second=59, microsecond=999
     )
-
+    
+    font_url = 'fonts/ARIAL.TTF'
+    
+    
     label = yesterday_end_lie.strftime("%H:%M  %d.%m.%Y")
 
-    font = ImageFont.truetype("Arial", 52)
-    font_1 = ImageFont.truetype("Arial", 68)
+    font = ImageFont.truetype(font_url, 52)
+    font_1 = ImageFont.truetype(font_url, 68)
 
+    
+    
     directory = "var/log/tg_bot"
     filename = "fire.png"
     filename_result = "daily_report.png"

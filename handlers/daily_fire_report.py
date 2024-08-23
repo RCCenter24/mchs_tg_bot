@@ -122,8 +122,9 @@ async def dayly_rep(message: Message, session: AsyncSession):
             )
 
     if response != "":
+        result_file_path = generator()
         try:
-            result_file_path = generator()
+            
             await message.answer_photo(
                 photo=FSInputFile(path=result_file_path),
                 caption=response,
@@ -216,8 +217,9 @@ async def dayly_rep_auto(session: AsyncSession):
             )
 
     if response != "":
+        result_file_path = generator()
         try:
-            result_file_path = generator()
+            
             users_query = select(Users.user_id)
             users_result = await session.execute(users_query)
             users_list = users_result.all()
@@ -239,6 +241,6 @@ async def dayly_rep_auto(session: AsyncSession):
         finally:
             if os.path.exists(result_file_path):
                 os.remove(result_file_path)
-            
-    
-    
+
+
+

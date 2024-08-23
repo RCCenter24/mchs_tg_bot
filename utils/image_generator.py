@@ -19,12 +19,14 @@ def generator():
     font = ImageFont.truetype("Arial", 52)
     font_1 = ImageFont.truetype("Arial", 68)
 
-    directory = "/var/log/tg_bot"
+    directory = "var/log/tg_bot"
     filename = "fire.png"
     filename_result = "daily_report.png"
     
 
-    file_path = os.path.join(directory, filename)
+
+    
+    file_path = os.path.join(os.getcwd(), directory, filename)
     img = Image.open(file_path)
 
     I1 = ImageDraw.Draw(img)
@@ -38,7 +40,9 @@ def generator():
     )
     I1.text((400, 160), label, fill=(0, 0, 0), font=font, embedded_color=True)
 
-    result_file_path = os.path.join(directory, filename_result)
+    
+  
+    result_file_path = os.path.join(os.getcwd(), directory, filename_result)
     img.save(result_file_path)
     
     return result_file_path

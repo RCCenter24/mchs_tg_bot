@@ -20,8 +20,9 @@ def generator():
     font_1 = ImageFont.truetype("Arial", 68)
 
     directory = "/var/log/tg_bot"
-    filename = "daily_report.png"
-    filename_result = "fire.png"
+    filename = "fire.png"
+    filename_result = "daily_report.png"
+    
 
     file_path = os.path.join(directory, filename)
     img = Image.open(file_path)
@@ -39,10 +40,5 @@ def generator():
 
     result_file_path = os.path.join(directory, filename_result)
     img.save(result_file_path)
-    with tempfile.NamedTemporaryFile(
-        suffix=".png", delete=False, delete_on_close=True
-    ) as temp_file:
-        img.save(temp_file, format="PNG")
-        result_file_path = temp_file.name
-
+    
     return result_file_path

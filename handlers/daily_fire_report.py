@@ -12,7 +12,7 @@ from sqlalchemy import text, select
 
 from database.models import Users
 from utils.image_generator import generator
-
+from icecream import ic
 
 
 router = Router()
@@ -130,8 +130,9 @@ async def dayly_rep(message: Message, session: AsyncSession):
                 caption=response,
                 parse_mode="HTML"
             )
-            os.remove(result_file_path)
+            # os.remove(result_file_path)
         except Exception as e:
+            await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
             await message.answer(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
 
 
@@ -241,6 +242,5 @@ async def dayly_rep_auto(session: AsyncSession):
         finally:
             if os.path.exists(result_file_path):
                 os.remove(result_file_path)
-
 
 

@@ -36,6 +36,7 @@ async def manual_check_news(message: Message, session: AsyncSession, bot: Bot):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
+    df_1['fire_area'] = df_1['fire_area'].map(lambda x: str(x).replace('.', ','))
     modified_df = await modify_dataframe_for_command(df_1)
     subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
                     .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \

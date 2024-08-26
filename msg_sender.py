@@ -27,6 +27,7 @@ async def msg_sender(message: Message, session: AsyncSession, email_id):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
+    df_1['fire_area'] = df_1['fire_area'].map(lambda x: str(x).replace('.', ','))
     if df_1.empty:
         return
     modified_df = await modify_dataframe(df_1)

@@ -75,11 +75,10 @@ async def dayly_rep(message: Message, session: AsyncSession):
 
     result = await session.execute(df_query)
     df_query_result = result.all()
-
     df_1 = pd.DataFrame(df_query_result)
-    df_1.style.format(decimal=',')
     df_1 = df_1.fillna("Всего")
-
+    
+    df_1['fire_area'] = df_1['fire_area'].map(lambda x: str(x).replace('.', ','))
     yesterday_end_lie = yesterday_end_lie.strftime("%H:%M %d.%m.%Y")
     summary = df_1.query('fire_zone == "Всего"')
     if not summary.empty:
@@ -176,6 +175,7 @@ async def dayly_rep_auto(session: AsyncSession):
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
     df_1 = df_1.fillna("Всего")
+    df_1['fire_area'] = df_1['fire_area'].map(lambda x: str(x).replace('.', ','))
 
     yesterday_end_lie = yesterday_end_lie.strftime("%H:%M %d.%m.%Y")
     summary = df_1.query('fire_zone == "Всего"')

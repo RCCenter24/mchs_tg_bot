@@ -77,6 +77,7 @@ async def dayly_rep(message: Message, session: AsyncSession):
     df_query_result = result.all()
 
     df_1 = pd.DataFrame(df_query_result)
+    df_1.style.format(decimal=',')
     df_1 = df_1.fillna("Всего")
 
     yesterday_end_lie = yesterday_end_lie.strftime("%H:%M %d.%m.%Y")

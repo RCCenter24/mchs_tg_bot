@@ -22,7 +22,7 @@ class Formatter(logging.Formatter):
 def setup_logging():
     file_handler = logging.FileHandler("bot.log")
     file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(Formatter('%(asctime)s - %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S, %f'))
+    file_handler.setFormatter(Formatter('%(asctime)s - %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S,%f'))
     
 
     

@@ -51,9 +51,11 @@ async def main():
     scheduler.add_job(daily_report_sender, 'cron', hour= 10)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
+    logging.info('Бот запущен и готов к приему сообщений')
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(), skip_updates=True)
+    
 
 if __name__ == "__main__":
     asyncio.run(main())

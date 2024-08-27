@@ -1,3 +1,4 @@
+import logging
 from aiogram.types import Message
 
 import asyncio
@@ -86,8 +87,15 @@ async def fetch_and_save_files(session: AsyncSession):
                     result = await session.execute(check_email_query)
                     already_exists = result.first()
                     if already_exists is None:
-                        await save_to_db(file_bytes, email_id, session)
-                        await msg_sender(Message, session, email_id)
+                        try:
+                            await save_to_db(file_bytes, email_id, session)
+                        except Exception as e:
+                            logging.error(f'Не удалось сохранить сообщение {email_id}: {e}')
+                        try:    
+                            await msg_sender(Message, session, email_id)
+                        except Exception as e:
+                            logging.error(f'Не удалось отправить сообщение {email_id}: {e}')
+                            
                         
     await asyncio.to_thread(mail.logout)
     return email_id

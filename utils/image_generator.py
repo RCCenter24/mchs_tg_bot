@@ -12,24 +12,18 @@ def generator():
     yesterday_end_lie = (now - timedelta(days=1)).replace(
         hour=23, minute=59, second=59, microsecond=999
     )
-    
-    font_url = 'fonts/ARIAL.TTF'
-    
-    
+
+    font_url = "fonts/ARIAL.TTF"
+
     label = yesterday_end_lie.strftime("%H:%M  %d.%m.%Y")
 
     font = ImageFont.truetype(font_url, 52)
     font_1 = ImageFont.truetype(font_url, 68)
 
-    
-    
     directory = "var/log/tg_bot"
     filename = "fire.png"
     filename_result = "daily_report.png"
-    
 
-
-    
     file_path = os.path.join(os.getcwd(), directory, filename)
     img = Image.open(file_path)
 
@@ -44,9 +38,7 @@ def generator():
     )
     I1.text((400, 160), label, fill=(0, 0, 0), font=font, embedded_color=True)
 
-    
-  
     result_file_path = os.path.join(os.getcwd(), directory, filename_result)
     img.save(result_file_path)
-    
+
     return result_file_path

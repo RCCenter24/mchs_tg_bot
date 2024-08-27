@@ -38,57 +38,60 @@ async def msg_sender(message: Message, session: AsyncSession, email_id):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    df_1["fire_area"] = df_1["fire_area"].map(lambda x: str(x).replace(".", ","))
-    if len(df_1) < 2:
-        return
-    modified_df = await modify_dataframe(df_1)
-    subscribers_query = select(Subscriptions.user_id, Municipalities.map_id).join(
-        Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id
-    )
-    result = await session.execute(subscribers_query)
-    subscribers = result.all()
-    df_subscribers = pd.DataFrame(subscribers)
-    result_df = await result_df_maker(modified_df, df_subscribers)
-    if not result_df.empty:
-        grouped_df = result_df.groupby("user_id")
-        for user_id, group in grouped_df:
-            group = group.drop_duplicates(
-                subset=[
-                    "region",
-                    "fire_status",
-                    "fire_num",
-                    "forestry_name",
-                    "forces_aps",
-                    "forces_lps",
-                    "city",
-                    "distance",
-                    "map_id",
-                    "fire_area",
-                    "fire_zone",
-                ]
-            )
-            grouped_by_municipality = group.groupby("region")
-            response = await response_maker(grouped_by_municipality)
-            try:
-                await bot.send_message(
-                    chat_id=user_id, text=response, parse_mode="HTML"
+    if len(df_1)>=1:
+        try:
+            df_1["fire_area"] = df_1["fire_area"].map(lambda x: str(x).replace(".", ","))
+        except Exception as e:
+            logging.error(f'не удалось изменить точку на запятую: {e}')
+            
+        modified_df = await modify_dataframe(df_1)
+        subscribers_query = select(Subscriptions.user_id, Municipalities.map_id).join(
+            Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id
+        )
+        result = await session.execute(subscribers_query)
+        subscribers = result.all()
+        df_subscribers = pd.DataFrame(subscribers)
+        result_df = await result_df_maker(modified_df, df_subscribers)
+        if not result_df.empty:
+            grouped_df = result_df.groupby("user_id")
+            for user_id, group in grouped_df:
+                group = group.drop_duplicates(
+                    subset=[
+                        "region",
+                        "fire_status",
+                        "fire_num",
+                        "forestry_name",
+                        "forces_aps",
+                        "forces_lps",
+                        "city",
+                        "distance",
+                        "map_id",
+                        "fire_area",
+                        "fire_zone",
+                    ]
                 )
-                sent_message_query = (
-                    insert(Messages)
-                    .values(
-                        user_id=user_id,
-                        email_id=email_id,
-                        message_text=response,
-                        date_send=dt.now(),
+                grouped_by_municipality = group.groupby("region")
+                response = await response_maker(grouped_by_municipality)
+                try:
+                    await bot.send_message(
+                        chat_id=user_id, text=response, parse_mode="HTML"
                     )
-                    .on_conflict_do_nothing()
-                )
-                await session.execute(sent_message_query)
-                await session.commit()
-            except SQLAlchemyError as db_err:
-                logging.error(
-                    f"Ошибка базы данных при обработке пользователя {user_id}: {db_err}"
-                )
-                await session.rollback()
-            except Exception as e:
-                logging.error(f"Ошибка при отправке пользователю {user_id}: {str(e)}")
+                    sent_message_query = (
+                        insert(Messages)
+                        .values(
+                            user_id=user_id,
+                            email_id=email_id,
+                            message_text=response,
+                            date_send=dt.now(),
+                        )
+                        .on_conflict_do_nothing()
+                    )
+                    await session.execute(sent_message_query)
+                    await session.commit()
+                except SQLAlchemyError as db_err:
+                    logging.error(
+                        f"Ошибка базы данных при обработке пользователя {user_id}: {db_err}"
+                    )
+                    await session.rollback()
+                except Exception as e:
+                    logging.error(f"Ошибка при отправке пользователю {user_id}: {str(e)}")

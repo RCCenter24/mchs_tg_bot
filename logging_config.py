@@ -1,9 +1,29 @@
 import logging
+import datetime
+import pytz
+
+class Formatter(logging.Formatter):
+    def converter(self, timestamp):
+        dt = datetime.datetime.fromtimestamp(timestamp, tz=pytz.UTC)
+        return dt.astimezone(pytz.timezone('Asia/Krasnoyarsk'))
+    def formatTime(self, record, datefmt=None):
+        dt = self.converter(record.created)
+        if datefmt:
+            s = dt.strftime(datefmt)
+        else:
+            try:
+                s = dt.isoformat(timespec='milliseconds')
+            except TypeError:
+                s = dt.isoformat()
+        return s
+
+
 
 def setup_logging():
     file_handler = logging.FileHandler("bot.log")
     file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+    file_handler.setFormatter(Formatter('%(asctime)s - %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S, %f'))
+    
 
     
     logging.basicConfig(

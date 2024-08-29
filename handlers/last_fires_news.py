@@ -36,54 +36,59 @@ async def manual_check_news(message: Message, session: AsyncSession, bot: Bot):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    try:
-        df_1['fire_area'] = df_1['fire_area'].map(lambda x: str(x).replace('.', ','))
-    except Exception as e:
-        logging.error(f'не удалось изменить точку на запятую: {e}')
-        
-    modified_df = await modify_dataframe_for_command(df_1)
-    subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
-                    .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
-                    .where(Subscriptions.user_id == user_id)
-
-    result = await session.execute(subscribers_query)
-    subscribers = result.all()
-    if subscribers == []:
-        text = (
-                "Для выбранных муниципальных образований информация о пожарной обстановке отсутствует. \n"
-                "Чтобы подписаться на другие муниципальные образования нажмите /subscribe или /subscribe_all")
-        await bot.send_message(chat_id=user_id, text=text, parse_mode='HTML')
-        return
-    df_2 = pd.DataFrame(subscribers)
-    result_df = await result_df_maker(modified_df, df_2)
-
-    if not result_df.empty:
-        grouped_df = result_df.groupby('user_id')
-        for user_id, group in grouped_df:
-            group = group.drop_duplicates(subset=['region', 'fire_status', 'fire_num',
-                                                  'forestry_name', 'forces_aps', 'forces_lps',
-                                                  'city', 'distance', 'map_id', 'fire_area', 'fire_zone'])
+    if not df_1.empty:
+        try:
+            df_1['fire_area'] = df_1['fire_area'].map(lambda x: str(x).replace('.', ','))
+        except Exception as e:
+            logging.error(f'не удалось изменить точку на запятую: {e}')
             
-            grouped_by_municipality = group.groupby('region')
-            response = await response_maker(grouped_by_municipality)
-            messages = await split_message(response)
-            for msg in messages:                
-                try:
-                    await bot.send_message(chat_id=user_id, text=msg, parse_mode='HTML')
-                    
-                    sent_message_query = insert(Messages).values(
-                        user_id=user_id,
-                        email_id=email_id,
-                        message_text=response,
-                        date_send=dt.now()
-                    ).on_conflict_do_nothing()
-                    await session.execute(sent_message_query)
-                    await session.commit()
-                except SQLAlchemyError as db_err:
-                    logging.error(
-                        f'Ошибка базы данных при обработке пользователя {user_id}: {db_err}')
-                    await session.rollback()
-                except Exception as e:
-                    await bot.send_message(chat_id=user_id, text='Не удалось отправить сообщение', parse_mode='HTML')
-                    logging.error(
-                        f'Ошибка при отправке пользователю {user_id}: {str(e)}')
+        modified_df = await modify_dataframe_for_command(df_1)
+        subscribers_query = select(Subscriptions.user_id, Subscriptions, Municipalities.map_id) \
+                        .join(Municipalities, Subscriptions.municipality_id == Municipalities.municipality_id) \
+                        .where(Subscriptions.user_id == user_id)
+
+        result = await session.execute(subscribers_query)
+        subscribers = result.all()
+        if subscribers == []:
+            text = (
+                    "Для выбранных муниципальных образований информация о пожарной обстановке отсутствует. \n"
+                    "Чтобы подписаться на другие муниципальные образования нажмите /subscribe или /subscribe_all")
+            await bot.send_message(chat_id=user_id, text=text, parse_mode='HTML')
+            return
+        df_2 = pd.DataFrame(subscribers)
+        result_df = await result_df_maker(modified_df, df_2)
+
+        if not result_df.empty:
+            grouped_df = result_df.groupby('user_id')
+            for user_id, group in grouped_df:
+                group = group.drop_duplicates(subset=['region', 'fire_status', 'fire_num',
+                                                    'forestry_name', 'forces_aps', 'forces_lps',
+                                                    'city', 'distance', 'map_id', 'fire_area', 'fire_zone'])
+                
+                grouped_by_municipality = group.groupby('region')
+                response = await response_maker(grouped_by_municipality)
+                messages = await split_message(response)
+                for msg in messages:                
+                    try:
+                        await bot.send_message(chat_id=user_id, text=msg, parse_mode='HTML')
+                        
+                        sent_message_query = insert(Messages).values(
+                            user_id=user_id,
+                            email_id=email_id,
+                            message_text=response,
+                            date_send=dt.now()
+                        ).on_conflict_do_nothing()
+                        await session.execute(sent_message_query)
+                        await session.commit()
+                    except SQLAlchemyError as db_err:
+                        logging.error(
+                            f'Ошибка базы данных при обработке пользователя {user_id}: {db_err}')
+                        
+                        await session.rollback()
+                    except Exception as e:
+                        await bot.send_message(chat_id=user_id, text='Не удалось отправить сообщение', parse_mode='HTML')
+                        logging.error(
+                            f'Ошибка при отправке пользователю {user_id}: {str(e)}')
+    
+    else:                   
+        await bot.send_message(chat_id=user_id, text='На текущий момент новости о пожарной обстановке отсутствуют', parse_mode='HTML')

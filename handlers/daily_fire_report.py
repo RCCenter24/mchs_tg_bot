@@ -87,7 +87,7 @@ async def dayly_rep(message: Message, session: AsyncSession):
                 fire_word = get_fire_count_word(row["count"])
 
                 response += (
-                    f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
+                    f'На территории Красноярского края действует '
                     f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>'
                 )
 
@@ -135,6 +135,22 @@ async def dayly_rep(message: Message, session: AsyncSession):
         except Exception as e:
             await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
             await message.answer(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
+        return
+    
+    try:
+        result_file_path = generator()
+        response = ('На территории Красноярского края действующие лесные пожары отсутствуют')   
+        await message.answer_photo(
+            photo=FSInputFile(path=result_file_path),
+            caption=response,
+            parse_mode="HTML"
+        )
+        if os.path.exists(result_file_path):
+            os.remove(result_file_path)
+    except Exception as e:
+        await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
+
+        
 
 
 async def dayly_rep_auto(session: AsyncSession):
@@ -185,7 +201,7 @@ async def dayly_rep_auto(session: AsyncSession):
                 fire_word = get_fire_count_word(row["count"])
 
                 response += (
-                    f'По состоянию на {yesterday_end_lie} на территории Красноярского края действует '
+                    f'На территории Красноярского края действует '
                     f'<b>{row["count"]}</b> {fire_word} на площади <b>{row["fire_area"]} га.</b>'
                 )
 
@@ -244,5 +260,18 @@ async def dayly_rep_auto(session: AsyncSession):
         finally:
             if os.path.exists(result_file_path):
                 os.remove(result_file_path)
+    try:
+        result_file_path = generator()
+        response = ('На территории Красноярского края действующие лесные пожары отсутствуют')   
+        await bot.send_photo(
+            photo=FSInputFile(path=result_file_path),
+            caption=response,
+            parse_mode="HTML"
+        )
+        if os.path.exists(result_file_path):
+            os.remove(result_file_path)
+    except Exception as e:
+        await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
+
 
 

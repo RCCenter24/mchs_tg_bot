@@ -13,15 +13,15 @@ async def save_to_db(file_bytes, email_id, session: AsyncSession):
     csv_io = StringIO()
     Xlsx2csv(bytes_io, dateformat="%d.%m.%Y %H:%M:%S").convert(csv_io)
     csv_io.seek(0)
-    df_chunks = pd.read_csv(
-        csv_io,
-        parse_dates=["Дата обнаружения", "Дата ликвидации", "Актульно"],
-        chunksize=10,
-        dayfirst=True)
-    df_chunks_len = df_chunks.read()
-    if len(df_chunks_len) >= 1:
-        try:
-            for chunk in df_chunks:
+    try:
+        df_chunks = pd.read_csv(
+            csv_io,
+            parse_dates=["Дата обнаружения", "Дата ликвидации", "Актульно"],
+            chunksize=10,
+            dayfirst=True,
+        )
+        for chunk in df_chunks:
+            if not chunk.empty and len(chunk) > 0:
                 chunk.fillna("", inplace=True)
                 to_db_data = [
                     {
@@ -41,23 +41,19 @@ async def save_to_db(file_bytes, email_id, session: AsyncSession):
                         "fire_area": row["Площадь пожара"],
                         "forces_aps": row["АПС"],
                         "forces_lps": row["ЛПС"],
-                        "forces_other": row["Привл"],
+                        "forces_": row["Привл"],
                         "forces_rent": row["Аренд"],
                         "forces_mchs": row["МЧС"],
-                        "date_terminate": row["Дата ликвидации"]
-                        if not pd.isna(row["Дата ликвидации"])
-                        else None,
+                        "date_terminate": row["Дата ликвидации"] if not pd.isna(row["Дата ликвидации"]) else None,
                         "date_actual": row["Актульно"],
                         "email_id": email_id,
                     }
                     for _, row in chunk.iterrows()
                 ]
-                add_db_query = insert(Fires).values(to_db_data)
+                add_db_query = insert(Fires).values(to_db_data).on_conflict_do_nothing()
                 await session.execute(add_db_query)
                 await session.commit()
-        except SQLAlchemyError as db_err:
-            logging.error(
-                f"Ошибка базы данных при сохранении данных из письма {email_id}: {db_err}"
-            )
-    else:
-        print('не удалось сохранить в базе')
+            else:
+                logging.info(f"Chunk is empty or contains only headers. Skipping insert.")
+    except Exception as e:
+        logging.error(f"Error reading CSV data: {e}")

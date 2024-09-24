@@ -1,5 +1,5 @@
-host = ""
-user = ""
+host = "localhost"
+user = "rejoller"
 port = 5432
-database = ""
-password = ""
+database = "mchs_tg_fires"
+password = "9205"

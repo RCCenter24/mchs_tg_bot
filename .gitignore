@@ -20,3 +20,5 @@ images.py
 *.xlsx
 *.jpg
 daily_report.png
+database/db_config.py
+

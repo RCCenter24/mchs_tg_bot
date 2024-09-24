@@ -4,13 +4,13 @@ from aiogram.types import Message
 import pandas as pd
 from datetime import datetime as dt
 
-from database.models import Messages, Municipalities, Subscriptions
+from database.models import Fires, Messages, Municipalities, Subscriptions
 
 from utils.df_modifier import modify_dataframe
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 
-from sqlalchemy import select, text
+from sqlalchemy import select, text, or_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
@@ -19,21 +19,11 @@ from bot import bot
 
 
 async def msg_sender(message: Message, session: AsyncSession, email_id):
-    df_query = text("""
-                    
-            select f.region, f.fire_status, f.fire_num,
-                f.forestry_name, f.forces_aps, f.forces_lps,
-                f.city, f.distance, f.map_id, f.fire_area, f.fire_zone, f.ext_log
-                , f.*
-            From fires f 
-            where not exists( select 1 from fires f2 Where f2.fire_ext_id = f.fire_ext_id
-                                and f.date_actual<=f2.date_actual
-                                and f.date_import<=f2.date_import
-                                and f2.fire_status = f.fire_status and f2.forces_aps=f.forces_aps
-                                and f2.forces_lps=f.forces_lps and f2.fire_area=f.fire_area
-                                and f2.fire_zone=f.fire_zone);
-            
-            """)
+    df_query = select(
+            Fires.region, Fires.fire_status, Fires.fire_num,
+            Fires.forestry_name, Fires.forces_aps, Fires.forces_lps,
+            Fires.city, Fires.distance, Fires.map_id, Fires.fire_area, Fires.fire_zone, Fires.ext_log
+        ).where((Fires.email_id == email_id) & or_(Fires.ext_log == int(2), Fires.ext_log == int(3)))
 
     result = await session.execute(df_query)
     df_query_result = result.all()

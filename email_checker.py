@@ -21,6 +21,7 @@ from utils.db_saver import save_to_db
 
 
 
+
 async def decode_file_name(encoded_name):
     d_header = decode_header(encoded_name)[0]
     if isinstance(d_header[0], bytes):
@@ -93,4 +94,5 @@ async def fetch_and_save_files(session: AsyncSession):
                             
                         
     await asyncio.to_thread(mail.logout)
+
     return email_id

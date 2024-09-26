@@ -2,7 +2,7 @@ from aiogram import Router, Bot, F
 from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command
 from aiogram.types import Message, Chat
-
+from config import admin_group_chat_id
 
 router = Router()
 
@@ -54,7 +54,7 @@ def extract_id(message: Message) -> int:
 
         
         
-@router.message(F.reply_to_message)
+@router.message(F.reply_to_message, F.chat.id == admin_group_chat_id)
 async def reply_to_user(message: Message):
     try:
         user_id = extract_id(message.reply_to_message)

@@ -48,7 +48,7 @@ async def main():
     dp.message.middleware(LoggingMiddleware())
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     scheduler.add_job(on_startup, 'interval', minutes=interval_min)
-    scheduler.add_job(daily_report_sender, 'cron', hour= 10)
+    scheduler.add_job(daily_report_sender, 'cron', hour= 12, minute=5)
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')
     logging.info('--------------------Бот запущен и готов к приему сообщений------------------------------')

@@ -14,6 +14,7 @@ from sqlalchemy import select, text, or_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
+from config import TEST_MSG
 
 from bot import bot
 
@@ -62,6 +63,11 @@ async def msg_sender(message: Message, session: AsyncSession, email_id):
                 )
                 grouped_by_municipality = group.groupby("region")
                 response = await response_maker(grouped_by_municipality)
+                try:
+                    await bot.send_message(chat_id=user_id, text = TEST_MSG, parse_mode="HTML")
+                except Exception as e:
+                    logging.error(f"Не удалось отправить сообщение пользователю {user_id}: {str(e)}")
+                
                 try:
                     await bot.send_message(
                         chat_id=user_id, text=response, parse_mode="HTML"

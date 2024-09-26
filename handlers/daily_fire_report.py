@@ -10,6 +10,7 @@ from datetime import timedelta, datetime as dt
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text, select
 
+from config import TEST_MSG
 from database.models import Users
 from utils.image_generator import generator
 from icecream import ic
@@ -120,6 +121,10 @@ async def dayly_rep(message: Message, session: AsyncSession):
                 f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
                 f'{row["fire_area"]} га</b>.'
             )
+    try:
+        await message.answer(text = TEST_MSG, parse_mode="HTML")
+    except Exception as e:
+        logging.error(f"Не удалось отправить сообщение пользователю {message.from_user.id}: {str(e)}")
 
     if response != "":
         result_file_path = generator()
@@ -134,7 +139,6 @@ async def dayly_rep(message: Message, session: AsyncSession):
                 os.remove(result_file_path)
         except Exception as e:
             await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
-            await message.answer(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
         return
     
     try:
@@ -195,6 +199,8 @@ async def dayly_rep_auto(session: AsyncSession):
 
     yesterday_end_lie = yesterday_end_lie.strftime("%H:%M %d.%m.%Y")
     summary = df_1.query('fire_zone == "Всего"')
+    
+    
     if not summary.empty:
         for index, row in summary.iterrows():
             if row["count"] != 0:
@@ -229,7 +235,6 @@ async def dayly_rep_auto(session: AsyncSession):
     if not zk.empty:
         for index, row in zk.iterrows():
             fire_word = get_fire_count_word_wo_forest(row["count"])
-
             response += (
                 f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
                 f'{row["fire_area"]} га</b>.'
@@ -238,21 +243,18 @@ async def dayly_rep_auto(session: AsyncSession):
     if response != "":
         result_file_path = generator()
         try:
-            
             users_query = select(Users.user_id)
             users_result = await session.execute(users_query)
             users_list = users_result.all()
-
             for user in users_list:
                 try:
-                    
+                    await bot.send_message(chat_id=user[0], text = TEST_MSG, parse_mode="HTML")
                     await bot.send_photo(
                         chat_id=user[0],
                         photo=FSInputFile(path=result_file_path),
                         caption=response,
                         parse_mode="HTML"
                     )
-                    
                 except Exception as e:
                     logging.info(
                         f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}, путь до файла {result_file_path}"
@@ -260,18 +262,34 @@ async def dayly_rep_auto(session: AsyncSession):
         finally:
             if os.path.exists(result_file_path):
                 os.remove(result_file_path)
+                
     try:
         result_file_path = generator()
-        response = ('На территории Красноярского края действующие лесные пожары отсутствуют')   
-        await bot.send_photo(
-            photo=FSInputFile(path=result_file_path),
-            caption=response,
-            parse_mode="HTML"
-        )
-        if os.path.exists(result_file_path):
-            os.remove(result_file_path)
+        response = 'На территории Красноярского края действующие лесные пожары отсутствуют'
+        users_query = select(Users.user_id)
+        users_result = await session.execute(users_query)
+        users_list = users_result.all()
+        for user in users_list:
+            try:            
+                await bot.send_message(chat_id=user[0], text = TEST_MSG, parse_mode="HTML")                
+                await bot.send_photo(
+                    chat_id=user[0],
+                    photo=FSInputFile(path=result_file_path),
+                    caption=response,
+                    parse_mode="HTML"
+                )
+                
+            except Exception as e:
+                logging.info(
+                    f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}, путь до файла {result_file_path}"
+                )
+        
     except Exception as e:
         await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
+        
+    finally:
+        if os.path.exists(result_file_path):
+            os.remove(result_file_path)
 
 
 

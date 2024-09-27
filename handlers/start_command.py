@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from user_manager import UserManager
 from images import main_photo
-
+from config import TEST_MSG
 
 router = Router()
 
@@ -43,7 +43,7 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
 
     builder.adjust(1)
     builder.attach(InlineKeyboardBuilder.from_markup(markup))
-
+    await message.answer(TEST_MSG, parse_mode='HTML')
     caption = ("Что умеет этот бот?\n\nБот «И 1 Лесные пожары» позволяет получить общую "
                "статистическую информацию по ряду основных параметров, характеризующих "
                "текущую лесопожарную обстановку за сутки, а также незамедлительно при обнаружении пожара.")

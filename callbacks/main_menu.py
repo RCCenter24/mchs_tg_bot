@@ -23,3 +23,4 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
     await state.clear()
 
     await query.message.answer_photo(caption=caption, photo=main_photo)
+    await query.answer()

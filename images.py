@@ -1,4 +1,4 @@
-main_photo = ''
-map_image = ''
-support_menu = ''
-daily_rep_animation = ''
+main_photo = 'AgACAgIAAxkBAAJGMWaLkO5OFeFQB6M_ItuwhWrKypRoAAKb8jEbzE9ZSItrFP_K9zadAQADAgADeQADNQQ'
+map_image = 'AgACAgIAAxkBAAJGMWaLkO5OFeFQB6M_ItuwhWrKypRoAAKb8jEbzE9ZSItrFP_K9zadAQADAgADeQADNQQ'
+support_menu = 'AgACAgIAAxkBAAJGMWaLkO5OFeFQB6M_ItuwhWrKypRoAAKb8jEbzE9ZSItrFP_K9zadAQADAgADeQADNQQ'
+daily_rep_animation = 'AgACAgIAAxkBAAJGMWaLkO5OFeFQB6M_ItuwhWrKypRoAAKb8jEbzE9ZSItrFP_K9zadAQADAgADeQADNQQ'

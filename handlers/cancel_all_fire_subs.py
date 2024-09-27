@@ -22,4 +22,5 @@ async def handle_cancel_all_fire_subs(message: Message, state: FSMContext, sessi
     delete_subs = delete(Subscriptions).where(Subscriptions.user_id == user_id)
     await session.execute(delete_subs)
     await session.commit()
-    await message.answer('Вы отписались от всего😕')
+    await message.answer('Вы отписались от рассылки по всем муниципальным образованиям')
+    

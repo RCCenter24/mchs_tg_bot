@@ -40,3 +40,4 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
     
     
     await state.update_data(all_municipalities=[mun[1] for mun in all_municipalities])
+    await query.answer()

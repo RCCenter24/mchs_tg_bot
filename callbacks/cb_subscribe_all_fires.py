@@ -34,6 +34,8 @@ async def handle_waiting_for_choise(query: types.CallbackQuery, state: FSMContex
     ]
     add_subscriber_query = insert(Subscriptions).values(
         subscribers_data).on_conflict_do_nothing()
+    
     await query.message.answer('Вы подписались на все муниципальные образования')
+    await query.answer()
     await session.execute(add_subscriber_query)
     await session.commit()

@@ -235,6 +235,7 @@ async def dayly_rep_auto(session: AsyncSession):
     if not zk.empty:
         for index, row in zk.iterrows():
             fire_word = get_fire_count_word_wo_forest(row["count"])
+
             response += (
                 f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
                 f'{row["fire_area"]} га</b>.'
@@ -243,6 +244,7 @@ async def dayly_rep_auto(session: AsyncSession):
     if response != "":
         result_file_path = generator()
         try:
+
             users_query = select(Users.user_id)
             users_result = await session.execute(users_query)
             users_list = users_result.all()
@@ -263,7 +265,7 @@ async def dayly_rep_auto(session: AsyncSession):
             if os.path.exists(result_file_path):
                 os.remove(result_file_path)
                 
-    try:
+    else:
         result_file_path = generator()
         response = 'На территории Красноярского края действующие лесные пожары отсутствуют'
         users_query = select(Users.user_id)
@@ -283,13 +285,9 @@ async def dayly_rep_auto(session: AsyncSession):
                 logging.info(
                     f"Ошибка отправки пользователю {user[0]} ежедневного отчета {e}, путь до файла {result_file_path}"
                 )
-        
-    except Exception as e:
-        await logging.error(f"Ошибка при формировании отчета {e} путь до файла {result_file_path}")
-        
-    finally:
         if os.path.exists(result_file_path):
             os.remove(result_file_path)
+
 
 
 

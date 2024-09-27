@@ -28,7 +28,7 @@ async def handle_start(message: Message, state: FSMContext, session: AsyncSessio
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="Выбрать муниципальное образование",
+                    text="Выбрать муниц. образование",
                     callback_data="choise_munic",
                 )
             ],

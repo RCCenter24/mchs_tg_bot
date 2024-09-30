@@ -5,7 +5,7 @@ def setup_routers() -> Router:
 
     from handlers import (start_command, help_command, cancel_all_fire_subs,
                           echo_handler, handle_munic_name, last_fires_news, my_fire_subs,
-                          subscribe_all_fires, subscribe_one_fire, support, daily_fire_report)
+                          subscribe_all_fires, subscribe_one_fire, support, daily_fire_report, statistics)
 
     from callbacks import main_menu, cb_subscribe_all_fires, wait_for_munic_name
     
@@ -18,6 +18,7 @@ def setup_routers() -> Router:
     router.include_router(help_command.router)
     router.include_router(cancel_all_fire_subs.router)
     router.include_router(daily_fire_report.router)
+    router.include_router(statistics.router)
     # router.include_router(echo_handler.router)
     router.include_router(handle_munic_name.router)
     router.include_router(last_fires_news.router)

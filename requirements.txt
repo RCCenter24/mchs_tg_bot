@@ -14,3 +14,4 @@ psycopg
 xlsx2csv
 asyncpg
 pillow
+XlsxWriter

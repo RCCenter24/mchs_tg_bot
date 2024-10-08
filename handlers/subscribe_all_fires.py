@@ -9,8 +9,6 @@ from sqlalchemy.dialects.postgresql import insert
 from database.models import Municipalities, Subscriptions
 
 
-from datetime import datetime as dt
-
 
 router=Router()
 
@@ -23,18 +21,30 @@ async def handle_sub_to_all_munic(message: types.Message, state: FSMContext, ses
     result = await session.execute(subscribe_query)
     all_municipalities = result.all()
     municipality_ids = [item[0] for item in all_municipalities]
-    municipality_names = [item[1] for item in all_municipalities]
-    subscribers_data = [
-        {
-            "user_id": user_id,
-            "municipality_id": municipality_ids,
-            "date_subscribed": dt.now()
-        }
-        for municipality_ids, municipality_name in zip(municipality_ids, municipality_names)
-    ]
-    add_subscriber_query = insert(Subscriptions).values(
-        subscribers_data).on_conflict_do_nothing()
-    await session.execute(add_subscriber_query)
-    await session.commit()
+    
+    
+    user_subs = select(Subscriptions.municipality_id).where(Subscriptions.user_id == user_id)
+    result = await session.execute(user_subs)
+    user_subs = result.all()
+    user_subs = [item[0] for item in user_subs]
+    if user_subs == []:
+        for munic in municipality_ids:
+            query = insert(Subscriptions).values(user_id=user_id, municipality_id=munic).on_conflict_do_nothing()
+            await session.execute(query)
+        await session.commit()
+        await message.answer('Вы подписались на все муниципальные образования')
+        return
+        
+    to_subscribe = list(set(municipality_ids) - set(user_subs))
+    if to_subscribe != []:
+        for munic in to_subscribe:
+            query = insert(Subscriptions).values(user_id=user_id, municipality_id=munic).on_conflict_do_nothing()
+            await session.execute(query)
+        await session.commit()
+        await message.answer('Вы подписались на все муниципальные образования')
+        return
 
-    await message.answer('Вы подписались на все муниципальные образования')
+    await message.answer('Вы уже подписаны на все муниципальные образования')
+        
+        
+    

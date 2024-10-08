@@ -8,7 +8,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-from user_manager import UserManager
 from images import main_photo
 from config import TEST_MSG
 
@@ -18,10 +17,6 @@ router = Router()
 @router.message(CommandStart(), F.chat.type == "private")
 async def handle_start(message: Message, state: FSMContext, session: AsyncSession):
     await state.clear()
-    user_manager = UserManager(session)
-    user_data = user_manager.extract_user_data_from_message(message)
-    await user_manager.add_user_if_not_exists(user_data)
-
     builder = InlineKeyboardBuilder()
 
     markup = InlineKeyboardMarkup(

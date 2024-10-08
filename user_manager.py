@@ -9,22 +9,6 @@ class UserManager:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    def extract_user_data_from_query(self, query: types.CallbackQuery):
-        return {
-            'user_id': query.from_user.id,
-            'first_name': query.from_user.first_name,
-            'last_name': query.from_user.last_name,
-            'username': query.from_user.username
-        }
-        
-    def extract_user_data_from_message(self, message: types.Message):
-        return {
-            'user_id': message.from_user.id,
-            'first_name': message.from_user.first_name,
-            'last_name': message.from_user.last_name,
-            'username': message.from_user.username
-        }
-
     async def add_user_if_not_exists(self, user_data: dict):
         add_user_query = insert(Users).values(
             user_id=user_data['user_id'],

@@ -12,6 +12,7 @@ from database.engine import session_maker
 from config import interval_min
 from handlers.daily_fire_report import dayly_rep_auto
 from handlers import setup_routers
+from users_middleware import UsersMiddleware
 
 
 bot = Bot(bot_token)
@@ -46,6 +47,7 @@ async def main():
     dp.include_router(router)
     
     dp.message.middleware(LoggingMiddleware())
+    dp.message.middleware(UsersMiddleware())
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     scheduler.add_job(on_startup, 'interval', minutes=interval_min)
     scheduler.add_job(daily_report_sender, 'cron', hour= 9, minute=54)

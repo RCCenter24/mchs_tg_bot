@@ -1,4 +1,3 @@
-import logging
 from aiogram.types import Message
 
 import asyncio

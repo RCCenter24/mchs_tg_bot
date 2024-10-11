@@ -10,7 +10,7 @@ from utils.df_modifier import modify_dataframe
 from utils.response_maker import response_maker
 from utils.result_df_maker import result_df_maker
 
-from sqlalchemy import select, text, or_
+from sqlalchemy import select, or_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError

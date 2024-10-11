@@ -4,7 +4,6 @@ from xlsx2csv import Xlsx2csv
 from io import BytesIO, StringIO
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import SQLAlchemyError
 from database.models import Fires
 
 
@@ -53,7 +52,5 @@ async def save_to_db(file_bytes, email_id, session: AsyncSession):
                 add_db_query = insert(Fires).values(to_db_data).on_conflict_do_nothing()
                 await session.execute(add_db_query)
                 await session.commit()
-            else:
-                logging.info(f"Chunk is empty or contains only headers. Skipping insert.")
     except Exception as e:
         logging.error(f"Error reading CSV data: {e}")

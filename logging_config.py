@@ -1,8 +1,8 @@
 import logging
 import datetime
 import pytz
-
 import sys
+
 
 class Formatter(logging.Formatter):
     def converter(self, timestamp):
@@ -10,10 +10,9 @@ class Formatter(logging.Formatter):
         return dt.astimezone(pytz.timezone("Asia/Krasnoyarsk"))
 
     def formatTime(self, record, datefmt=None):
-        # Проверка на завершение работы интерпретатора
         if sys.meta_path is None:
             return ""
-        
+
         dt = self.converter(record.created)
         if datefmt:
             s = dt.strftime(datefmt)

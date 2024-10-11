@@ -1,7 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.dialects.postgresql import insert
 from database.models import Users
-from aiogram import types
 from datetime import datetime as dt
 from config import ADMINS
 

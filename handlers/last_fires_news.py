@@ -9,7 +9,6 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
-from config import TEST_MSG
 from database.models import Fires, Messages, Municipalities, Subscriptions
 from email_checker import fetch_and_save_files
 from utils.df_modifier import modify_dataframe_for_command
@@ -37,12 +36,6 @@ async def manual_check_news(message: Message, session: AsyncSession, bot: Bot):
     result = await session.execute(df_query)
     df_query_result = result.all()
     df_1 = pd.DataFrame(df_query_result)
-    
-    try:
-        await message.answer(text = TEST_MSG, parse_mode="HTML")
-    except Exception as e:
-        logging.error(f"Не удалось отправить сообщение пользователю {user_id}: {str(e)}")
-    
     
     if not df_1.empty:
         try:

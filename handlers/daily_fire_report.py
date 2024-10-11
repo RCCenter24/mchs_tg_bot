@@ -10,10 +10,8 @@ from datetime import timedelta, datetime as dt
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text, select
 
-from config import TEST_MSG
 from database.models import Users
 from utils.image_generator import generator
-from icecream import ic
 
 
 router = Router()
@@ -121,11 +119,6 @@ async def dayly_rep(message: Message, session: AsyncSession):
                 f'\nв зоне контроля: действует <b>{row["count"]}</b> {fire_word} на площади <b>'
                 f'{row["fire_area"]} га</b>.'
             )
-    try:
-        await message.answer(text = TEST_MSG, parse_mode="HTML")
-    except Exception as e:
-        logging.error(f"Не удалось отправить сообщение пользователю {message.from_user.id}: {str(e)}")
-
     if response != "":
         result_file_path = generator()
         try:
@@ -250,7 +243,6 @@ async def dayly_rep_auto(session: AsyncSession):
             users_list = users_result.all()
             for user in users_list:
                 try:
-                    await bot.send_message(chat_id=user[0], text = TEST_MSG, parse_mode="HTML")
                     await bot.send_photo(
                         chat_id=user[0],
                         photo=FSInputFile(path=result_file_path),
@@ -273,7 +265,6 @@ async def dayly_rep_auto(session: AsyncSession):
         users_list = users_result.all()
         for user in users_list:
             try:            
-                await bot.send_message(chat_id=user[0], text = TEST_MSG, parse_mode="HTML")                
                 await bot.send_photo(
                     chat_id=user[0],
                     photo=FSInputFile(path=result_file_path),

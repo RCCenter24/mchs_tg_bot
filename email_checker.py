@@ -28,10 +28,10 @@ async def decode_file_name(encoded_name):
     return d_header[0]
 
 
-async def save_file(part, filename):
-    filepath = os.path.join(SAVE_DIR, filename)
-    await asyncio.to_thread(lambda: open(filepath, 'wb').write(part.get_payload(decode=True)))
-    return filepath
+# async def save_file(part, filename):
+#     filepath = os.path.join(SAVE_DIR, filename)
+#     await asyncio.to_thread(lambda: open(filepath, 'wb').write(part.get_payload(decode=True)))
+#     return filepath
 
 
 async def extract_content(email_message):

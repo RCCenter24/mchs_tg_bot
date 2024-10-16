@@ -46,7 +46,7 @@ async def main():
     dp.message.middleware(LoggingMiddleware())
     dp.message.middleware(UsersMiddleware())
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
-    scheduler.add_job(on_startup, 'interval', minutes=interval_min)
+    # scheduler.add_job(on_startup, 'interval', minutes=interval_min)
     # scheduler.add_job(daily_report_sender, 'cron', hour= 9, minute=30, day_of_week = 'mon-fri')
     scheduler.start()
     print('Бот запущен и готов к приему сообщений')

@@ -12,7 +12,7 @@ class Messages(Base):
     user_id: Mapped[int] = mapped_column(BIGINT, ForeignKey('users.user_id'))
     email_id: Mapped[str] = mapped_column(String(225))
     date_send: Mapped[DateTime] = mapped_column(TIMESTAMP)
-    message_text: Mapped[str] = mapped_column(String)
+    message_text: Mapped[str] = mapped_column(String, nullable=True)
     
     #user = relationship("Users", back_populates="messages")
     
@@ -38,8 +38,8 @@ class Users(Base):
     __tablename__ = 'users'
     user_id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=True)
     first_name: Mapped[str] = mapped_column(String(255))
-    last_name: Mapped[str] = mapped_column(String(255))
-    username: Mapped[str] = mapped_column(String(255))
+    last_name: Mapped[str] = mapped_column(String(255), nullable=True)
+    username: Mapped[str] = mapped_column(String(255), nullable=True)
     joined_at: Mapped[DateTime] = mapped_column(TIMESTAMP)
     is_admin: Mapped[bool] = mapped_column(BOOLEAN)
     msg_type: Mapped[int] = mapped_column(BIGINT)

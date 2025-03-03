@@ -62,6 +62,7 @@ async def msg_sender(message: Message, session: AsyncSession, email_id):
                 )
                 grouped_by_municipality = group.groupby("region")
                 response = await response_maker(grouped_by_municipality)
+                
                 try:
                     await bot.send_message(
                         chat_id=user_id, text=response, parse_mode="HTML"

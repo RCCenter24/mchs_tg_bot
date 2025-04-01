@@ -1,7 +1,7 @@
 import logging
 from zoneinfo import ZoneInfo
 from aiogram import Dispatcher, Bot
-from aiogram.fsm.storage.redis import RedisStorage
+from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from config import bot_token
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -17,7 +17,7 @@ from users_middleware import UsersMiddleware
 
 bot = Bot(bot_token)
 
-storage = RedisStorage.from_url("redis://localhost:6379/2")
+storage = RedisStorage.from_url("redis://localhost:6379/2", key_builder=DefaultKeyBuilder(with_destiny=True, with_bot_id=True))
 
 
 async def on_startup():
@@ -47,7 +47,7 @@ async def main():
     dp.message.middleware(UsersMiddleware())
     scheduler = AsyncIOScheduler(timezone=ZoneInfo("Asia/Krasnoyarsk"))
     # scheduler.add_job(on_startup, 'interval', minutes=interval_min)
-    scheduler.add_job(daily_report_sender, 'cron', hour= 9, minute=30, day_of_week = 'mon-fri')
+    # scheduler.add_job(daily_report_sender, 'cron', hour= 9, minute=30, day_of_week = 'mon-fri')
     logging.info('--------------------Добавлен планировщик ежедневной рассылки------------------------------')
     
     # scheduler.start()

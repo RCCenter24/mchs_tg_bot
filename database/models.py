@@ -14,7 +14,6 @@ class Messages(Base):
     date_send: Mapped[DateTime] = mapped_column(TIMESTAMP)
     message_text: Mapped[str] = mapped_column(String, nullable=True)
     
-    #user = relationship("Users", back_populates="messages")
     
 class Municipalities(Base):
     __tablename__ = 'municipalities'
@@ -22,7 +21,6 @@ class Municipalities(Base):
     map_id: Mapped[str] = mapped_column(String(10), primary_key=True)
     municipality_name: Mapped[str] = mapped_column(String(225))
     
-    #subscriptions = relationship("Subscriptions", back_populates="map") 
 
 class Subscriptions(Base):
     __tablename__ = 'subscriptions'
@@ -30,9 +28,7 @@ class Subscriptions(Base):
     user_id: Mapped[int] = mapped_column(BIGINT, ForeignKey('users.user_id'))
     municipality_id: Mapped[str] = mapped_column(BIGINT, ForeignKey('municipalities.municipality_id'))
     date_subscribed: Mapped[DateTime] = mapped_column(TIMESTAMP)
-    
-    #user = relationship("Users", back_populates="subscriptions")
-    #map = relationship("Municipalities", back_populates="subscriptions")
+
 
 class Users(Base):
     __tablename__ = 'users'
